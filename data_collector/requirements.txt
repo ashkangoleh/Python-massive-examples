@@ -1,0 +1,5 @@
+-e git+https://github.com/SohierDane/BigQuery_Helper@8615a7f6c1663e7f2d48aa2b32c2dbcb600a440f#egg=bq_helper
+google-cloud-bigquery
+pyarrow
+pandas
+tqdm

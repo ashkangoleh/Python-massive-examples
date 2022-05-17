@@ -1,0 +1,14 @@
+FROM python:3.9
+
+USER root
+
+ADD requirements.txt /home/app/
+
+RUN python -m pip install -U pip \
+    && pip install -r /home/app/requirements.txt 
+
+
+COPY . /home/app/
+
+CMD [ "python" "/home/app/main.py" ]
+

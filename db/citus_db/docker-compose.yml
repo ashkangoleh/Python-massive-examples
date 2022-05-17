@@ -1,0 +1,38 @@
+# This file is auto generated from it's template,
+# see citusdata/tools/packaging_automation/templates/docker/latest/docker-compose.tmpl.yml.
+version: "3"
+
+services:
+  master:
+    container_name: "${COMPOSE_PROJECT_NAME:-citus}_master"
+    image: "citusdata/citus:10.2.2"
+    ports: ["${COORDINATOR_EXTERNAL_PORT:-5436}:5432"]
+    labels: ["com.citusdata.role=Master"]
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment: &AUTH
+      POSTGRES_USER: "${POSTGRES_USER:-postgres}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD-1}"
+      PGUSER: "${POSTGRES_USER:-postgres}"
+      PGPASSWORD: "${POSTGRES_PASSWORD-1}"
+      POSTGRES_HOST_AUTH_METHOD: "${POSTGRES_HOST_AUTH_METHOD:-trust}"
+  worker:
+    image: "citusdata/citus:10.2.2"
+    labels: ["com.citusdata.role=Worker"]
+    depends_on: [manager]
+    environment: *AUTH
+    command: "/wait-for-manager.sh"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - healthcheck-volume:/healthcheck
+  manager:
+    container_name: "${COMPOSE_PROJECT_NAME:-citus}_manager"
+    image: "citusdata/membership-manager:0.3.0"
+    volumes:
+      - "${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock"
+      - healthcheck-volume:/healthcheck
+    depends_on: [master]
+    environment: *AUTH
+volumes:
+  healthcheck-volume:
+  data:

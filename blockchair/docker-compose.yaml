@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  blocks:
+    build:
+      context: ./
+      dockerfile: dockerfile-blocks
+    volumes:
+      - ./:/home/app
+  transactions:
+    build:
+      context: ./
+      dockerfile: dockerfile-transactions
+    volumes:
+      - ./:/home/app
+  inputs:
+    build:
+      context: ./
+      dockerfile: dockerfile-input
+    volumes:
+      - ./:/home/app
+  outputs:
+    build:
+      context: ./
+      dockerfile: dockerfile-outputs
+    volumes:
+      - ./:/home/app

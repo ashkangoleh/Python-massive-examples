@@ -1,0 +1,33 @@
+employee_1:
+  Name: John Doe
+  Age: 25
+  Title: DS
+  Employed: True
+  company:
+      XYZ
+  Responsibilities_list:
+    - Data Analysis
+    - Data Engineering
+    - Data Scientist
+  Languages_NestedList:
+    - [python,Elite]
+    - [java, Elite]
+    - [Go,Fundamental]
+  Education:
+    bachelors:
+      School: IIT
+      Degree: BTECH
+      GPA: 4.3
+    PostGrad:
+      school: MIT
+      Degree: PhD in Data Science
+      GPA: 4.2
+  description: >
+              this
+
+              is
+              
+              test
+
+              description
+  
