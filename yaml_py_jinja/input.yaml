@@ -1,13 +1,13 @@
 employee_1:
-  Name: John Doe
-  Age: 25
-  Title: DS
+  Name: Majid
+  Age: 0
+  Title: DE
   Employed: True
   company:
-      XYZ
+      Arz:D
   Responsibilities_list:
-    - Data Analysis
-    - Data Engineering
+    - Data Analyst
+    - Data Engineer
     - Data Scientist
   Languages_NestedList:
     - [python,Elite]
@@ -24,10 +24,7 @@ employee_1:
       GPA: 4.2
   description: >
               this
-
               is
-              
               test
-
               description
-  
+

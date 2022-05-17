@@ -80,41 +80,48 @@
 
 
 
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
+# class Node:
+#     def __init__(self, data):
+#         self.data = data
+#         self.next = None
         
-class LinkedList:
-    def __init__(self):
-        self.head = None
+# class LinkedList:
+#     def __init__(self):
+#         self.head = None
  
-    def append(self, data):
-        new_node = Node(data)
-        if self.head is None:
-            self.head = new_node
-        else:
-            tail = self.head
-            while tail.next:
-                tail = tail.next
-            tail.next = new_node
+#     def append(self, data):
+#         new_node = Node(data)
+#         if self.head is None:
+#             self.head = new_node
+#         else:
+#             tail = self.head
+#             while tail.next:
+#                 tail = tail.next
+#             tail.next = new_node
     
-    def create_two_ll(self, lists):
-        ll_dict = {}
-        for i in range(len(lists)):
-            for data in lists[i]:
-                self.append(data)
-            ll_dict[f"ll{i}"] = data
-        print(ll_dict)
-        return ll_dict
+#     def create_two_ll(self, lists):
+#         ll_dict = {}
+#         for i in range(len(lists)):
+#             for data in lists[i]:
+#                 self.append(data)
+#             ll_dict[f"ll{i}"] = data
+#         print(ll_dict)
+#         return ll_dict
 
             
-if __name__ == "__main__":
-    ll = LinkedList()
-    ll.create_two_ll([[1,[3,2]]])
-    # ll.create_two_ll([[1,3,5], [2,4,6],[7,9,11],[8,10,12]])
+# if __name__ == "__main__":
+#     ll = LinkedList()
+#     ll.create_two_ll([[1,[3,2]]])
+#     # ll.create_two_ll([[1,3,5], [2,4,6],[7,9,11],[8,10,12]])
+
+# d = {"a":0,"b":1,"c":2}
+
+# print(dict([list(d.items())[1]]))
 
 
-li = [[1,2],[3,4],[5,6],[7,8]]
-
-print([item for sublist in li for item in sublist if item%2==0])
+# variable_data = 300
+# values = [*map(int, input(f'Enter two numbers {variable_data}: ').split())] # Enter two numbers 300: 
+# a = values[0] if len(values) > 0 else 100
+# print('a: ', a)
+# b = values[0] if len(values) > 0 else 200
+# print('b: ', b)

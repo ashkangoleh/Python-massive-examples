@@ -1,1 +1,16 @@
-print('{{employee_1['Name']}}')
+from datetime import datetime
+
+
+#print('{{name}}')
+
+{%for name in name%}
+print('{{name}}')
+{%endfor%}
+
+print(datetime.now())
+
+def test(x,y):
+    return x*y
+
+
+print(test({{x}},{{y}}))
