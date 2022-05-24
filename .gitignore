@@ -17,3 +17,6 @@ venv3
 data/
 !function_basics.png
 tempCodeRunnerFile.py
+.coverage
+htmlcov/
+.pytest*

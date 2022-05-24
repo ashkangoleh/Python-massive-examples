@@ -8,6 +8,7 @@ services:
     image: "citusdata/citus:10.2.2"
     ports: ["${COORDINATOR_EXTERNAL_PORT:-5436}:5432"]
     labels: ["com.citusdata.role=Master"]
+    restart: always
     volumes:
       - ./data:/var/lib/postgresql/data
     environment: &AUTH
@@ -20,6 +21,7 @@ services:
     image: "citusdata/citus:10.2.2"
     labels: ["com.citusdata.role=Worker"]
     depends_on: [manager]
+    restart: always
     environment: *AUTH
     command: "/wait-for-manager.sh"
     volumes:

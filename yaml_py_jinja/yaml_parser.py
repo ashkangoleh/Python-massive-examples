@@ -5,20 +5,21 @@ import json
 
 file_dir = os.path.dirname(os.path.abspath(__file__))
 config = yaml.full_load(open(f"{file_dir}/input.yaml"))
-print('config: ', config)
-
+config2 = yaml.full_load(open(f"{file_dir}/different_form_yaml.json"))
 
 env = Environment(loader=FileSystemLoader(f"{file_dir}"),trim_blocks=True,lstrip_blocks=True)
 template = env.get_template('print.j2')
 
 body = {"name":["majid","ashkan","asghar",'pp'],"x":2,"y":12}
 
-# print(template.render(config))
-print(template.render(body))
-
-
-# with open(f"{file_dir}/test2.py","w") as f:
-#         f.write(template.render(config))
+print(template.render(config2))
+# print(template.render(body))
+################convert json to yml
+# ff = open(f'{file_dir}/meta.yaml', 'w+')
+# print(yaml.dump(config2,ff,allow_unicode=True)) 
+#######################################
+with open(f"{file_dir}/test2.py","w") as f:
+        f.write(template.render(config2))
         
 # with open(f"{file_dir}/test2.py","w") as f:
 #         f.write(template.render(body))
