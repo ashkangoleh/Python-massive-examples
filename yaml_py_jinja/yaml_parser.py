@@ -1,3 +1,4 @@
+import jinja2
 import yaml
 import os
 from jinja2 import FileSystemLoader,Environment
@@ -9,17 +10,19 @@ config2 = yaml.full_load(open(f"{file_dir}/different_form_yaml.json"))
 
 env = Environment(loader=FileSystemLoader(f"{file_dir}"),trim_blocks=True,lstrip_blocks=True)
 template = env.get_template('print.j2')
-
+html_ = env.get_template('ht.html').render(content=config2)
 body = {"name":["majid","ashkan","asghar",'pp'],"x":2,"y":12}
 
-print(template.render(config2))
+print(html_)
 # print(template.render(body))
 ################convert json to yml
 # ff = open(f'{file_dir}/meta.yaml', 'w+')
 # print(yaml.dump(config2,ff,allow_unicode=True)) 
 #######################################
-with open(f"{file_dir}/test2.py","w") as f:
-        f.write(template.render(config2))
+# with open(f"{file_dir}/test2.py","w") as f:
+        # f.write(template.render(matches=config2))
+with open(f"{file_dir}/test_html.html","w") as f:
+        f.write(html_)
         
 # with open(f"{file_dir}/test2.py","w") as f:
 #         f.write(template.render(body))

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    {% for code in content %}{% for key,value in code.items() %}
+    <p>{{key}} : <strong>{% if "Type" in key %}
+    <del>{{value}}</del>
+    {% elif value is mapping %} {# mapping for dicts #} {# iterable for lists #}
+    {%for k,v in value.items() %}
+    <br>{{k}} : {{v}}<br>    
+    {%endfor%}
+    {%else%}
+    
+    {{value}}
+    {%endif%}</strong></p>
+    <br> {% endfor %} {% endfor %}
+</body>
+
+</html>
