@@ -20,3 +20,6 @@ tempCodeRunnerFile.py
 .coverage
 htmlcov/
 .pytest*
+data/
+archives/
+tempCodeRunnerFile.py

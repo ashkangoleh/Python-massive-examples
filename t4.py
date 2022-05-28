@@ -167,69 +167,69 @@
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-import functools
-import time
-import sys
-import gc
-# print(sys.getrecursionlimit())
-print(sys.setrecursionlimit(5000000))
+# import functools
+# import time
+# import sys
+# import gc
+# # print(sys.getrecursionlimit())
+# print(sys.setrecursionlimit(5000000))
 
-# def fib_without_cache(n):
+# # def fib_without_cache(n):
+# #     if n < 2:
+# #         return n
+# #     return fib_without_cache(n-1) + fib_without_cache(n-2)
+
+# # # Execution start time
+# # begin = time.time()
+# # # fib_without_cache(50)
+# # print('fib_without_cache(30): ', fib_without_cache(30))
+# # end = time.time()
+# # print("Time taken to execute the\
+# # function without lru_cache is", f"{end-begin:0.9f}")
+
+# @functools.lru_cache(maxsize = None)
+# def fib_with_cache(n):
 #     if n < 2:
 #         return n
-#     return fib_without_cache(n-1) + fib_without_cache(n-2)
+#     return fib_with_cache(n-1) + fib_with_cache(n-2)
 
-# # Execution start time
+
 # begin = time.time()
-# # fib_without_cache(50)
-# print('fib_without_cache(30): ', fib_without_cache(30))
+# print('fib(1500): ', fib_with_cache(1500))
 # end = time.time()
-# print("Time taken to execute the\
-# function without lru_cache is", f"{end-begin:0.9f}")
-
-@functools.lru_cache(maxsize = None)
-def fib_with_cache(n):
-    if n < 2:
-        return n
-    return fib_with_cache(n-1) + fib_with_cache(n-2)
+# print("Time taken to execute: ", f"{end-begin:0.9f}")
 
 
-begin = time.time()
-print('fib(1500): ', fib_with_cache(1500))
-end = time.time()
-print("Time taken to execute: ", f"{end-begin:0.9f}")
+# # # @functools.lru_cache()
+# def fib2(n):
+#     if n == 1:
+#         return [1]
+#     if n == 2:
+#         return [1, 1]
+#     fibs = [1, 1]
+#     for _ in range(2, n):
+#         fibs.append(fibs[-1] + fibs[-2])
+#     return bin(fibs[-1] + fibs[-2])
 
 
-# # @functools.lru_cache()
-def fib2(n):
-    if n == 1:
-        return [1]
-    if n == 2:
-        return [1, 1]
-    fibs = [1, 1]
-    for _ in range(2, n):
-        fibs.append(fibs[-1] + fibs[-2])
-    return bin(fibs[-1] + fibs[-2])
+# def fib(n):
+#     v1, v2, v3 = 1, 1, 0    # initialise a matrix [[1,1],[1,0]]
+#     # perform fast exponentiation of the matrix (quickly raise it to the nth power)
+#     for rec in bin(n)[3:]:
+#         calc = v2*v2
+#         v1, v2, v3 = v1*v1+calc, (v1+v3)*v2, calc+v3*v3
+#         if rec == '1':
+#             v1, v2, v3 = v1+v2, v1, v2
+#     return v2
 
 
-def fib(n):
-    v1, v2, v3 = 1, 1, 0    # initialise a matrix [[1,1],[1,0]]
-    # perform fast exponentiation of the matrix (quickly raise it to the nth power)
-    for rec in bin(n)[3:]:
-        calc = v2*v2
-        v1, v2, v3 = v1*v1+calc, (v1+v3)*v2, calc+v3*v3
-        if rec == '1':
-            v1, v2, v3 = v1+v2, v1, v2
-    return v2
+# begin = time.time()
+# print('fib(1500): ', fib(1500))
+# end = time.time()
+# print("Time taken to execute1: ", f"{end-begin:0.9f}")
+# begin = time.time()
+# print('fib2(1500): ', int(fib2(1500),2))
+# end = time.time()
+# print("Time taken to execute2: ", f"{end-begin:0.9f}")
 
-
-begin = time.time()
-print('fib(1500): ', fib(1500))
-end = time.time()
-print("Time taken to execute1: ", f"{end-begin:0.9f}")
-begin = time.time()
-print('fib2(1500): ', int(fib2(1500),2))
-end = time.time()
-print("Time taken to execute2: ", f"{end-begin:0.9f}")
-
-print('garbage collect: ', gc.collect())
+# print('garbage collect: ', gc.collect())

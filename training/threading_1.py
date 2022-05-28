@@ -10,9 +10,9 @@ def do_work():
     print("Finishing Work!", end='\n')
 
 
-for i,_ in enumerate(range(5)):
-    st = time() 
-    t = Thread(target=do_work, args=(),daemon=True,name='threading')
+for i, _ in enumerate(range(5)):
+    st = time()
+    t = Thread(target=do_work, args=(), daemon=True, name='threading')
     t.start()
     en = time()
-print(f"time taken = {en-st}", end='\n')
+print(f"time taken = {en - st}", end='\n')

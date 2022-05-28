@@ -5,6 +5,7 @@ from threading import Thread, Lock
 class StingySpendy:
     money = 100
     mutex = Lock()
+
     def stingy(self):
         for i in range(1000000):
             self.mutex.acquire()
@@ -19,7 +20,8 @@ class StingySpendy:
             self.mutex.release()
         print("Spendy Done")
 
-# 
+
+#
 ss = StingySpendy()
 Thread(target=ss.stingy, args=()).start()
 Thread(target=ss.spendy, args=()).start()

@@ -1,8 +1,9 @@
+# {% filter indent(width=0) %}
 from datetime import datetime
 
 
 #print('{{name}}')
-print('{{ClusterId}}')
+# print('{{ClusterId}}')
 
 # {%for name in name%}
 # print('{{name}}')
@@ -12,6 +13,25 @@ print('{{ClusterId}}')
 
 # def test(x,y):
 #     return x*y
-
+#content context
+{%for code in content%}
+{%for k,v in code.items() %}
+{%if v == "os" %}
+import {{v}}
+{%endif%}
+{%endfor%}
+{%endfor%}
+#code context
+{%for item in code %}
+{%for k,v in item.items() %}
+{%if v == "device_2" %}
+def function_2(model:str=None,iter:int=None):
+    var = iter * model
+    return var
+print(function_2(model='{{v}}',iter=2))
+{%endif%}
+{%endfor%}
+{%endfor%}
 
 # print(test({{x}},{{y}}))
+# {% endfilter %}
