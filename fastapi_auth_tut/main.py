@@ -1,16 +1,9 @@
-from datetime import datetime, timedelta
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.openapi.utils import get_openapi
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jose import JWTError, jwt
-from passlib.context import CryptContext
-from pydantic import BaseModel
-import sqlalchemy
 import uvicorn
 from api import api
-# to get a string like this run:
-# openssl rand -hex 32
-from fastapi_auth_tut.utils import get_code_samples
+
+from utils import get_code_samples
 
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ALGORITHM = "pbkdf2-sha256"
@@ -19,6 +12,7 @@ API_PREFIX = '/api/v1'
 
 app = FastAPI()
 app.include_router(router=api, prefix=API_PREFIX)
+
 
 def custom_openapi():
     # cache the generated schema
@@ -45,5 +39,6 @@ def custom_openapi():
 
 # assign the customized OpenAPI schema
 app.openapi = custom_openapi
+
 if __name__ == '__main__':
     uvicorn.run('main:app', host="localhost", port=7676, reload=True)

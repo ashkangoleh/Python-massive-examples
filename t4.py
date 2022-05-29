@@ -233,3 +233,12 @@
 # print("Time taken to execute2: ", f"{end-begin:0.9f}")
 
 # print('garbage collect: ', gc.collect())
+
+
+import requests
+from datetime import datetime
+now = str(datetime.now().strftime("%Y-%m-%d"))
+url = "http://localhost:7676/api/v1/test"
+params = {'since':'2009-01-01','until':f'{now}','page_num':1,'page_size':10}
+response = requests.request("GET", url, params=params)
+print(response.text)
