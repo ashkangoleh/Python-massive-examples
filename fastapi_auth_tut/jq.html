@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+    <div>
+        <button type="submit" onclick="search(10, 209)" style="width:auto;">Submit</button>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        var search = function(a, b) {
+            $.ajax({
+                type: "post",
+                url: "http://127.0.0.1:7676",
+                data: JSON.stringify({
+                    "start": a,
+                    "end": b
+                }),
+                async: true,
+                accept: "application/json",
+                success: (data) => {
+                    console.log(JSON.parse(data).start)
+                    alert(JSON.parse(data).start);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("code:" + XMLHttpRequest.status);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
