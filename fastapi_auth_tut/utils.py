@@ -11,16 +11,16 @@ def get_code_samples(route, method):
         print(f"Path:{route.path}")
         try:
             example_schema = route.body_field.type_.Config.schema_extra.get('example')
-            payload = f"json.dumps({example_schema})"
+            # payload = f"json.dumps({example_schema})"
             data_raw = f"\\{nl} --data-raw " + "'" + f"{json.dumps(example_schema)} " + "'"
             params = {'since': '2009-01-01', 'until': f'{now}', 'page_num': 1, 'page_size': 10}
         except Exception as e:
             print(f"Path:{route.path} Error:{e}")
-            payload = '{}'
+            # payload = '{}'
             data_raw = ''
             params = {'since': '2009-01-01', 'until': f'{now}', 'page_num': 1, 'page_size': 10}
     else:
-        payload = '{}'
+        # payload = '{}'
         data_raw = ''
         params = {'since': '2009-01-01', 'until': f'{now}', 'page_num': 1, 'page_size': 10}
     return [

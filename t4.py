@@ -235,10 +235,157 @@
 # print('garbage collect: ', gc.collect())
 
 
-import requests
-from datetime import datetime
-now = str(datetime.now().strftime("%Y-%m-%d"))
-url = "http://localhost:7676/api/v1/test"
-params = {'since':'2009-01-01','until':f'{now}','page_num':1,'page_size':10}
-response = requests.request("GET", url, params=params)
-print(response.text)
+# x = False
+# tries = 6
+#
+#
+# def drawgrid():
+#     global tries
+#     #  the variable is local so it will give a error by calling it in a function so by making it global it works as long as you add "global variable"
+#     if tries == 6:
+#         print("   _____ \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "__|__\n")
+#
+#     elif tries == 5:
+#         print("   _____ \n"
+#               "  |    0 \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "__|__\n")
+#
+#     elif tries == 4:
+#         print("   _____ \n"
+#               "  |    0 \n"
+#               "  |    | \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "__|__\n")
+#     elif tries == 3:
+#         print("   _____ \n"
+#               "  |    0 \n"
+#               "  |    |- \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "__|__\n")
+#
+#     elif tries == 2:
+#         print("   _____ \n"
+#               "  |    0 \n"
+#               "  |   -|-\n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "__|__\n")
+#
+#     elif tries == 1:
+#         print("   _____ \n"
+#               "  |    0 \n"
+#               "  |   -|-\n"
+#               "  |   / \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "__|__\n")
+#
+#     elif tries == 0:
+#         print("   _____ \n"
+#               "  |    0 \n"
+#               "  |   -|-\n"
+#               "  |   / \ \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "  |      \n"
+#               "__|__\n")
+#
+#
+# def mainLoop():
+#     global tries
+#
+#     print('Hello, please choose a word')
+#     hangWord = input('')
+#     operation4 = len(hangWord)
+#     lettersOfWords = list(hangWord)
+#     while not x:
+#         print('enter a letter')
+#         letter = input('')
+#         if operation4 == 4:
+#             if letter != lettersOfWords[0] and letter != lettersOfWords[1] and letter != lettersOfWords[2] and letter != \
+#                     lettersOfWords[3]:
+#                 print('Try again ')
+#                 print('?', '?', '?', '?')
+#                 tries -= 1
+#                 drawgrid()
+#                 print(f'{tries} life are left')
+#             elif letter == lettersOfWords[0]:
+#                 print(letter, '?', '?', '?')
+#                 print('First letter found')
+#
+#             elif letter == lettersOfWords[1]:
+#
+#                 print('?', letter, '?', '?')
+#                 print('second letter found')
+#
+#             elif letter == lettersOfWords[2]:
+#                 print('?', '?', letter, '?')
+#                 print('Third letter found')
+#
+#             elif letter == lettersOfWords[3]:
+#                 print('?', '?', '?', letter)
+#                 print('Fourth letter found')
+#
+#
+# drawgrid()
+# mainLoop()
+l = {
+  "fee_per_kwu": "0",
+  "witness_count": "0",
+  "guessed_miner": "Unknown",
+  "output_total_usd": "0.5",
+  "transaction_count": "1",
+  "version_bits": "000000000000000000000000000001",
+  "output_count": "1",
+  "input_count": "1",
+  "id": "0",
+  "input_total_usd": "0",
+  "fee_per_kb_usd": "0",
+  "generation": "5000000000",
+  "reward": "5000000000",
+  "version_hex": "1",
+  "generation_usd": "0.5",
+  "reward_usd": "0.5",
+  "cdd_total": "0",
+  "fee_total": "0",
+  "bits": "486604799",
+  "weight": "1140",
+  "merkle_root": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+  "nonce": "2083236893",
+  "version": "1",
+  "difficulty": "1",
+  "fee_total_usd": "0",
+  "median_time": "2009-01-03 18:15:05",
+  "fee_per_kwu_usd": "0",
+  "chainwork": "0000000000000000000000000000000000000000000000000000000100010001",
+  "input_total": "0",
+  "size": "285",
+  "output_total": "5000000000",
+  "coinbase_data_hex": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",
+  "stripped_size": "285",
+  "time": "2009-01-03 18:15:05",
+  "fee_per_kb": "0",
+  "hash": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
+}
+print([k for k,v in l.items()].index("id"))
