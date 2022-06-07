@@ -27,7 +27,7 @@ tempCodeRunnerFile.py
 __pycache__/
 *.py[cod]
 *$py.class
-current/
+
 # C extensions
 *.so
 
