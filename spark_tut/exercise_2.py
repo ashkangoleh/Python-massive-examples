@@ -29,7 +29,7 @@ print('filteredRDD(count): ', filteredRDD.count())
 print("*"*80)
 
 # Distribute a local Python collection to form an RDD. Using range is recommended if the input represents a range for performance.
-listRDD = sc.parallelize([1, 2, 3, 4, 5, 6], 2).glom().collect()
+listRDD = sc.parallelize([1, 2, 3, 4, 5, 6], 7).glom().collect()
 print('listRDD: ', listRDD)
 print("*"*80)
 
