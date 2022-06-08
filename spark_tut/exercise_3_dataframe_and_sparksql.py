@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+
 # Creating a spark session
 spark = SparkSession.builder.master("local").appName("Python Spark DataFrames basic example").getOrCreate()
 # Read the dataset into a spark dataframe using the `read.json()` function
@@ -14,10 +15,12 @@ df.select("name").show()
 df.select("age").show()
 spark.sql("SELECT name FROM people").show()
 
-
-#Perform basic filtering
+# Perform basic filtering
 df.filter(df['age'] > 21).show()
 
 spark.sql("SELECT name,age from people where age > 21;").show()
 
+# Perform basic aggregation of data
+df.groupBy("age").count().show()
 
+spark.sql("SELECT age,COUNT(age) FROM people GROUP BY age").show()

@@ -20,7 +20,7 @@ tempCodeRunnerFile.py
 .coverage
 htmlcov/
 .pytest*
-data/
+*/data/
 archives/
 tempCodeRunnerFile.py
 # Byte-compiled / optimized / DLL files
