@@ -2,6 +2,8 @@ import psycopg
 import datetime
 import asyncio
 from psycopg.rows import dict_row
+import json
+
 
 connection = {
     'host': 'venus.arz.team',
@@ -10,13 +12,13 @@ connection = {
     'port': 5435,
     'dbname': 'blocks'
 }
-conninfo = "postgresql://{user}:{password}@{host}:{port}/{dbname}".format(**connection)
-
+conninfo = "postgresql://{user}:{password}@{host}:{port}/{dbname}".format(
+    **connection)
 
 
 async def main():
     try:
-        aconn = await psycopg.AsyncConnection.connect(conninfo=conninfo,row_factory=dict_row)
+        aconn = await psycopg.AsyncConnection.connect(conninfo=conninfo, row_factory=dict_row)
         async with aconn:
             async with aconn.cursor() as cur:
                 ps = await cur.execute('SELECT * FROM block_stats limit 10;')
@@ -27,9 +29,8 @@ async def main():
         raise e
 
 if __name__ == '__main__':
-    
+
     begin_time = datetime.datetime.now()
     async_result = asyncio.run(main())
-    print('ps: ', async_result)
+    print('ps: ', json.dumps(async_result, indent=4))
     print(datetime.datetime.now() - begin_time)
-

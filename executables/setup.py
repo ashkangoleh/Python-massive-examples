@@ -1,10 +1,10 @@
 import setuptools
 
-setuptools.setup(name='test',
+setuptools.setup(name='FData',
                  version='0.1',
                  description='An example package',
                  url='#',
-                 author='max',
+                 author='ashkan',
                  install_requires=['faker'],
                  author_email='',
                  packages=setuptools.find_packages(),
