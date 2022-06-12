@@ -27,7 +27,11 @@ tempCodeRunnerFile.py
 __pycache__/
 *.py[cod]
 *$py.class
-
+datanode/
+hadoop_namenode/
+hadoop_datanode1/
+hadoop_datanode2/
+hadoop_datanode3/
 # C extensions
 *.so
 

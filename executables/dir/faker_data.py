@@ -2,7 +2,7 @@ import argparse
 # from faker import Faker
 # import json
 
-# Initialize parser
+# Adding optional argument
 parser = argparse.ArgumentParser()
 
 # Adding optional argument
