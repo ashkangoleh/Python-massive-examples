@@ -32,6 +32,7 @@ hadoop_namenode/
 hadoop_datanode1/
 hadoop_datanode2/
 hadoop_datanode3/
+hadoop_historyserver/
 # C extensions
 *.so
 
