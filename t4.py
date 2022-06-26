@@ -350,42 +350,81 @@
 #
 # drawgrid()
 # mainLoop()
-l = {
-  "fee_per_kwu": "0",
-  "witness_count": "0",
-  "guessed_miner": "Unknown",
-  "output_total_usd": "0.5",
-  "transaction_count": "1",
-  "version_bits": "000000000000000000000000000001",
-  "output_count": "1",
-  "input_count": "1",
-  "id": "0",
-  "input_total_usd": "0",
-  "fee_per_kb_usd": "0",
-  "generation": "5000000000",
-  "reward": "5000000000",
-  "version_hex": "1",
-  "generation_usd": "0.5",
-  "reward_usd": "0.5",
-  "cdd_total": "0",
-  "fee_total": "0",
-  "bits": "486604799",
-  "weight": "1140",
-  "merkle_root": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
-  "nonce": "2083236893",
-  "version": "1",
-  "difficulty": "1",
-  "fee_total_usd": "0",
-  "median_time": "2009-01-03 18:15:05",
-  "fee_per_kwu_usd": "0",
-  "chainwork": "0000000000000000000000000000000000000000000000000000000100010001",
-  "input_total": "0",
-  "size": "285",
-  "output_total": "5000000000",
-  "coinbase_data_hex": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",
-  "stripped_size": "285",
-  "time": "2009-01-03 18:15:05",
-  "fee_per_kb": "0",
-  "hash": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
-}
-print([k for k,v in l.items()].index("id"))
+# l = {
+#   "fee_per_kwu": "0",
+#   "witness_count": "0",
+#   "guessed_miner": "Unknown",
+#   "output_total_usd": "0.5",
+#   "transaction_count": "1",
+#   "version_bits": "000000000000000000000000000001",
+#   "output_count": "1",
+#   "input_count": "1",
+#   "id": "0",
+#   "input_total_usd": "0",
+#   "fee_per_kb_usd": "0",
+#   "generation": "5000000000",
+#   "reward": "5000000000",
+#   "version_hex": "1",
+#   "generation_usd": "0.5",
+#   "reward_usd": "0.5",
+#   "cdd_total": "0",
+#   "fee_total": "0",
+#   "bits": "486604799",
+#   "weight": "1140",
+#   "merkle_root": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+#   "nonce": "2083236893",
+#   "version": "1",
+#   "difficulty": "1",
+#   "fee_total_usd": "0",
+#   "median_time": "2009-01-03 18:15:05",
+#   "fee_per_kwu_usd": "0",
+#   "chainwork": "0000000000000000000000000000000000000000000000000000000100010001",
+#   "input_total": "0",
+#   "size": "285",
+#   "output_total": "5000000000",
+#   "coinbase_data_hex": "04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73",
+#   "stripped_size": "285",
+#   "time": "2009-01-03 18:15:05",
+#   "fee_per_kb": "0",
+#   "hash": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
+# }
+# print([k for k,v in l.items()].index("id"))
+
+import grequests
+from threading import Thread
+
+class Test:
+    def __init__(self):
+        self.urls = [
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-kumo?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-kumo?resolution=1h&exchange=binance&category=spot', 
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-up-kumo?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-down-kumo?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-up-base?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-down-base?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-base?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-base?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-conversion?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-conversion?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crosses-down-conversion?resolution=1h&exchange=binance&category=spot',
+            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crosses-up-conversion?resolution=1h&exchange=binance&category=spot',
+        ]
+
+    def exception(self, request, exception):
+        print("Problem: {}: {}".format(request.url, exception))
+
+    def async_(self):
+        results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=100)
+        print(results)
+
+test = Test()
+test.async_()
+
+
+concurrent = 1000
+
+for i in range(concurrent):
+    t = Thread(target=test.async_)
+    t.start()
+    print(t.getName())
+    

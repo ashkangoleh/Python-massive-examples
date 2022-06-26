@@ -1,0 +1,57 @@
+version: "3.6"
+services:
+  
+  traefik:
+    container_name: traefik
+    hostname: traefik
+    image: traefik
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik/traefik.toml:/etc/traefik/traefik.toml"
+      - "./letsencrypt:/letsencrypt"
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+    restart: always
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  # Required because of DockerOperator. For secure access and handling permissions.
+  docker_socket_proxy:
+    container_name: docker_socket_proxy
+    hostname: docker_socket_proxy
+    image: tecnativa/docker-socket-proxy:0.1.1
+    environment:
+      CONTAINERS: 1
+      IMAGES: 1
+      AUTH: 1
+      POST: 1
+    privileged: true
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    restart: always
+
+  # whoami:
+  #   container_name: whoami
+  #   hostname: whoami
+  #   image: traefik/whoami
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.whoami.rule=Host(`venus.arz.team`)"
+  #     - "traefik.http.routers.whoami.entrypoints=websecure"
+  #     - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+  #   restart: always
+
+networks:
+  default:
+    external:
+      name: vnet
