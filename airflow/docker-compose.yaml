@@ -1,0 +1,386 @@
+version: "3.9"
+
+x-airflow-common:
+  &airflow-common
+  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.2.3-python3.8}
+  # networks:
+  #   - n1
+  env_file:
+    - .env
+  environment:
+    &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}
+    AIRFLOW__CELERY__BROKER_URL: redis://:@broker:6379/0
+    AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: ${AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION}
+    AIRFLOW__CORE__LOAD_EXAMPLES: ${AIRFLOW__CORE__LOAD_EXAMPLES}
+    AIRFLOW__CORE__ENABLE_XCOM_PICKLING: ${AIRFLOW__CORE__ENABLE_XCOM_PICKLING}
+    AIRFLOW__CORE__STORE_DAG_CODE: ${AIRFLOW__CORE__STORE_DAG_CODE}
+    AIRFLOW__CORE__STORE_SERIALIZED_DAGS: ${AIRFLOW__CORE__STORE_SERIALIZED_DAGS}
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: ${AIRFLOW__WEBSERVER__EXPOSE_CONFIG}
+    AIRFLOW__WEBSERVER__RBAC: ${AIRFLOW__WEBSERVER__RBAC}
+    AIRFLOW__WEBSERVER__BASE_URL: http://airflow.venus.arz.team:8081
+    AIRFLOW__CORE__PARALLELISM: 64
+    AIRFLOW__CORE__DAG_CONCURRENCY: 32
+    AIRFLOW__SCHEDULER__PARSING_PROCESSES: 4
+    AIRFLOW__API__AUTH_BACKEND: ${AIRFLOW__API__AUTH_BACKEND}
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+  volumes:
+    - //var/run/docker.sock:/var/run/docker.sock
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
+    - ./airflowlogs:/usr/local/airflow/logs
+  user: "${AIRFLOW_UID:-50000}:0"
+  depends_on:
+    &airflow-common-depends-on
+    broker:
+      condition: service_healthy
+    metastore:
+      condition: service_healthy
+
+
+services:
+  metastore:
+    image: postgres:13
+    container_name: metastore_db
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
+      interval: 5s
+      retries: 5
+    volumes:
+      - ./metastore-vol:/var/lib/postgresql/data
+    # networks:
+    #   - n1
+
+  postgres1:
+    image: postgres:13
+    container_name: sourcedb
+    hostname: sourcedb
+    # networks:
+    #   - n1
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER_SOURCE}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_SOURCE}
+      - POSTGRES_DB=${POSTGRES_DB_SOURCE}
+    ports:
+      - "5435:5435"
+    volumes:
+      - ./Data/sourcedb-vol:/var/lib/postgresql/data
+      - ./Data/dumps/source_table_init.sql:/docker-entrypoint-initdb.d/source_table_init.sql
+      # - ./Data/CSV/bs_dumps.csv:/docker-entrypoint-initdb.d/bs_dumps.csv
+      # - ./Data/CSV/bh_dumps.csv:/docker-entrypoint-initdb.d/bh_dumps.csv
+
+  postgres2:
+    image: postgres:13
+    container_name: historydb
+    hostname: historydb
+    # networks:
+    #   - n1
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=bitcoin
+      - POSTGRES_PORT=5436
+      - POSTGRES_HOST=historydb
+    ports:
+      - "5436:5432"
+    volumes:
+      - ./Data/historydb-vol:/var/lib/postgresql/data
+  sqlpad:
+    image: sqlpad/sqlpad:6.11
+    container_name: postgres_viz
+    hostname: 'sqlpad'
+    ports:
+      - '8083:3000'
+    environment:
+      SQLPAD_ADMIN: 'admin@arz.team'
+      SQLPAD_ADMIN_PASSWORD: 'secret'
+      SQLPAD_APP_LOG_LEVEL: debug
+      SQLPAD_WEB_LOG_LEVEL: warn
+      SQLPAD_SEED_DATA_PATH: /etc/sqlpad/seed-data
+      SQLPAD_CONNECTIONS__pgdemo__name: Postgres demo
+      SQLPAD_CONNECTIONS__pgdemo__driver: postgres
+      SQLPAD_CONNECTIONS__pgdemo__host: postgres
+      SQLPAD_CONNECTIONS__pgdemo__database: sqlpad
+      SQLPAD_CONNECTIONS__pgdemo__username: sqlpad
+      SQLPAD_CONNECTIONS__pgdemo__password: sqlpad
+      SQLPAD_CONNECTIONS__pgdemo__multiStatementTransactionEnabled: 'true'
+      SQLPAD_CONNECTIONS__pgdemo__idleTimeoutSeconds: 86400
+    volumes:
+      - ./seed-data:/etc/sqlpad/seed-data
+      - ./mnt/sqlpad:/var/lib/sqlpad
+  pgadmin:
+    image: dpage/pgadmin4:6.4
+    container_name: postgres_ui
+    restart: always
+    # networks:
+    #   - n1
+    env_file:
+      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@arz.team
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    depends_on:
+      - metastore
+    ports:
+      - "${PGADMIN_PORT:-8082}:80"
+    volumes:
+      - pgadmin-vol:/var/lib/pgadmin
+
+  broker:
+    image: redis
+    container_name: celery_redis
+    env_file:
+      - .env
+    volumes:
+    - ./redis-data:/data
+    ports:
+      - "${REDIS_PORT:-6380}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    restart: always
+
+
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    # networks:
+    #   - n1    
+    ports:
+      - "${AIRFLOW_WEBSERVER_PORT:-8081}:8080"
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:${AIRFLOW_WEBSERVER_PORT}/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.airflow-webserver.rule=Host(`data-pip.venus.arz.team`)"
+    #   - "traefik.http.routers.airflow-webserver.entrypoints=websecure"
+    #   - "traefik.http.routers.airflow-webserver.tls.certresolver=myresolver"
+    #   - "traefik.http.services.airflow-webserver.loadbalancer.server.port=8080"
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    healthcheck:
+      test: [ "CMD-SHELL", 'airflow jobs check --job-type SchedulerJob --hostname "$${HOSTNAME}"' ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+    # networks:
+    #   - n1
+
+  worker_1:
+    <<: *airflow-common
+    container_name: celery_worker_1
+    command: celery worker
+    # networks:
+    #   - n1    
+    environment:
+      <<: *airflow-common-env
+      # Required to handle warm shutdown of the celery workers properly
+      # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
+      DUMB_INIT_SETSID: "0"
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - 'celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"'
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  worker_2:
+    <<: *airflow-common
+    container_name: celery_worker_2
+    command: celery worker
+    # networks:
+    #   - n1     
+    environment:
+      <<: *airflow-common-env
+      # Required to handle warm shutdown of the celery workers properly
+      # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
+      DUMB_INIT_SETSID: "0"
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - 'celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"'
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  airflow-triggerer:
+    <<: *airflow-common
+    command: triggerer
+    healthcheck:
+      test: [ "CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"' ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+    # networks:
+    #   - n1
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    # yamllint disable rule:line-length
+    command:
+      - -c
+      - |
+        # exec /entrypoint airflow connections add "source_db" --conn-uri "${AIRFLOW_CONN_MY_PROD_DATABASE}"
+        function ver() {
+          printf "%04d%04d%04d%04d" $${1//./ }
+        }
+        airflow_version=$$(gosu airflow airflow version)
+        airflow_version_comparable=$$(ver $${airflow_version})
+        min_airflow_version=2.2.0
+        min_airflow_version_comparable=$$(ver $${min_airflow_version})
+        if (( airflow_version_comparable < min_airflow_version_comparable )); then
+          echo
+          echo -e "\033[1;31mERROR!!!: Too old Airflow version $${airflow_version}!\e[0m"
+          echo "The minimum Airflow version supported: $${min_airflow_version}. Only use this or higher!"
+          echo
+          exit 1
+        fi
+        if [[ -z "${AIRFLOW_UID}" ]]; then
+          echo
+          echo -e "\033[1;33mWARNING!!!: AIRFLOW_UID not set!\e[0m"
+          echo "If you are on Linux, you SHOULD follow the instructions below to set "
+          echo "AIRFLOW_UID environment variable, otherwise files will be owned by root."
+          echo "For other operating systems you can get rid of the warning with manually created .env file:"
+          echo "    See: https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html#setting-the-right-airflow-user"
+          echo
+        fi
+        one_meg=1048576
+        mem_available=$$(($$(getconf _PHYS_PAGES) * $$(getconf PAGE_SIZE) / one_meg))
+        cpus_available=$$(grep -cE 'cpu[0-9]+' /proc/stat)
+        disk_available=$$(df / | tail -1 | awk '{print $$4}')
+        warning_resources="false"
+        if (( mem_available < 4000 )) ; then
+          echo
+          echo -e "\033[1;33mWARNING!!!: Not enough memory available for Docker.\e[0m"
+          echo "At least 4GB of memory required. You have $$(numfmt --to iec $$((mem_available * one_meg)))"
+          echo
+          warning_resources="true"
+        fi
+        if (( cpus_available < 2 )); then
+          echo
+          echo -e "\033[1;33mWARNING!!!: Not enough CPUS available for Docker.\e[0m"
+          echo "At least 2 CPUs recommended. You have $${cpus_available}"
+          echo
+          warning_resources="true"
+        fi
+        if (( disk_available < one_meg * 10 )); then
+          echo
+          echo -e "\033[1;33mWARNING!!!: Not enough Disk space available for Docker.\e[0m"
+          echo "At least 10 GBs recommended. You have $$(numfmt --to iec $$((disk_available * 1024 )))"
+          echo
+          warning_resources="true"
+        fi
+        if [[ $${warning_resources} == "true" ]]; then
+          echo
+          echo -e "\033[1;33mWARNING!!!: You have not enough resources to run Airflow (see above)!\e[0m"
+          echo "Please follow the instructions to increase amount of resources available:"
+          echo "   https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html#before-you-begin"
+          echo
+        fi
+        mkdir -p /sources/logs /sources/dags /sources/plugins
+        chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins}
+        exec /entrypoint airflow version
+        
+        
+
+    # yamllint enable rule:line-length
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_UPGRADE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
+      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
+    user: "0:0"
+    volumes:
+      - .:/sources
+
+  airflow-cli:
+    <<: *airflow-common
+    profiles:
+      - debug
+    environment:
+      <<: *airflow-common-env
+      CONNECTION_CHECK_MAX_COUNT: "0"
+    # Workaround for entrypoint issue. See: https://github.com/apache/airflow/issues/16252
+    command:
+      - bash
+      - -c
+      - airflow
+
+  flower:
+    <<: *airflow-common
+    command: celery flower
+    # networks:
+    #   - n1     
+    ports:
+      - "${FLOWER_PORT:-5556}:5555"
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:${FLOWER_PORT}/"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+# networks:
+#   n1:
+#     external: true
+networks:
+  default:
+    external:
+      name: vnet
+
+volumes:
+  metastore-vol:
+  # historydb-vol:
+  # sourcedb-vol:
+  pgadmin-vol:
+
+# 
