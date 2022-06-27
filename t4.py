@@ -390,41 +390,41 @@
 # }
 # print([k for k,v in l.items()].index("id"))
 
-import grequests
-from threading import Thread
+# import grequests
+# from threading import Thread
 
-class Test:
-    def __init__(self):
-        self.urls = [
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-kumo?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-kumo?resolution=1h&exchange=binance&category=spot', 
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-up-kumo?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-down-kumo?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-up-base?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-down-base?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-base?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-base?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-conversion?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-conversion?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crosses-down-conversion?resolution=1h&exchange=binance&category=spot',
-            'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crosses-up-conversion?resolution=1h&exchange=binance&category=spot',
-        ]
+# class Test:
+#     def __init__(self):
+#         self.urls = [
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-kumo?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-kumo?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-up-kumo?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-down-kumo?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-up-base?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crossed-down-base?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-base?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-base?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-below-conversion?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-above-conversion?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crosses-down-conversion?resolution=1h&exchange=binance&category=spot',
+#             'http://ploto.arz.team:7878/api/v1/strategies/ichimoku/price-crosses-up-conversion?resolution=1h&exchange=binance&category=spot',
+#         ]
 
-    def exception(self, request, exception):
-        print("Problem: {}: {}".format(request.url, exception))
+#     def exception(self, request, exception):
+#         print("Problem: {}: {}".format(request.url, exception))
 
-    def async_(self):
-        results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=100)
-        print(results)
+#     def async_(self):
+#         results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=100)
+#         print(results)
 
-test = Test()
-test.async_()
+# test = Test()
+# test.async_()
 
 
-concurrent = 1000
+# concurrent = 1000
 
-for i in range(concurrent):
-    t = Thread(target=test.async_)
-    t.start()
-    print(t.getName())
-    
+# for i in range(concurrent):
+#     t = Thread(target=test.async_)
+#     t.start()
+#     print(t.getName())
+
