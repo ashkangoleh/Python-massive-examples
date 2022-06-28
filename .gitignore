@@ -35,6 +35,7 @@ hadoop_datanode3/
 hadoop_historyserver/
 # C extensions
 *.so
+dask-worker-space/
 
 # Distribution / packaging
 .Python
