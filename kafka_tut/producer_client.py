@@ -16,4 +16,4 @@ if __name__ == '__main__':
         print(registered_user)
         producer.send('t2',registered_user)
         producer2.send('t2',registered_user2)
-        time.sleep(1)
+        time.sleep(25 )

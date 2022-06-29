@@ -31,7 +31,9 @@ async def fetch(client, symbol):
 
 async def main():
     try:
-        async with aiohttp.ClientSession() as client:
+        async with aiohttp.ClientSession(  headers={
+            "Content-Encoding":"gzip"
+        }) as client:
             # Generate a list of coroutines for each request we want to make:
             # requests = [asyncio.ensure_future(fetch(client, symbol)) for symbol in lists]
             requests = [await fetch(client, symbol) for symbol in lists]
@@ -50,20 +52,20 @@ if __name__ == '__main__':
         loop.close()
     
     # requests uses blocking sockets
-    # time_delta = datetime.now() - timedelta(days=3)
-    # print('time_delta: ', time_delta)
-    # next_time = datetime.now() + timedelta(days=1)
-    # print('next_time: ', next_time)
-    # for symbol in ['btc-usdt', 'eth-usdt', 'doge-usdt', 'eth-btc']:
-    #     print('symbol: ', symbol)
-    #     params = {
-    #         "base": symbol.split("-")[0].lower(),
-    #         "quote": symbol.split("-")[1].lower(),
-    #         "resolution": "1h",
-    #         "exchange": "binance",
-    #         "from": int(time_delta.timestamp()) * 1000,
-    #         "to": int(next_time.timestamp()) * 1000
-    #     }
-    #     candles = requests.get(url="https://dp.d01.arz.team/api/ohlcv/v1", params=params)
+    time_delta = datetime.now() - timedelta(days=3)
+    print('time_delta: ', time_delta)
+    next_time = datetime.now() + timedelta(days=1)
+    print('next_time: ', next_time)
+    for symbol in ['btc-usdt', 'eth-usdt', 'doge-usdt', 'eth-btc']:
+        print('symbol: ', symbol)
+        params = {
+            "base": symbol.split("-")[0].lower(),
+            "quote": symbol.split("-")[1].lower(),
+            "resolution": "1h",
+            "exchange": "binance",
+            "from": int(time_delta.timestamp()) * 1000,
+            "to": int(next_time.timestamp()) * 1000
+        }
+        candles = requests.get(url="https://dp.d01.arz.team/api/ohlcv/v1", params=params)
 
-    #     print(candles.json(), '\n')
+        # print(candles.json(), '\n')
