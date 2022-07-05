@@ -36,7 +36,7 @@ hadoop_historyserver/
 # C extensions
 *.so
 dask-worker-space/
-
+package.*
 # Distribution / packaging
 .Python
 build/

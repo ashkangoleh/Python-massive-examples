@@ -6,11 +6,19 @@ import json
 fake = Faker()
 
 
-def get_registered_user():
+def get_registered_user1():
     return {
+        "timestamp":f"{fake.date_time()}",
+        # "name": fake.name(),
+        # "address": fake.address(),
+        "created_at": fake.year()
+    }
+def get_registered_user2():
+    return {
+        # "timestamp":f"{fake.date_time()}",
         "name": fake.name(),
         "address": fake.address(),
-        "created_at": fake.year()
+        # "created_at": fake.year()
     }
 
 
