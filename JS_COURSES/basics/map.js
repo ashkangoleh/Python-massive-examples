@@ -32,17 +32,25 @@ console.log(has);
 // Key Order	|Keys are not well ordered	|Keys are ordered by insertion
 // Defaults	|Have default keys	|Do not have default keys
 
-
 //The forEach() method calls a function for each key/value pair in a Map:
 let text = "";
-fruits.forEach (function(value, key) {
-  text += key + ' = ' + value + '\t';
-})
+fruits.forEach(function (value, key) {
+    text += key + " = " + value + "\t";
+});
 console.log(text);
 
 //The entries() method returns an iterator object with the [key, values] in a Map: looks like .items() in python
 let text2 = "";
 for (const x of fruits.entries()) {
-  text2 += x;
+    text2 += x;
 }
 console.log(text2);
+
+const _map = new Map([
+    ["a", 1],
+    ["b", 2],
+]);
+
+for (const [key, value] of _map) {
+    console.log(`${key}:${value}`);
+}

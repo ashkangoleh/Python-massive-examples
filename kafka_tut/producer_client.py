@@ -1751,12 +1751,13 @@ if __name__ == '__main__':
         registered_user1 = get_registered_user1()
         # registered_user2 = get_registered_user2()
         producer.send('kline.5m.binance', data)
-        producer.send('kline.15m.binance', data)
-        producer.send('kline.1h.binance', data)
-        producer.send('kline.4h.binance', data)
-        producer.send('kline.1d.binance', data)
+        print('registered_user1: ', registered_user1)
+        # producer.send('kline.15m.binance', data)
+        # producer.send('kline.1h.binance', data)
+        # producer.send('kline.4h.binance', data)
+        # producer.send('kline.1d.binance', data)
         # producer.send('test2', registered_user2)
-        # time.sleep(0.01)
+        time.sleep(10)
         # count +=1
         # if count >=20:
         #     break
