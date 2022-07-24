@@ -12,6 +12,7 @@ __pycache__
 env
 !requirements.txt
 venv3
+venv39
 !package.json
 !req.txt
 data/

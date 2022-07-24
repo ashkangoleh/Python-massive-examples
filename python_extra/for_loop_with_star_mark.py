@@ -1,5 +1,6 @@
 
-w = list(map(lambda x: x**2, [i for i in range(3)]))
+w = set(map(lambda x: x**2, [i for i in range(3)]))
+print("==>> w: ", w)
 e = ("hello world",)
 
 
@@ -14,3 +15,4 @@ e2 = {"hello_world": "123"}
 
 
 print(list(*e2.values()).__repr__())
+

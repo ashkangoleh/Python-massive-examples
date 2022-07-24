@@ -16,6 +16,7 @@ class JSONSerializer(json.JSONEncoder):
         return super().encode(obj)
 
 
+
 test_dict = {datetime.date(2022, 7, 10): 'OK'}
 
 print(json.dumps(test_dict, cls=JSONSerializer))  # -> {"2022-07-11": "OK"}
