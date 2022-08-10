@@ -429,34 +429,59 @@
 #     print(t.getName())
 
 
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import *
-from sqlalchemy.types import Integer, Text, DateTime
-from sqlalchemy import Column, create_engine
-Base = declarative_base()
-engine = create_engine("sqlite:///user.db?check_same_thread=False", echo=True)
-session = sessionmaker(bind=engine, autocommit=False, autoflush=False)
-db = session()
-Base = declarative_base()
-def init_db():
-    Base.metadata.create_all(bind=engine)
+# from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.orm import *
+# from sqlalchemy.types import Integer, Text, DateTime
+# from sqlalchemy import Column, create_engine
+# Base = declarative_base()
+# engine = create_engine("sqlite:///user.db?check_same_thread=False", echo=True)
+# session = sessionmaker(bind=engine, autocommit=False, autoflush=False)
+# db = session()
+# Base = declarative_base()
+# def init_db():
+#     Base.metadata.create_all(bind=engine)
 
-class User(Base):
-    __tablename__ = "Users"
+# class User(Base):
+#     __tablename__ = "Users"
 
-    
-    email = Column(Text ,primary_key = True)
-    password = Column(Text)
 
-    def __repr__(self):
-           return '{0}(email={1})'.format(self.__class__.__name__, self.email)
+#     email = Column(Text ,primary_key = True)
+#     password = Column(Text)
 
-def addUser(username, password):
-    user = User()
-    user.email = username
-    user.password = password
-    db.add(user)
-    db.commit()
-    
-init_db()
-addUser("a", "b")
+#     def __repr__(self):
+#            return '{0}(email={1})'.format(self.__class__.__name__, self.email)
+
+# def addUser(username, password):
+#     user = User()
+#     user.email = username
+#     user.password = password
+#     db.add(user)
+#     db.commit()
+
+# init_db()
+# addUser("a", "b")
+
+# import time
+
+# time_to_wait = 30
+
+# while time_to_wait:
+#    seconds = time_to_wait % 60
+#    mins = time_to_wait // 60
+#    hours = mins * 60
+#    timer = '{:02d}:{:02d}:{:02d}'.format(hours, mins, seconds)
+#    print("\r", timer, end="")
+#    time.sleep(1)
+#    time_to_wait -= 1
+   
+   
+import pandas as pd
+import time
+import requests
+stockslist = ['f','goog', 'aapl']
+for s in stockslist:
+    url = f'https://finance.yahoo.com/quote/{s}/?guccounter=1'
+    html = requests.get(url).content
+    tablelist = pd.read_html(html, flavor='html5lib')
+    df = pd.concat(tablelist[:2])
+    print(df)
