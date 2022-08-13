@@ -473,15 +473,15 @@
 #    print("\r", timer, end="")
 #    time.sleep(1)
 #    time_to_wait -= 1
-   
-   
-import pandas as pd
-import time
-import requests
-stockslist = ['f','goog', 'aapl']
-for s in stockslist:
-    url = f'https://finance.yahoo.com/quote/{s}/?guccounter=1'
-    html = requests.get(url).content
-    tablelist = pd.read_html(html, flavor='html5lib')
-    df = pd.concat(tablelist[:2])
-    print(df)
+
+
+# import pandas as pd
+# import time
+# import requests
+# stockslist = ['f','goog', 'aapl']
+# for s in stockslist:
+#     url = f'https://finance.yahoo.com/quote/{s}/?guccounter=1'
+#     html = requests.get(url).content
+#     tablelist = pd.read_html(html, flavor='html5lib')
+#     df = pd.concat(tablelist[:2])
+#     print(df)

@@ -5,6 +5,9 @@ import websockets as ws
 import asyncio
 import requests as req
 
+loop = asyncio.new_event_loop()
+
+
 
 def get_public_key():
     url: str = "https://api.kucoin.com/api/v1/bullet-public"
@@ -27,7 +30,8 @@ def _get_ws_pingtimeout(details):
     if not details:
         raise Exception("Unknown Websocket details")
 
-    ping_timeout = int(details / 1000 / 2) - 1
+    ping_timeout = int(details / 1000 / 2) - 2
+    print("==>> ping_timeout: ", ping_timeout)
     return ping_timeout
 
 
@@ -36,48 +40,54 @@ async def send_ping(socket):
         'id': str(int(time.time() * 1000)),
         'type': 'ping'
     }
+    ping = time.time()
     await socket.send(json.dumps(msg))
-    last_ping = time.time()
-    return last_ping
+    return ping
 
 
 async def handler():
+    keep_waiting = True
     connection, details = get_public_key()
     async with ws.connect(connection) as channel:
-        last_ping = await send_ping(channel)
-        while True:
-            if time.time() - last_ping > _get_ws_pingtimeout(details):
-                await send_ping(channel)
-            try:
-                topics = {
-                    "BTC-USDT": "BTC-USDT",
-                    "ETH-USDT": "ETH-USDT",
-                }   
-                topic = 'BTC-USDT'
-                subscribe = {
-                    "id": 1545910660739,
-                    "type": "subscribe",
-                    "topic": f'/market/level2:{topic}',
-                    "privateChannel": False,
-                    "response": True
-                }
-                unsubscribe ={
-                    # "id":subscribe.get('id'),
-                    'type': 'unsubscribe',
-                    'topic': topic,
-                    'response': True
-                }
-                await channel.send(json.dumps(subscribe))
+        try:
+
+            topic = 'BTC-USDT,ETH-USDT'
+            subscribe = {
+                "id": time.time()*1000,
+                "type": "subscribe",
+                "topic": f'/market/level2:{topic}',
+                "privateChannel": False,
+                "response": True
+            }
+            unsubscribe = {
+                # "id":subscribe.get('id'),
+                'type': 'unsubscribe',
+                'topic': topic,
+                'response': True
+            }
+            if time.time() - 2 > _get_ws_pingtimeout(details):
+                await channel.send(json.dumps({
+                        "id": str(int(time.time() * 1000)),
+                        "type": 'ping'
+                }))
+            await channel.send(json.dumps(subscribe))
+
+            while keep_waiting:
                 result = await channel.recv()
-                result = json.loads(result)
+                # result = json.loads(result)
                 print("==>> result: ", result)
-                await asyncio.sleep(5)
+                await asyncio.sleep(0.5)
                 # if result["type"] == "ack":
                 #     await channel.send(json.dumps(unsubscribe))
-                #     print("result unsubscribe: ", result["type"])
-            except Exception as e:
-                raise e
-
+            else:
+                await channel.send(json.dumps({
+                    "id": str(int(time.time() * 1000)),
+                    "type": 'ping'
+            }))
+        except ws.ConnectionClosed:
+            keep_waiting = False
+            import traceback
+            print(traceback.format_exc())
 
 if __name__ == "__main__":
     asyncio.run(handler())
