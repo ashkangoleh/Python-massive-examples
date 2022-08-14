@@ -49,6 +49,7 @@ async def handler():
     keep_waiting = True
     connection, details = get_public_key()
     async with ws.connect(connection) as channel:
+        li = []
         try:
 
             topic = 'BTC-USDT,ETH-USDT'
@@ -79,6 +80,7 @@ async def handler():
                 await asyncio.sleep(0.5)
                 # if result["type"] == "ack":
                 #     await channel.send(json.dumps(unsubscribe))
+                li.append(result)
             else:
                 await channel.send(json.dumps({
                     "id": str(int(time.time() * 1000)),
@@ -88,6 +90,6 @@ async def handler():
             keep_waiting = False
             import traceback
             print(traceback.format_exc())
-
+        print(li.__len__())
 if __name__ == "__main__":
     asyncio.run(handler())
