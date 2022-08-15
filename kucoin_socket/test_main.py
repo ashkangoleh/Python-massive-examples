@@ -2,7 +2,7 @@ import asyncio
 import json
 import time
 import unittest
-from main import KucoinWs
+from .main import KucoinWs
 import websockets as ws
 import enum
 

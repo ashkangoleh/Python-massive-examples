@@ -17,6 +17,7 @@ class KucoinWs():
         self.endpoint: str = ''
         self.connectId: str = ''
         self.wsEndpoint: str = ''
+        self.ping_interval:int = 50000
         self.timeout: int = 0
         self.topics: list = topics
         self.last_ping: float = time.time()
@@ -33,9 +34,11 @@ class KucoinWs():
         self.endpoint = response['data']['instanceServers'][0]['endpoint']
         self.timeout = int(response['data']['instanceServers']
                            [0]['pingTimeout'] / 1000) - 2
+        print("==>> self.timeout: ", self.timeout)
         self.connectId = str(uuid4()).replace('-', '')
         wsEndpoint = f"{self.endpoint}?token={self.token}&connectId={self.connectId}"
         self.wsEndpoint = wsEndpoint
+
 
     async def get_id(self) -> ws:
         async with ws.connect(self.wsEndpoint) as websocket:
@@ -47,7 +50,7 @@ class KucoinWs():
     async def _run(self) -> ws:
         li = []
         try:
-            async with ws.connect(self.wsEndpoint) as websocket:
+            async with ws.connect(self.wsEndpoint,ping_interval=self.ping_interval) as websocket:
                 for topic in self.topics:
                     await websocket.send(json.dumps({
                         "id": self.connectId,
@@ -55,28 +58,30 @@ class KucoinWs():
                         "topic": topic,
                         "response": True
                     }))
-                if time.time() - self.last_ping > self.timeout:
-                    await websocket.send(json.dumps({
-                        "id": self.connectId,
-                        "type": 'ping'
-                    }))
-                self.last_ping = time.time()
+
+                    self.last_ping = time.time()
 
                 while self.keep_waiting:
-                    # await asyncio.sleep(5)
+                    await asyncio.sleep(1.0)
+                    if time.time() - self.last_ping > self.timeout:
+                        print("here")
+                        await websocket.send(json.dumps({
+                            "id": self.connectId,
+                            "type": 'ping'
+                        }))
                     message: str = await websocket.recv()
                     message = json.loads(message)
                     if 'subject' in message.keys():
                         # if message['subject'].isupper():
-                            li.append(message)
-                            print("==>> message: ", message)
-                            self.queue.put(message)
+                        li.append(message)
+                        print("==>> message: ", message)
+                        self.queue.put(message)
         except ws.ConnectionClosed:
             self.keep_waiting = False
             await websocket.send(json.dumps({
-                        "id": self.connectId,
-                        "type": 'ping'
-                    }))
+                "id": self.connectId,
+                "type": 'ping'
+            }))
             message: str = await websocket.recv()
             print("==>> message: ", message)
         print(li.__len__())
@@ -87,7 +92,7 @@ async def main() -> KucoinWs:
     _ws: KucoinWs = KucoinWs(
         q, ['/market/ticker:all', '/market/level2:BTC-USDT'])
     _ws.get_ws()
-    print(True if isinstance(_ws.wsEndpoint,str) else False)
+    print(True if isinstance(_ws.wsEndpoint, str) else False)
     await _ws.get_id()
     _ws.get_ws()
     await _ws._run()

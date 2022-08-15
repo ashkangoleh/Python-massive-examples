@@ -1,16 +1,15 @@
 from collections import UserDict
 
 
-class UpperCaseDict(UserDict):
+class UpperCaseKey(UserDict):
     def __setitem__(self, key, value) -> None:
         key = key.upper()
-        # value = value ** 2
         super().__setitem__(key, value)
 
-
-numbers = UpperCaseDict({
-    "one": 1, "two": 2,
-})
+_dict = {
+    "name": "x", "age": 2,
+}
+numbers = UpperCaseKey(_dict)
 
 
 numbers["three"] = 3

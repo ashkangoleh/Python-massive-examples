@@ -12,6 +12,7 @@ from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
 from sse_starlette import EventSourceResponse
+import base64
 
 import uvicorn
 
@@ -44,6 +45,7 @@ async def generate_random_data(request: Request) -> Iterator[str]:
         yield f"data:{json_data}\n\n"
         await asyncio.sleep(1)
 
+
 async def generate_random_date_2():
     while True:
         json_data = json.dumps(
@@ -55,14 +57,26 @@ async def generate_random_date_2():
         yield json_data
         await asyncio.sleep(10)
 
-@app.get("/")
-def generate():
-    ata = "https://ata.trade"
-    img = qrcode.make(ata)
+
+@app.get("/test/{message}")
+def generate(message:str):
+    img = qrcode.make(message)
     buf = io.BytesIO()
     img.save(buf)
-    buf.seek(0) # important here!
+    buf.seek(0)  # important here!
     return StreamingResponse(buf, media_type="image/jpeg")
+
+
+@app.get("/based/{based}")
+def generate(based:str):
+    ata = "https://ata.trade"
+    img = qrcode.make(based)
+    buf = io.BytesIO()
+    img.save(buf)
+    buf.seek(0)  # important here!
+    encoded = base64.b64encode(buf.getvalue()).decode("ascii")
+    return {"encoded_image": encoded}
+
 
 @app.get("/chart-data")
 async def chart_data(request: Request) -> StreamingResponse:
@@ -72,7 +86,7 @@ async def chart_data(request: Request) -> StreamingResponse:
     response.headers["X-Accel-Buffering"] = "no"
     # return response
     generator = generate_random_date_2()
-    return EventSourceResponse(generator) #works without media_type
+    return EventSourceResponse(generator)  # works without media_type
 
 
 if __name__ == '__main__':
