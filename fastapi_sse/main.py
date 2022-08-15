@@ -4,7 +4,8 @@ import random
 import sys
 from datetime import datetime
 from typing import Iterator
-
+import io
+import qrcode
 import asyncio
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, StreamingResponse
@@ -54,7 +55,14 @@ async def generate_random_date_2():
         yield json_data
         await asyncio.sleep(10)
 
-
+@app.get("/")
+def generate():
+    ata = "https://ata.trade"
+    img = qrcode.make(ata)
+    buf = io.BytesIO()
+    img.save(buf)
+    buf.seek(0) # important here!
+    return StreamingResponse(buf, media_type="image/jpeg")
 
 @app.get("/chart-data")
 async def chart_data(request: Request) -> StreamingResponse:
