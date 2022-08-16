@@ -7,7 +7,7 @@ from typing import Iterator
 import io
 import qrcode
 import asyncio
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
@@ -23,6 +23,15 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 # templates = Jinja2Templates(directory="templates")
 random.seed()
+
+
+async def qrCodeGenerator(message):
+    img = qrcode.make(message)
+    buf = io.BytesIO()
+    img.save(buf)
+    buf.seek(0)
+    encoded = base64.b64encode(buf.getvalue()).decode("ascii")
+    return encoded
 
 
 async def generate_random_data(request: Request) -> Iterator[str]:
@@ -59,7 +68,7 @@ async def generate_random_date_2():
 
 
 @app.get("/test/{message}")
-def generate(message:str):
+def generate(message: str):
     img = qrcode.make(message)
     buf = io.BytesIO()
     img.save(buf)
@@ -67,15 +76,9 @@ def generate(message:str):
     return StreamingResponse(buf, media_type="image/jpeg")
 
 
-@app.get("/based/{based}")
-def generate(based:str):
-    ata = "https://ata.trade"
-    img = qrcode.make(based)
-    buf = io.BytesIO()
-    img.save(buf)
-    buf.seek(0)  # important here!
-    encoded = base64.b64encode(buf.getvalue()).decode("ascii")
-    return {"encoded_image": encoded}
+@app.get("/based/{message}")
+def generate(message: str = Depends(qrCodeGenerator)):
+    return {"qrcode_encoded":message}
 
 
 @app.get("/chart-data")
