@@ -485,3 +485,16 @@
 #     tablelist = pd.read_html(html, flavor='html5lib')
 #     df = pd.concat(tablelist[:2])
 #     print(df)
+
+
+#Find all combinations of a list of numbers with a given sum
+import itertools
+
+numbers = [1, 2, 3, 7, 7, 9, 10]
+target = 10
+
+result = [seq for i in range(len(numbers), 0, -1)
+          for seq in itertools.combinations(numbers, i)
+          if sum(seq) == target]
+
+print(set(result))
