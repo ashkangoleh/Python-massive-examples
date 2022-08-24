@@ -9,6 +9,7 @@ venv
 .vscode
 .idea
 __pycache__
+!pairs.txt
 env
 !requirements.txt
 venv3
