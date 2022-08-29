@@ -52,6 +52,7 @@ def main():
         resp.raise_for_status()
         print_response(resp, dump_body=False)
         print(f"\n\n{'*' * 80}\n\n")
+        print("*"*1000)
 
 
 if __name__ == "__main__":

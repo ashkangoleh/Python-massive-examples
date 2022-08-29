@@ -3,7 +3,7 @@ import json
 import requests
 
 
-def print_response(resp, filedir="resp", filename=None, dump_body=True):
+def print_response(resp, filedir=".", filename=None, dump_body=True):
     """
     Print the key details from a given response. Set dump_body to true
     to reveal the body content in the most appropriate format based on

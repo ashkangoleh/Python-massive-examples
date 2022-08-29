@@ -1,0 +1,546 @@
+{
+  "header": {
+    "generatedOn": 1661751842524,
+    "viewKeys": {
+      "uniqueKey": [
+        "system-ip"
+      ],
+      "preferenceKey": "grid-Device"
+    },
+    "columns": [
+      {
+        "title": "Hostname",
+        "property": "host-name",
+        "display": "iconAndText",
+        "iconProperty": "device-type",
+        "hideable": false,
+        "icon": [
+          {
+            "key": "vmanage",
+            "value": "images/vmanage_table.png"
+          },
+          {
+            "key": "vedge",
+            "value": "images/vedge_table.png"
+          },
+          {
+            "key": "vedge-vbond",
+            "value": "images/vedge-vbond_table.png"
+          },
+          {
+            "key": "vsmart",
+            "value": "images/vsmart_table.png"
+          },
+          {
+            "key": "vbond",
+            "value": "images/vbond_table.png"
+          }
+        ],
+        "width": 150,
+        "dataType": "string"
+      },
+      {
+        "title": "State",
+        "property": "state",
+        "display": "iconAndToolTip",
+        "iconProperty": "state",
+        "toolTipProperty": "state_description",
+        "defaultPropertyKey": "reachability",
+        "defaultPropertyValue": "reachable",
+        "icon": [
+          {
+            "key": "green",
+            "value": "images/device_state_green.png"
+          },
+          {
+            "key": "red",
+            "value": "images/device_state_red.png"
+          },
+          {
+            "key": "yellow",
+            "value": "images/device_state_yellow.png"
+          },
+          {
+            "key": "default",
+            "value": "images/device_state_other.png"
+          }
+        ],
+        "width": 20,
+        "dataType": "string"
+      },
+      {
+        "title": "System IP",
+        "property": "system-ip",
+        "hideable": false,
+        "width": 110,
+        "dataType": "ipv4"
+      },
+      {
+        "title": "Reachability",
+        "property": "reachability",
+        "display": "multiColumns",
+        "color": [
+          {
+            "key": "reachable",
+            "value": "616161",
+            "property": "reachability"
+          },
+          {
+            "key": "unreachable",
+            "value": "ef5350",
+            "property": "reachability"
+          },
+          {
+            "key": "auth-failed",
+            "value": "ffb300",
+            "property": "reachability"
+          },
+          {
+            "key": "staging",
+            "value": "ffb300",
+            "property": "validity"
+          }
+        ],
+        "width": 150,
+        "minWidth": 150,
+        "dataType": "string"
+      },
+      {
+        "title": "Site ID",
+        "property": "site-id",
+        "width": 70,
+        "dataType": "numberStr"
+      },
+      {
+        "title": "Device Model",
+        "property": "device-model",
+        "display": "multiColumns",
+        "hideable": false,
+        "width": 100,
+        "dataType": "deviceModel"
+      },
+      {
+        "title": "BFD",
+        "property": "bfdSessions",
+        "width": 75,
+        "minWidth": 65,
+        "dataType": "numberStr"
+      },
+      {
+        "title": "Control",
+        "property": "controlConnections",
+        "width": 75,
+        "minWidth": 65,
+        "dataType": "numberStr"
+      },
+      {
+        "title": "Version",
+        "property": "version",
+        "width": 150,
+        "dataType": "string"
+      },
+      {
+        "title": "Up Since",
+        "property": "uptime-date",
+        "displayFormat": "DD MMM YYYY h:mm:ss A z",
+        "inputFormat": "unix-time",
+        "width": 200,
+        "dataType": "date"
+      },
+      {
+        "title": "Chassis Number/ID",
+        "property": "uuid",
+        "hideable": false,
+        "width": 220,
+        "dataType": "string"
+      },
+      {
+        "title": "Device Groups",
+        "property": "device-groups",
+        "width": 100,
+        "dataType": "array"
+      },
+      {
+        "title": "Connected vManage",
+        "property": "connectedVManages",
+        "width": 500,
+        "dataType": "array"
+      }
+    ],
+    "fields": [
+      {
+        "property": "host-name",
+        "dataType": "string",
+        "display": "iconAndText"
+      },
+      {
+        "property": "state",
+        "dataType": "string",
+        "display": "iconAndToolTip"
+      },
+      {
+        "property": "system-ip",
+        "dataType": "ipv4"
+      },
+      {
+        "property": "reachability",
+        "dataType": "string",
+        "display": "multiColumns"
+      },
+      {
+        "property": "site-id",
+        "dataType": "numberStr"
+      },
+      {
+        "property": "device-model",
+        "dataType": "deviceModel",
+        "display": "multiColumns"
+      },
+      {
+        "property": "bfdSessions",
+        "dataType": "numberStr"
+      },
+      {
+        "property": "controlConnections",
+        "dataType": "numberStr"
+      },
+      {
+        "property": "version",
+        "dataType": "string"
+      },
+      {
+        "property": "number-vsmart-peers",
+        "dataType": "number"
+      },
+      {
+        "property": "uptime-date",
+        "dataType": "date"
+      },
+      {
+        "property": "uuid",
+        "dataType": "string"
+      },
+      {
+        "property": "board-serial",
+        "dataType": "string"
+      },
+      {
+        "property": "device-groups",
+        "dataType": "array"
+      },
+      {
+        "property": "connectedVManages",
+        "dataType": "array"
+      },
+      {
+        "property": "lastupdated",
+        "dataType": "date"
+      }
+    ]
+  },
+  "data": [
+    {
+      "deviceId": "10.10.1.1",
+      "system-ip": "10.10.1.1",
+      "host-name": "vmanage",
+      "reachability": "reachable",
+      "status": "normal",
+      "personality": "vmanage",
+      "device-type": "vmanage",
+      "timezone": "UTC",
+      "device-groups": [
+        "\"No groups\""
+      ],
+      "lastupdated": 1661728861549,
+      "domain-id": "0",
+      "board-serial": "B1CA91AE45B8194D",
+      "certificate-validity": "Valid",
+      "max-controllers": "0",
+      "uuid": "81ac6722-a226-4411-9d5d-45c0ca7d567b",
+      "controlConnections": "5",
+      "device-model": "vmanage",
+      "version": "20.4.2.1",
+      "connectedVManages": [
+        "\"10.10.1.1\""
+      ],
+      "site-id": "101",
+      "latitude": "37.666684",
+      "longitude": "-122.777023",
+      "isDeviceGeoData": false,
+      "platform": "x86_64",
+      "uptime-date": 1661728500000,
+      "statusOrder": 4,
+      "device-os": "next",
+      "validity": "valid",
+      "state": "green",
+      "state_description": "All daemons up",
+      "model_sku": "None",
+      "local-system-ip": "10.10.1.1",
+      "total_cpu_count": "2",
+      "testbed_mode": false,
+      "layoutLevel": 1
+    },
+    {
+      "deviceId": "10.10.1.5",
+      "system-ip": "10.10.1.5",
+      "host-name": "vsmart",
+      "reachability": "reachable",
+      "status": "normal",
+      "personality": "vsmart",
+      "device-type": "vsmart",
+      "timezone": "UTC",
+      "device-groups": [
+        "\"No groups\""
+      ],
+      "lastupdated": 1661728881706,
+      "domain-id": "1",
+      "board-serial": "B1CA91AE45B81950",
+      "certificate-validity": "Valid",
+      "uuid": "f7b49da3-383e-4cd5-abc1-c8e97d345a9f",
+      "controlConnections": "6",
+      "device-model": "vsmart",
+      "version": "20.4.2",
+      "connectedVManages": [
+        "\"10.10.1.1\""
+      ],
+      "site-id": "101",
+      "ompPeers": "4",
+      "latitude": "37.666684",
+      "longitude": "-122.777023",
+      "isDeviceGeoData": false,
+      "platform": "x86_64",
+      "uptime-date": 1657282980000,
+      "statusOrder": 4,
+      "device-os": "next",
+      "validity": "valid",
+      "state": "green",
+      "state_description": "All daemons up",
+      "model_sku": "None",
+      "local-system-ip": "10.10.1.5",
+      "total_cpu_count": "2",
+      "testbed_mode": false,
+      "layoutLevel": 2
+    },
+    {
+      "deviceId": "10.10.1.3",
+      "system-ip": "10.10.1.3",
+      "host-name": "vbond",
+      "reachability": "reachable",
+      "status": "normal",
+      "personality": "vbond",
+      "device-type": "vbond",
+      "timezone": "UTC",
+      "device-groups": [
+        "\"No groups\""
+      ],
+      "lastupdated": 1661728874694,
+      "board-serial": "B1CA91AE45B8194F",
+      "certificate-validity": "Valid",
+      "uuid": "ed0863cb-83e7-496c-b118-068e2371b13c",
+      "controlConnections": "--",
+      "device-model": "vedge-cloud",
+      "version": "20.4.2",
+      "connectedVManages": [
+        "\"10.10.1.1\""
+      ],
+      "site-id": "101",
+      "ompPeers": "--",
+      "latitude": "37.666684",
+      "longitude": "-122.777023",
+      "isDeviceGeoData": false,
+      "platform": "x86_64",
+      "uptime-date": 1657025640000,
+      "statusOrder": 4,
+      "device-os": "next",
+      "validity": "valid",
+      "state": "green",
+      "state_description": "All daemons up",
+      "model_sku": "None",
+      "local-system-ip": "10.10.1.3",
+      "total_cpu_count": "4",
+      "linux_cpu_count": "1",
+      "testbed_mode": false,
+      "layoutLevel": 3
+    },
+    {
+      "deviceId": "10.10.1.11",
+      "system-ip": "10.10.1.11",
+      "host-name": "dc-cedge01",
+      "reachability": "reachable",
+      "status": "normal",
+      "personality": "vedge",
+      "device-type": "vedge",
+      "timezone": "UTC +0000",
+      "device-groups": [
+        "\"No groups\""
+      ],
+      "lastupdated": 1661728887780,
+      "bfdSessionsUp": 4,
+      "domain-id": "1",
+      "board-serial": "E708136E",
+      "certificate-validity": "Valid",
+      "max-controllers": "0",
+      "uuid": "CSR-61CD2335-4775-650F-8538-4EC7BDFFD04C",
+      "bfdSessions": "4",
+      "controlConnections": "2",
+      "device-model": "vedge-CSR-1000v",
+      "version": "16.12.3.0.3752",
+      "connectedVManages": [
+        "\"10.10.1.1\""
+      ],
+      "site-id": "101",
+      "ompPeers": "1",
+      "latitude": "37.411343",
+      "longitude": "-121.938803",
+      "isDeviceGeoData": true,
+      "platform": "x86_64",
+      "uptime-date": 1657540500000,
+      "statusOrder": 4,
+      "device-os": "next",
+      "validity": "valid",
+      "state": "green",
+      "state_description": "All daemons up",
+      "model_sku": "None",
+      "local-system-ip": "10.10.1.11",
+      "total_cpu_count": "1",
+      "linux_cpu_count": "1",
+      "testbed_mode": false,
+      "layoutLevel": 4
+    },
+    {
+      "deviceId": "10.10.1.13",
+      "system-ip": "10.10.1.13",
+      "host-name": "site1-cedge01",
+      "reachability": "reachable",
+      "status": "normal",
+      "personality": "vedge",
+      "device-type": "vedge",
+      "timezone": "UTC +0000",
+      "device-groups": [
+        "\"No groups\""
+      ],
+      "lastupdated": 1661728887850,
+      "bfdSessionsUp": 4,
+      "domain-id": "1",
+      "board-serial": "8BC6D12A",
+      "certificate-validity": "Valid",
+      "max-controllers": "0",
+      "uuid": "CSR-807E37A3-537A-07BA-BD71-8FB76DE9DC38",
+      "bfdSessions": "4",
+      "controlConnections": "2",
+      "device-model": "vedge-CSR-1000v",
+      "version": "16.12.3.0.3752",
+      "connectedVManages": [
+        "\"10.10.1.1\""
+      ],
+      "site-id": "1001",
+      "ompPeers": "1",
+      "latitude": "37.411343",
+      "longitude": "-121.938803",
+      "isDeviceGeoData": true,
+      "platform": "x86_64",
+      "uptime-date": 1657540500000,
+      "statusOrder": 4,
+      "device-os": "next",
+      "validity": "valid",
+      "state": "green",
+      "state_description": "All daemons up",
+      "model_sku": "None",
+      "local-system-ip": "10.10.1.13",
+      "total_cpu_count": "1",
+      "linux_cpu_count": "1",
+      "testbed_mode": false,
+      "layoutLevel": 4
+    },
+    {
+      "deviceId": "10.10.1.15",
+      "system-ip": "10.10.1.15",
+      "host-name": "site2-cedge01",
+      "reachability": "reachable",
+      "status": "normal",
+      "personality": "vedge",
+      "device-type": "vedge",
+      "timezone": "UTC +0000",
+      "device-groups": [
+        "\"No groups\""
+      ],
+      "lastupdated": 1661736689715,
+      "bfdSessionsUp": 4,
+      "domain-id": "1",
+      "board-serial": "7F876785",
+      "certificate-validity": "Valid",
+      "max-controllers": "0",
+      "uuid": "CSR-DE6DAB19-BA1A-E543-959C-FD117F4A6205",
+      "bfdSessions": "4",
+      "controlConnections": "2",
+      "device-model": "vedge-CSR-1000v",
+      "version": "16.12.3.0.3752",
+      "connectedVManages": [
+        "\"10.10.1.1\""
+      ],
+      "site-id": "1002",
+      "ompPeers": "1",
+      "latitude": "37.411343",
+      "longitude": "-121.938803",
+      "isDeviceGeoData": true,
+      "platform": "x86_64",
+      "uptime-date": 1657540500000,
+      "statusOrder": 4,
+      "device-os": "next",
+      "validity": "valid",
+      "state": "green",
+      "state_description": "All daemons up",
+      "model_sku": "None",
+      "local-system-ip": "10.10.1.15",
+      "total_cpu_count": "1",
+      "linux_cpu_count": "1",
+      "testbed_mode": false,
+      "layoutLevel": 4
+    },
+    {
+      "deviceId": "10.10.1.17",
+      "system-ip": "10.10.1.17",
+      "host-name": "site3-vedge01",
+      "reachability": "reachable",
+      "status": "normal",
+      "personality": "vedge",
+      "device-type": "vedge",
+      "timezone": "UTC",
+      "device-groups": [
+        "\"No groups\""
+      ],
+      "lastupdated": 1661728888450,
+      "bfdSessionsUp": 6,
+      "domain-id": "1",
+      "board-serial": "84B83C92",
+      "certificate-validity": "Valid",
+      "max-controllers": "0",
+      "uuid": "0140a336-5fd5-9829-10d2-f6ba0b177efd",
+      "bfdSessions": "6",
+      "controlConnections": "3",
+      "device-model": "vedge-cloud",
+      "version": "20.4.2",
+      "connectedVManages": [
+        "\"10.10.1.1\""
+      ],
+      "site-id": "1003",
+      "ompPeers": "1",
+      "latitude": "53.408",
+      "longitude": "-2.228",
+      "isDeviceGeoData": true,
+      "platform": "x86_64",
+      "uptime-date": 1657540440000,
+      "statusOrder": 4,
+      "device-os": "next",
+      "validity": "valid",
+      "state": "green",
+      "state_description": "All daemons up",
+      "model_sku": "None",
+      "local-system-ip": "10.10.1.17",
+      "total_cpu_count": "2",
+      "linux_cpu_count": "1",
+      "testbed_mode": false,
+      "layoutLevel": 4
+    }
+  ]
+}

@@ -9,7 +9,7 @@ logging.basicConfig(
     # level=logging.INFO
 )
 logger = logging.getLogger()
-breakpoint()
+# breakpoint()
 
 my_headers = {"Accept": "text/html"}
 params = {"limit": 5, "type": "tech"}
@@ -17,7 +17,7 @@ body = {"name": "nick", "kids": 2}
 resp = requests.get('http://njrusmc.net', params=params,
                     headers=my_headers, data=body)
 
-logger.info(f"Result: {resp.status_code}/{resp.reason}")
+logger.info(f"{resp.status_code}/{resp.reason}")
 print(f"Result: {resp.status_code}/{resp.reason}", end=f"\n{'*'*50}\n")
 
 print(

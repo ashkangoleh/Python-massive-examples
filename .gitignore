@@ -12,6 +12,7 @@ __pycache__
 !pairs.txt
 env
 !requirements.txt
+!get_cisco_sdwan_devices.json
 venv3
 venv39
 !package.json
