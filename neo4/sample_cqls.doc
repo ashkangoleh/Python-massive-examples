@@ -1,0 +1,6 @@
+MATCH (out:outputs),(inp:inputs),(b:blocks) where out.block_id = inp.block_id and out.block_id = b.id and inp.block_id = b.id CREATE (b)<-[x:ID]-(inp) CREATE (out)-[x:ID]->(b) return x limit 100;
+
+
+
+
+MATCH (b:blocks),(i:inputs),(o:inputs) where b.id = i.block_id and i.block_id <= '171' and o.spending_transaction_hash = i.transaction_hash and o.spending_index = i.index create (o)-[r1:spending_self {value:i.value,id:i.block_id}]->(i) return i,o,r1;
