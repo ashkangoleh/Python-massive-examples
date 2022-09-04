@@ -1,6 +1,5 @@
 import redis
 import threading
-import json
 
 
 class Listener(threading.Thread):
