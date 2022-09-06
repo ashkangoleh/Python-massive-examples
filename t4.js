@@ -49,26 +49,33 @@
 const { Kafka } = require("kafkajs");
 
 const kafka = new Kafka({
-    clientId: "test_gid2",
+    clientId: "test1",
     brokers: ["arz.local:9093"],
 });
 const consumer = kafka.consumer({
-    groupId: "test_gid2",
+    groupId: "test318424",
 });
 
-const run = async () => {
+const run = async() => {
     // Consuming
     await consumer.connect();
-    await consumer.subscribe({ topic: "test", fromBeginning: true });
-
-    await consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
-            console.log({
-                value: (typeof message.value.toString())
-            });
-        },
-    });
-    await consumer.disconnect()
+    await consumer.subscribe({ topic: "OHLCVs", fromBeginning: true });
+    try {
+        await consumer.run({
+            eachMessage: async({ topic, partition, message }) => {
+                // console.log({
+                //     value: (typeof message.value.toString())
+                // });
+                const msg = message.value.toString();
+                const parsed_msg = JSON.parse(msg);
+                console.log(parsed_msg);
+                parsed_msg["candles"].pop();
+                console.table(parsed_msg["candles"].pop());
+            },
+        });
+    } catch (error) {
+        await consumer.disconnect();
+    }
 };
 
 run().catch(console.error);
