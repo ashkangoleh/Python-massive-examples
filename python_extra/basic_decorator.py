@@ -7,23 +7,23 @@ def decorator(anything):
         print("decoration ends")
     return wrapper
 
-def func():
-    print("none decoration functions")
+# def func():
+#     print("none decoration functions")
 
-###we are capturing decorator as new_func here
-new_func = decorator(func)
-new_func()
+# ###we are capturing decorator as new_func here
+# new_func = decorator(func)
+# new_func()
 
-###we are overwritting function name here 
-func = decorator(func) #(I)
-func()
+# ###we are overwritting function name here 
+# func = decorator(func) #(I)
+# func()
 
-###we using decorator here
-@decorator #-> works same as (I)
-def func():
-    print("none decoration functions")
+# ###we using decorator here
+# @decorator #-> works same as (I)
+# def func():
+#     print("none decoration functions")
     
-func()
+# func()
 
 def duration_decorator(anything):
     def wrapper():
@@ -49,24 +49,26 @@ def duration_decorator(anything):
     duration 1.000596
     decoration ends
 '''
-@decorator #-> works same as (I)
-@duration_decorator
-def func():
-    print("none decoration functions")
-    time.sleep(1)
+# @decorator #-> works same as (I)
+# @duration_decorator
+# def func():
+#     print("none decoration functions")
+#     time.sleep(1)
     
-func()
+# func()
 
 
 
 def double_decorator(anything):
     def wrapper():
+        print("********************double decorator")
         anything()
+        
         anything()
     return wrapper
 
-@double_decorator
-@decorator #-> works same as (I)
+@double_decorator #-> works same as (I)
+@decorator 
 @duration_decorator
 def func():
     print("none decoration functions")
