@@ -496,13 +496,12 @@
 
 # li = [1,2,3,4,5,6,7,8,9]
 # numbers = []
-    
+
 # for i in range(10000):
 #     ran = random.choice(li)
 #     st = threading.Thread(target=numbers.append(ran))
 #     st.start()
-    
-    
+
 
 # print("==>> numbers: ", numbers)
 # target = 10
@@ -514,5 +513,17 @@
 # st.start()
 # print(set(result))
 
+A = "AABBCCCDAA"
 
+# ABCDA
 
+B = list(''.join(A))
+
+print("==>> B: ", B)
+
+index = []
+for i in range(len(B)):
+    if B[i] != B[i-1]:
+        index.append(B[i])
+
+print("==>> index: ", ''.join(index))
