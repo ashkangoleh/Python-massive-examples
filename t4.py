@@ -489,13 +489,30 @@
 
 # Find all combinations of a list of numbers with a given sum
 # import itertools
+# import random
 
-# numbers = [1, 2, 3, 7, 7, 9, 10]
+# import threading
+
+
+# li = [1,2,3,4,5,6,7,8,9]
+# numbers = []
+    
+# for i in range(10000):
+#     ran = random.choice(li)
+#     st = threading.Thread(target=numbers.append(ran))
+#     st.start()
+    
+    
+
+# print("==>> numbers: ", numbers)
 # target = 10
 
-# result = [seq for i in range(len(numbers), 0, -1)
+# result = [seq for i in range(len(numbers))
 #           for seq in itertools.combinations(numbers, i)
 #           if sum(seq) == target]
-
+# st = threading.Thread(target=result)
+# st.start()
 # print(set(result))
+
+
 

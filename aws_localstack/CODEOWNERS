@@ -1,0 +1,173 @@
+######################
+###  CODE OWNERS   ###
+######################
+
+# CODEOWNERS
+/CODEOWNERS @thrau @dominikschubert
+
+# ASF
+/localstack/aws/ @thrau
+/tests/unit/aws/ @thrau
+# ASF parsers and serializers
+/localstack/aws/protocol @alexrashed
+# left empty (without owner) because the generated APIs belong to the specific service owners
+# you can overwrite this for single services afterwards
+/localstack/aws/api/
+
+# CLI/plugins
+/localstack/cli/ @thrau
+/localstack/plugins.py @thrau
+/localstack/config.py @thrau
+/tests/unit/cli/ @thrau
+/tests/unit/services/test_internal.py @thrau
+
+# Container utils
+/localstack/utils/container_utils/ @dfangl @dominikschubert
+/localstack/utils/docker_utils.py @dfangl @dominikschubert
+/tests/integration/docker_utils/ @dfangl @dominikschubert
+/tests/unit/test_dockerclient.py @dfangl @dominikschubert
+
+# HTTP framework
+/localstack/http/ @thrau
+
+# Dockerfile
+/Dockerfile @alexrashed
+/Dockerfile.rh @alexrashed
+
+# Circle CI pipeline
+/.circleci/config.yml @thrau @alexrashed @dfangl
+
+# Analytics client
+/localstack/utils/analytics/ @thrau
+
+# Snapshot testing
+/localstack/testing/snapshots/ @dominikschubert @steffyP
+/localstack/testing/pytest/ @dominikschubert
+/localstack/testing/pytest/snapshot.py @dominikschubert @steffyP
+
+######################
+### SERVICE OWNERS ###
+######################
+
+# ACM
+/localstack/aws/api/acm/ @alexrashed
+/localstack/services/acm/ @alexrashed
+/tests/integration/test_acm.py @alexrashed
+
+# API Gateway
+/localstack/aws/api/apigateway/ @calvernaz
+/localstack/services/apigateway/ @calvernaz
+/localstack/services/cloudformation/models/apigateway.py @calvernaz
+/tests/integration/test_apigateway*.py @calvernaz
+/tests/unit/test_apigateway.py @calvernaz
+
+# Cloudformation
+/localstack/aws/api/cloudformation/ @dominikschubert
+/localstack/services/cloudformation/ @dominikschubert
+/localstack/utils/cloudformation/ @dominikschubert
+/tests/integration/cloudformation/ @dominikschubert
+/tests/unit/test_cloudformation.py @dominikschubert
+# left empty (without owner) because the models belong to the specific service owners
+# you can overwrite this for single services afterwards
+/localstack/services/cloudformation/models/
+/localstack/services/cloudformation/models/cloudformation.py @dominikschubert
+
+# Cloudwatch
+/localstack/aws/api/cloudwatch/ @steffyP
+/localstack/services/cloudwatch/ @steffyP
+/localstack/services/cloudformation/models/cloudwatch.py @steffyP
+/tests/integration/test_cloudwatch.py @steffyP
+
+# EC2
+/localstack/aws/api/ec2/ @viren-nadkarni
+/localstack/services/ec2/ @viren-nadkarni
+/localstack/services/cloudformation/models/ec2.py @viren-nadkarni
+/tests/integration/test_ec2.py @viren-nadkarni
+
+# ElasticSearch
+/localstack/aws/api/es/ @alexrashed
+/localstack/services/es/ @alexrashed
+/localstack/services/cloudformation/models/elasticsearch.py @alexrashed
+/tests/integration/test_es.py @alexrashed
+
+# Events / EventBridge
+/localstack/aws/api/events/ @dominikschubert @dfangl
+/localstack/services/events/ @dominikschubert @dfangl
+/localstack/services/cloudformation/models/events.py @dominikschubert @dfangl
+/tests/integration/test_events.py @dominikschubert @dfangl
+
+# IAM
+/localstack/aws/api/iam/ @dfangl
+/localstack/services/iam/ @dfangl
+/localstack/services/cloudformation/models/iam.py @dfangl
+/tests/integration/test_iam.py @dfangl
+
+# Lambda
+/localstack/aws/api/lambda_/ @dfangl @dominikschubert
+/localstack/services/awslambda/ @dfangl @dominikschubert
+/localstack/services/cloudformation/models/awslambda.py @dfangl @dominikschubert
+/tests/integration/awslambda/ @dfangl @dominikschubert
+
+# Logs
+/localstack/aws/api/logs/ @steffyP
+/localstack/services/logs/ @steffyP
+/localstack/services/cloudformation/models/logs.py @steffyP
+/tests/integration/test_logs.py @steffyP
+/tests/unit/test_logs.py @steffyP
+
+# OpenSearch
+/localstack/aws/api/opensearch/ @alexrashed
+/localstack/services/opensearch/ @alexrashed
+/localstack/services/cloudformation/models/opensearch.py @alexrashed
+/tests/integration/test_opensearch.py @alexrashed
+/tests/unit/services/opensearch/ @alexrashed
+
+# Route53
+/localstack/aws/api/route53/ @giograno
+/localstack/services/route53/ @giograno
+/localstack/services/cloudformation/models/route53.py @giograno
+/tests/integration/test_route53.py @giograno
+
+# S3
+/localstack/aws/api/s3/ @thrau
+/localstack/services/s3/ @thrau
+/localstack/services/cloudformation/models/s3.py @thrau
+/tests/integration/test_s3.py @thrau
+/tests/unit/test_s3.py @thrau
+
+# Secretsmanager
+/localstack/aws/api/secretsmanager/ @dominikschubert
+/localstack/services/secretsmanager/ @dominikschubert
+/localstack/services/cloudformation/models/secretsmanager.py @dominikschubert
+/tests/integration/test_secretsmanager.py @dominikschubert
+
+# SES
+/localstack/aws/api/ses/ @viren-nadkarni
+/localstack/services/ses/ @viren-nadkarni
+/tests/integration/test_ses.py @viren-nadkarni
+
+# SNS
+/localstack/aws/api/sns/ @bentsku
+/localstack/services/sns/ @bentsku
+/localstack/services/cloudformation/models/sns.py @bentsku
+/tests/integration/test_sns.py @bentsku
+/tests/unit/test_sns.py @bentsku
+
+# SQS
+/localstack/aws/api/sqs/ @thrau
+/localstack/services/sqs/ @thrau
+/localstack/services/cloudformation/models/sqs.py @thrau
+/tests/integration/test_sqs.py @thrau
+/tests/unit/test_sqs.py @thrau
+
+# SSM
+/localstack/aws/api/ssm/ @dominikschubert
+/localstack/services/ssm/ @dominikschubert
+/localstack/services/cloudformation/models/ssm.py @dominikschubert
+/tests/integration/test_ssm.py @dominikschubert
+
+# Stepfunctions
+/localstack/aws/api/stepfunctions/ @dominikschubert
+/localstack/services/stepfunctions/ @dominikschubert
+/localstack/services/cloudformation/models/stepfunctions.py @dominikschubert
+/tests/integration/test_stepfunctions.py @dominikschubert
