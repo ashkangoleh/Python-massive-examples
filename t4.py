@@ -513,7 +513,7 @@
 # st.start()
 # print(set(result))
 
-A = "AABBCCCDAA"
+A = "AABBCCCDAAAETETEFF"
 
 # ABCDA
 
@@ -522,8 +522,28 @@ B = list(''.join(A))
 print("==>> B: ", B)
 
 index = []
-for i in range(len(B)):
-    if B[i] != B[i-1]:
-        index.append(B[i])
 
+for i in range(len(B)):
+    if not index:
+        index.append(B[0])
+    else:
+        if B[i] != B[i-1]:
+            index.append(B[i])
+        
 print("==>> index: ", ''.join(index))
+
+
+# d_list = ['1. ', '2. ', '3. ', '4. ', 'XVIII. ', 'XVII. ', 'XVI. ', 'XV. ', 'XIV. ', 'XIII. ',
+#           'XII. ', 'XI. ', 'IX. ', 'VIII. ', 'VII. ', 'VI. ', 'IV. ', 'IV. ', 'XVIII.', 'XVII.', 'XVI.', 'XV.', 'XIV.', 'XIII.',
+#           'XII.', 'XI.', 'IX.', 'VIII.', 'VII.', 'VI.', 'IV.', 'IV.', 'Ⅰ.', 'Ⅱ.', 'Ⅲ.', 'Ⅳ.', 'Ⅴ.', 'Ⅵ.', 'Ⅶ-1.', 'Ⅶ-2.', 'Ⅶ.', 'Ⅱ.'
+#           'Ⅷ.', 'Ⅸ.', 'Ⅹ.', '1.', '2.', '3.', '4.', '5.', '6.', '7.',
+#           'I. ', 'II. ', 'III. ', 'Ⅷ.',
+#           'ⅥI. ',  'VIIII. ',  '- ',  'I',  'II',
+#           'V.',  'Ⅵ',  'VIII',  'I.',  'II.',
+#           'V.',  'X.',  'Ⅹ',  'V',  'Ⅷ.',
+#           ]
+# for i in d_list:
+#     if not i[0].isdigit():
+#         pass
+#     else:
+#         print(i)
