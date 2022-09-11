@@ -513,24 +513,57 @@
 # st.start()
 # print(set(result))
 
-A = "AABBCCCDAAAETETEFF"
+A = "WTBBBAABBCCCDAAAETETEFFF"
+print("==>> A: ", sorted(A))
 
 # ABCDA
 
-B = list(''.join(A))
-
-print("==>> B: ", B)
-
 index = []
-
-for i in range(len(B)):
+for i in range(len(A)):
     if not index:
-        index.append(B[0])
+        index.append(A[0])
     else:
-        if B[i] != B[i-1]:
-            index.append(B[i])
-        
-print("==>> index: ", ''.join(index))
+        if A[i] != A[i-1]:
+            index.append(A[i])
+
+print("==>> index: ", index)
+
+
+def binary_search(li, key):
+    high = len(li) - 1
+    low = 0
+    while low <= high:
+        mid = (low + high)
+        guess = li[mid]
+        if guess == key:
+            return mid
+        if guess > key:
+            high = mid - 1
+        else:
+            low = mid + 1
+    return None
+
+
+def linear_search(values, search_for):
+    search_at = 0
+    search_res = False
+
+    while search_at < len(values) and search_res is False:
+        if values[search_at] == search_for:
+            search_res = True
+        else:
+            search_at = search_at + 1
+    return search_res
+
+
+def lin_search(ourlist, key):
+    
+    for index in range(0, len(ourlist)):
+        if (ourlist[index] == key):
+            return  index
+    else:
+        return "not fund"
+print(lin_search(A, 'W'))
 
 
 # d_list = ['1. ', '2. ', '3. ', '4. ', 'XVIII. ', 'XVII. ', 'XVI. ', 'XV. ', 'XIV. ', 'XIII. ',
