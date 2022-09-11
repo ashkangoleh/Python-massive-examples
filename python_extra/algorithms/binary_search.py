@@ -1,3 +1,5 @@
+## Binary search only works when your list is in `sorted order`.
+
 def binary_search(orderList, key):
     low = 0
     high = len(orderList) - 1
