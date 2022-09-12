@@ -582,12 +582,17 @@
 #         print(i)
 
 
-def sign(num):
-    _if = {
-        -1: -1,
-        1: 1
-    }
-    return _if.get(num, 0)
+# def sign(num):
+#     _if = {
+#         -1: -1,
+#         1: 1
+#     }
+#     return _if.get(num, 0)
 
 
-print(sign(2))
+# print(sign(2))
+
+
+
+x= 1.25
+print(x.as_integer_ratio()) # (as_integer_ratio()) Coefficients which makes `x`
