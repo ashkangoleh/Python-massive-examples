@@ -513,57 +513,57 @@
 # st.start()
 # print(set(result))
 
-A = "WTBBBAABBCCCDAAAETETEFFF"
-print("==>> A: ", sorted(A))
+# A = "WTBBBAABBCCCDAAAETETEFFF"
+# print("==>> A: ", sorted(A))
 
-# ABCDA
+# # ABCDA
 
-index = []
-for i in range(len(A)):
-    if not index:
-        index.append(A[0])
-    else:
-        if A[i] != A[i-1]:
-            index.append(A[i])
+# index = []
+# for i in range(len(A)):
+#     if not index:
+#         index.append(A[0])
+#     else:
+#         if A[i] != A[i-1]:
+#             index.append(A[i])
 
-print("==>> index: ", index)
-
-
-def binary_search(li, key):
-    high = len(li) - 1
-    low = 0
-    while low <= high:
-        mid = (low + high)
-        guess = li[mid]
-        if guess == key:
-            return mid
-        if guess > key:
-            high = mid - 1
-        else:
-            low = mid + 1
-    return None
+# print("==>> index: ", index)
 
 
-def linear_search(values, search_for):
-    search_at = 0
-    search_res = False
+# def binary_search(li, key):
+#     high = len(li) - 1
+#     low = 0
+#     while low <= high:
+#         mid = (low + high)
+#         guess = li[mid]
+#         if guess == key:
+#             return mid
+#         if guess > key:
+#             high = mid - 1
+#         else:
+#             low = mid + 1
+#     return None
 
-    while search_at < len(values) and search_res is False:
-        if values[search_at] == search_for:
-            search_res = True
-        else:
-            search_at = search_at + 1
-    return search_res
+
+# def linear_search(values, search_for):
+#     search_at = 0
+#     search_res = False
+
+#     while search_at < len(values) and search_res is False:
+#         if values[search_at] == search_for:
+#             search_res = True
+#         else:
+#             search_at = search_at + 1
+#     return search_res
 
 
-def lin_search(ourlist, key):
-    
-    for index in range(0, len(ourlist)):
-        if (ourlist[index] == key):
-            return  index
-    else:
-        return "not fund"
-print(lin_search(A, 'W'))
+# def lin_search(ourlist, key):
+
+#     for index in range(0, len(ourlist)):
+#         if (ourlist[index] == key):
+#             return  index
+#     else:
+#         return "not fund"
+# print(lin_search(A, 'W'))
 
 
 # d_list = ['1. ', '2. ', '3. ', '4. ', 'XVIII. ', 'XVII. ', 'XVI. ', 'XV. ', 'XIV. ', 'XIII. ',
@@ -580,3 +580,14 @@ print(lin_search(A, 'W'))
 #         pass
 #     else:
 #         print(i)
+
+
+def sign(num):
+    _if = {
+        -1: -1,
+        1: 1
+    }
+    return _if.get(num, 0)
+
+
+print(sign(2))
