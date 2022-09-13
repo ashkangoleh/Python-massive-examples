@@ -594,5 +594,5 @@
 
 
 
-x= 1.25
-print(x.as_integer_ratio()) # (as_integer_ratio()) Coefficients which makes `x`
+# x= 1.25
+# print(x.as_integer_ratio()) # (as_integer_ratio()) Coefficients which makes `x`
