@@ -1,0 +1,6 @@
+database:
+    url: "arz.local"
+    port: 5432
+    username: "root"
+    password: 1
+    db_name: "postgres"

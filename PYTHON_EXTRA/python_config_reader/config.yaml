@@ -1,10 +1,10 @@
 paths:
-  data: "data/"
+    data: "data/"
 
 storage:
-  bucket: "storage_tier"
-  bucket_name: "s3"
+    bucket: "storage_tier"
+    bucket_name: "s3"
 
 test:
-  ff: 10
-  dd: true
+    ff: 10
+    dd: true
