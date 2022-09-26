@@ -6,8 +6,9 @@ from sqlalchemy import (
     func,
     Table,
     Column as c,
-
+    alias
 )
+from sqlalchemy.sql import func
 from box import Box
 import yaml
 
@@ -95,25 +96,39 @@ print(
     f"\033[34m select_from_:{select_from_.statement.compile(dialect=postgresql.dialect())}\033[0m")
 # ***********************************************with_for_update with metadata************************************
 
-with_for_update = session.query(cites).filter(cites.c.cited_paper_id==9)
-ww = with_for_update.with_for_update().update({
-    "citing_paper_id":12
-})
+# with_for_update = session.query(cites).filter(cites.c.cited_paper_id==100157)
+# ww = with_for_update.with_for_update().update({
+#     "citing_paper_id":12
+# })
 
-print(f"\033[92m with_for_update(result):{ww}\033[0m")
-print(
-    f"\033[34m with_for_update:{with_for_update.statement.compile(dialect=postgresql.dialect())}\033[0m")
-session.commit()
-# ***********************************************update_existing_table_by_MetaData************************************
-update_param = "10000"
-with_for_update = cites.update().where(cites.c.cited_paper_id== 10).values(citing_paper_id=update_param)
-print(f"\033[92m with_for_update(result): update parameter {update_param}\033[0m")
-print(
-    f"\033[34m with_for_update:{with_for_update}\033[0m")
-session.execute(with_for_update)
-session.commit()
+# print(f"\033[92m with_for_update(result):{ww}\033[0m")
+# print(
+#     f"\033[34m with_for_update:{with_for_update.statement.compile(dialect=postgresql.dialect())}\033[0m")
+# session.commit()
+# # ***********************************************update_existing_table_by_MetaData************************************
+# update_param = "10000"
+# with_for_update = cites.update().where(cites.c.cited_paper_id== 10).values(citing_paper_id=update_param)
+# print(f"\033[92m with_for_update(result): update parameter {update_param}\033[0m")
+# print(
+#     f"\033[34m with_for_update:{with_for_update}\033[0m")
+# session.execute(with_for_update)
+# session.commit()
 
-# ***********************************************insert into reflected database************************************
-ss = cites.insert().values({"cited_paper_id":9,"citing_paper_id":"asdfasdf12"})
-session.execute(ss)
-session.commit()
+# # ***********************************************insert into reflected database************************************
+# ss = cites.insert().values({"cited_paper_id":9,"citing_paper_id":"asdfasdf12"})
+# session.execute(ss)
+# session.commit()
+
+# # ***********************************************having************************************
+
+# having_ = session.query(cites.c.cited_paper_id).group_by(cites.c.cited_paper_id).having(func.count(cites.c.cited_paper_id)>1).all()
+# print("==>> having_: ", having_)
+
+# # ***********************************************delete duplicate row************************************
+# Create a query that identifies the row for each cites with the lowest id
+subq = session.query(func.min(cites.c.cited_paper_id)).group_by(cites.c.cited_paper_id).scalar_subquery()
+print("==>> subq: ", subq.all())
+
+
+# for ex in session.query(cites):
+#     print(ex)
