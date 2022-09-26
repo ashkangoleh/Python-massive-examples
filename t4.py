@@ -596,3 +596,32 @@
 
 # x= 1.25
 # print(x.as_integer_ratio()) # (as_integer_ratio()) Coefficients which makes `x`
+
+
+# https://www.youtube.com/watch?v=CCO0-64cfe4
+
+
+
+import pytube
+import ffmpeg
+
+# link = "https://www.youtube.com/watch?v=CCO0-64cfe4"
+# yt = pytube.YouTube(link)
+# # for e in yt.streams:
+# #     print(e)
+# yt.streams.filter(abr="160kbps", progressive=False).first().download(filename="audio.mp3")
+# yt.streams.filter(video_codec="vp9",res="1080p", progressive=False).first().download(filename="video.mp4")
+
+
+audio = ffmpeg.input("audio.mp3")
+video = ffmpeg.input("video.mp4")
+
+ffmpeg.output(audio, video, "finished_video.mp4").run(overwrite_output=True)
+# print("==>> yt: ", yt)
+# print("Title:", yt.title)
+# print("Author:", yt.author)
+# print("Published date:", yt.publish_date.strftime("%Y-%m-%d"))
+# print("Number of views:", yt.views)
+# print("Length of video:", yt.length, "seconds")
+# yt.streams.get_highest_resolution().download()
+# print("Video successfullly downloaded from", link)

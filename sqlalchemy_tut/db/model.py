@@ -1,16 +1,20 @@
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import sessionmaker, aliased
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (
     create_engine,
     MetaData,
     func,
     Table,
+    VARCHAR,
     Column as c,
-    alias
+    alias,
+    select
 )
 from sqlalchemy.sql import func
 from box import Box
 import yaml
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 config = Box.from_yaml(
     filename="/external/test_proj/sqlalchemy_tut/db/config.yaml", Loader=yaml.FullLoader)
@@ -20,6 +24,8 @@ password = conf.password
 url = conf.url
 port = conf.port
 db_name = conf.db_name
+
+Base = declarative_base()
 
 engine = create_engine(
     f"postgresql+psycopg2://{username}:{password}@{url}:{port}/{db_name}")
@@ -37,6 +43,9 @@ content = Table('content', meta, autoload=True,
                 extend_existing=True, autoload_with=engine)
 paper = Table('paper', meta, autoload=True,
               extend_existing=True, autoload_with=engine)
+cities = Table('cities', meta, autoload=True,
+              extend_existing=True, autoload_with=engine)
+
 # content = meta.tables['content']
 # paper = meta.tables['paper']
 
@@ -96,39 +105,68 @@ print(
     f"\033[34m select_from_:{select_from_.statement.compile(dialect=postgresql.dialect())}\033[0m")
 # ***********************************************with_for_update with metadata************************************
 
-# with_for_update = session.query(cites).filter(cites.c.cited_paper_id==100157)
-# ww = with_for_update.with_for_update().update({
-#     "citing_paper_id":12
-# })
+with_for_update = session.query(cites).filter(cites.c.cited_paper_id==100157)
+ww = with_for_update.with_for_update().update({
+    "citing_paper_id":12
+})
 
-# print(f"\033[92m with_for_update(result):{ww}\033[0m")
-# print(
-#     f"\033[34m with_for_update:{with_for_update.statement.compile(dialect=postgresql.dialect())}\033[0m")
-# session.commit()
-# # ***********************************************update_existing_table_by_MetaData************************************
-# update_param = "10000"
-# with_for_update = cites.update().where(cites.c.cited_paper_id== 10).values(citing_paper_id=update_param)
-# print(f"\033[92m with_for_update(result): update parameter {update_param}\033[0m")
-# print(
-#     f"\033[34m with_for_update:{with_for_update}\033[0m")
-# session.execute(with_for_update)
-# session.commit()
+print(f"\033[92m with_for_update(result):{ww}\033[0m")
+print(
+    f"\033[34m with_for_update:{with_for_update.statement.compile(dialect=postgresql.dialect())}\033[0m")
+session.commit()
+# ***********************************************update_existing_table_by_MetaData************************************
+update_param = "10000"
+with_for_update = cites.update().where(cites.c.cited_paper_id== 100598).values(citing_paper_id=update_param)
+print(f"\033[92m with_for_update(result): update parameter {update_param}\033[0m")
+print(
+    f"\033[34m with_for_update:{with_for_update}\033[0m")
+session.execute(with_for_update)
+session.commit()
 
-# # ***********************************************insert into reflected database************************************
-# ss = cites.insert().values({"cited_paper_id":9,"citing_paper_id":"asdfasdf12"})
-# session.execute(ss)
-# session.commit()
+# ***********************************************insert into reflected database************************************
+ss = cites.insert().values({"cited_paper_id":9,"citing_paper_id":"asdfasdf12"})
+session.execute(ss)
+session.commit()
 
-# # ***********************************************having************************************
+# ***********************************************having************************************
 
-# having_ = session.query(cites.c.cited_paper_id).group_by(cites.c.cited_paper_id).having(func.count(cites.c.cited_paper_id)>1).all()
-# print("==>> having_: ", having_)
-
-# # ***********************************************delete duplicate row************************************
-# Create a query that identifies the row for each cites with the lowest id
-subq = session.query(func.min(cites.c.cited_paper_id)).group_by(cites.c.cited_paper_id).scalar_subquery()
-print("==>> subq: ", subq.all())
+having_ = session.query(cites.c.cited_paper_id).group_by(cites.c.cited_paper_id).having(func.count(cites.c.cited_paper_id)>1).all()
+print("==>> having_: ", having_.__len__())
 
 
-# for ex in session.query(cites):
-#     print(ex)
+# # ***********************************************insert by orm ************************************
+class Cites(Base):
+    __tablename__ = 'cites'
+    meta
+    citing_paper_id = c(VARCHAR,primary_key=True)
+    cited_paper_id = c(VARCHAR)
+
+
+
+cc = Cites(cited_paper_id=100,citing_paper_id=200)
+
+session.add(cc)
+session.commit()
+# ***********************************************insert on conflict by orm ************************************
+# from sqlalchemy.dialects.postgresql import insert as pg_insert
+for i in range(100):
+    statement= pg_insert(cities).values({
+        "name":f"ashkan-{i}",
+    }).on_conflict_do_nothing(index_elements=['id'])
+
+    result = session.execute(statement)
+session.commit()
+print("==>> result.is_insert: ", result.is_insert)
+
+statement= pg_insert(cities).values({
+    "name":"ashkan-0"
+}).on_conflict_do_update(index_elements=['id'],set_= dict(name="1-11"))
+
+# ***********************************************update orm on reflected database************************************
+stmt = session.query(cites).filter(cites.c.citing_paper_id=="455651").update({"citing_paper_id":"********************"})
+
+print(f"\033[92m statement(result): update parameter {str(stmt)}\033[0m")
+
+session.commit()
+
+
