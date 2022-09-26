@@ -9,7 +9,8 @@ from sqlalchemy import (
     VARCHAR,
     Column as c,
     alias,
-    select
+    select,
+    update
 )
 from sqlalchemy.sql import func
 from box import Box
@@ -149,18 +150,18 @@ session.add(cc)
 session.commit()
 # ***********************************************insert on conflict by orm ************************************
 # from sqlalchemy.dialects.postgresql import insert as pg_insert
-for i in range(100):
-    statement= pg_insert(cities).values({
-        "name":f"ashkan-{i}",
-    }).on_conflict_do_nothing(index_elements=['id'])
+# for i in range(100):
+#     statement= pg_insert(cities).values({
+#         "name":f"ashkan-{i}",
+#     }).on_conflict_do_nothing(index_elements=['id'])
 
-    result = session.execute(statement)
-session.commit()
-print("==>> result.is_insert: ", result.is_insert)
+#     result = session.execute(statement)
+# session.commit()
+# print("==>> result.is_insert: ", result.is_insert)
 
-statement= pg_insert(cities).values({
-    "name":"ashkan-0"
-}).on_conflict_do_update(index_elements=['id'],set_= dict(name="1-11"))
+# statement= pg_insert(cities).values({
+#     "name":"ashkan-0"
+# }).on_conflict_do_update(index_elements=['id'],set_= dict(name="1-11"))
 
 # ***********************************************update orm on reflected database************************************
 stmt = session.query(cites).filter(cites.c.citing_paper_id=="455651").update({"citing_paper_id":"********************"})
@@ -169,4 +170,28 @@ print(f"\033[92m statement(result): update parameter {str(stmt)}\033[0m")
 
 session.commit()
 
+# ***********************************************insert/update orm on conflict reflected database************************************
+stmts = update(cities).where(cities.c.name == "spongebob").values(name="spongebob11").returning(cities.c.id)
 
+for row in session.execute(stmts):
+    print(f"id: {row.id}")
+print(f"\033[92m statement(result): update parameter {str(stmt)}\033[0m")
+
+
+stmtts = pg_insert(cities).values(
+    [
+        dict(name="sandy"),
+        dict(name="squidward"),
+        dict(name="spongebob"),
+    ]
+)
+
+stmtts = stmtts.on_conflict_do_update(
+    index_elements=['id'], set_=dict(name=stmtts.excluded.name)
+).returning(cities)
+
+for user in session.execute(
+    stmtts,
+).scalars():
+    print("inserted or updated: %s" % user)
+session.commit()
