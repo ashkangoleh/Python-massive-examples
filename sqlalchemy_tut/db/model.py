@@ -29,29 +29,30 @@ db_name = conf.db_name
 Base = declarative_base()
 
 engine = create_engine(
-    f"postgresql+psycopg2://{username}:{password}@{url}:{port}/{db_name}")
+    f"postgresql+psycopg2://{username}:{password}@{url}:{port}/{db_name}", pool_recycle=3600,  pool_size=40, max_overflow=0)
 engine.execution_options(stream_results=True)
+connection = engine.connect()
 # Base = automap_base()
 # Base.prepare(engine, reflect=True)
-meta = MetaData(bind=engine)
+meta = MetaData(bind=connection)
 meta.reflect(views=True)
 
 
-# meta.create_all(engine)
+# meta.create_all(connection)
 cites = Table('cites', meta, autoload=True,
-              extend_existing=True, autoload_with=engine)
+              extend_existing=True, autoload_with=connection)
 content = Table('content', meta, autoload=True,
-                extend_existing=True, autoload_with=engine)
+                extend_existing=True, autoload_with=connection)
 paper = Table('paper', meta, autoload=True,
-              extend_existing=True, autoload_with=engine)
+              extend_existing=True, autoload_with=connection)
 cities = Table('cities', meta, autoload=True,
-              extend_existing=True, autoload_with=engine)
+               extend_existing=True, autoload_with=connection)
 
 # content = meta.tables['content']
 # paper = meta.tables['paper']
 
 
-Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Session = sessionmaker(autocommit=False, autoflush=False, bind=connection)
 session = Session()
 
 
@@ -66,9 +67,9 @@ print(
 
 # ***********************************************join**************************************************
 cites_join = session.query(cites).join(content, cites.c.cited_paper_id ==
-                                       content.c.paper_id).filter(cites.c.cited_paper_id == content.c.paper_id)
+                                       content.c.paper_id).filter(cites.c.cited_paper_id == content.c.paper_id).limit(10)
 
-print(f"\033[92m cites_join(result):{cites_join.first()}\033[0m")
+print(f"\033[92m cites_join(result):{cites_join.all()}\033[0m")
 print(
     f"\033[34m cites_join:{cites_join.statement.compile(dialect=postgresql.dialect())}\033[0m")
 
@@ -106,45 +107,50 @@ print(
     f"\033[34m select_from_:{select_from_.statement.compile(dialect=postgresql.dialect())}\033[0m")
 # ***********************************************with_for_update with metadata************************************
 
-with_for_update = session.query(cites).filter(cites.c.cited_paper_id==100157)
+with_for_update = session.query(cites).filter(cites.c.cited_paper_id == 100157)
 ww = with_for_update.with_for_update().update({
-    "citing_paper_id":12
+    "citing_paper_id": 12
 })
 
 print(f"\033[92m with_for_update(result):{ww}\033[0m")
 print(
-    f"\033[34m with_for_update:{with_for_update.statement.compile(dialect=postgresql.dialect())}\033[0m")
+    f"\033[34m with_for_update:{ww}\033[0m")
 session.commit()
 # ***********************************************update_existing_table_by_MetaData************************************
 update_param = "10000"
-with_for_update = cites.update().where(cites.c.cited_paper_id== 100598).values(citing_paper_id=update_param)
-print(f"\033[92m with_for_update(result): update parameter {update_param}\033[0m")
+with_for_update = cites.update().where(cites.c.cited_paper_id ==
+                                       100598).values(citing_paper_id=update_param)
+print(
+    f"\033[92m with_for_update(result): update parameter {update_param}\033[0m")
 print(
     f"\033[34m with_for_update:{with_for_update}\033[0m")
 session.execute(with_for_update)
 session.commit()
 
 # ***********************************************insert into reflected database************************************
-ss = cites.insert().values({"cited_paper_id":9,"citing_paper_id":"asdfasdf12"})
+ss = cites.insert().values(
+    {"cited_paper_id": 9, "citing_paper_id": "asdfasdf12"})
 session.execute(ss)
 session.commit()
 
 # ***********************************************having************************************
 
-having_ = session.query(cites.c.cited_paper_id).group_by(cites.c.cited_paper_id).having(func.count(cites.c.cited_paper_id)>1).all()
-print("==>> having_: ", having_.__len__())
+having_ = session.query(cites.c.cited_paper_id).group_by(
+    cites.c.cited_paper_id).having(func.count(cites.c.cited_paper_id) > 1)
+print(f"\033[92m having_(result):{having_.all().__len__()}\033[0m")
+print(
+    f"\033[34m having_:{having_.statement.compile(dialect=postgresql.dialect())}\033[0m")
 
 
 # # ***********************************************insert by orm ************************************
 class Cites(Base):
     __tablename__ = 'cites'
     meta
-    citing_paper_id = c(VARCHAR,primary_key=True)
+    citing_paper_id = c(VARCHAR, primary_key=True)
     cited_paper_id = c(VARCHAR)
 
 
-
-cc = Cites(cited_paper_id=100,citing_paper_id=200)
+cc = Cites(cited_paper_id=100000, citing_paper_id=200)
 
 session.add(cc)
 session.commit()
@@ -164,14 +170,16 @@ session.commit()
 # }).on_conflict_do_update(index_elements=['id'],set_= dict(name="1-11"))
 
 # ***********************************************update orm on reflected database************************************
-stmt = session.query(cites).filter(cites.c.citing_paper_id=="455651").update({"citing_paper_id":"********************"})
+stmt = session.query(cites).filter(cites.c.citing_paper_id == "455651").update(
+    {"citing_paper_id": "********************"})
 
 print(f"\033[92m statement(result): update parameter {str(stmt)}\033[0m")
 
 session.commit()
 
 # ***********************************************insert/update orm on conflict reflected database************************************
-stmts = update(cities).where(cities.c.name == "spongebob").values(name="spongebob11").returning(cities.c.id)
+stmts = update(cities).where(cities.c.name == "spongebob").values(
+    name="spongebob11").returning(cities.c.id)
 
 for row in session.execute(stmts):
     print(f"id: {row.id}")
