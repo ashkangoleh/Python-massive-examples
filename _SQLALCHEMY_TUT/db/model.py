@@ -2,6 +2,7 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import sessionmaker, aliased
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (
+    and_,
     create_engine,
     MetaData,
     func,
@@ -10,7 +11,9 @@ from sqlalchemy import (
     Column as c,
     alias,
     select,
-    update
+    update,
+    or_,
+    and_
 )
 from sqlalchemy.sql import func
 from box import Box
@@ -18,7 +21,8 @@ import yaml
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 config = Box.from_yaml(
-    filename="/external/test_proj/sqlalchemy_tut/db/config.yaml", Loader=yaml.FullLoader)
+    filename="/external/test_proj/_SQLALCHEMY_TUT/db/config.yaml", Loader=yaml.FullLoader)
+
 conf = config.database
 username = conf.username
 password = conf.password
@@ -203,3 +207,24 @@ for user in session.execute(
 ).scalars():
     print("inserted or updated: %s" % user)
 session.commit()
+
+
+# ***********************************************like in orm************************************
+
+
+regx_stmt1 = session.query(cites).filter(cites.c.citing_paper_id.ilike(
+    "windhouwer01flexible"))  # ilike means i contain
+regx_stmt2 = session.query(cites).filter(
+    cites.c.citing_paper_id.startswith("wi"))
+regx_stmt3 = session.query(cites).filter(or_(cites.c.citing_paper_id.endswith(
+    "ated"), cites.c.citing_paper_id.startswith("wi")))
+regx_stmt4 = session.query(cites).filter(and_(
+    cites.c.citing_paper_id.endswith("d"), cites.c.citing_paper_id.startswith("wi")))
+print(f"\033[92m regx_stmt1(result): {str(regx_stmt1.all())}\033[0m")
+print(f"\033[34mregx_stmt1(result): {str(regx_stmt1)}\033[0m")
+print(f"\033[92m regx_stmt2(result): {str(regx_stmt2.all())}\033[0m")
+print(f"\033[34mregx_stmt2(result): {str(regx_stmt2)}\033[0m")
+print(f"\033[92m regx_stmt3(result): {str(regx_stmt3.all())}\033[0m")
+print(f"\033[34mregx_stmt3(result): {str(regx_stmt3)}\033[0m")
+print(f"\033[92m regx_stmt4(result): {str(regx_stmt4.all())}\033[0m")
+print(f"\033[34mregx_stmt4(result): {str(regx_stmt4)}\033[0m")

@@ -1,5 +1,6 @@
 import asyncio
 from curses import echo
+import json
 from box import Box
 import yaml
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
@@ -8,14 +9,16 @@ from sqlalchemy import select, Table, MetaData, VARCHAR, Column as c
 from contextlib import asynccontextmanager
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
-# config = Box.from_yaml(
-#     filename="./config.yaml", Loader=yaml.FullLoader)
-conf = "postgres"
-username = "root"
-password = 1
-url = "arz.local"
-port = 5432
-db_name = "postgres"
+config = Box.from_yaml(
+    filename="/external/test_proj/_SQLALCHEMY_TUT/db/config.yaml", Loader=yaml.FullLoader)
+
+conf = config.database
+username = conf.username
+password = conf.password
+url = conf.url
+port = conf.port
+db_name = conf.db_name
+
 
 engine = create_async_engine(
     f"postgresql+asyncpg://{username}:{password}@{url}:{port}/{db_name}", echo=False, future=True)
@@ -29,6 +32,13 @@ class Cites(Base):
     meta
     citing_paper_id = c(VARCHAR, primary_key=True)
     cited_paper_id = c(VARCHAR)
+
+
+class Content(Base):
+    __tablename__ = 'content'
+    meta
+    paper_id = c(VARCHAR, primary_key=True)
+    word_cited_id = c(VARCHAR)
 
 
 AsyncLocalSession = sessionmaker(
@@ -64,25 +74,43 @@ def async_session(func):
     return wrapper
 
 
-
 # @async_run
 @async_session
 async def fetch_id(async_session):
-    stmt = select(Cites).filter_by(citing_paper_id="asdfasdf12")
+    stmt = select(Cites)
     result = await async_session.execute(stmt)
     return result.scalars().all()
 
 
+@async_session
+async def fetch_join(async_session):
+    stmt = select(Cites, Content).join(
+        Content, Cites.cited_paper_id == Content.paper_id).limit(10)
+    print("==>> stmt: ", stmt)
+    result = await async_session.execute(stmt)
+    return result.all()
+
+
 @async_run
-async def test(l=fetch_id()):
-    get_data  = await l
+async def _fetch_id(l=fetch_id()):
+    get_data = await l
     data = {}
-    dd = []
     for i in get_data:
-        data.setdefault(i.cited_paper_id,[])
+        data.setdefault(i.cited_paper_id, [])
         data[i.cited_paper_id].append(f"{i.citing_paper_id}")
-    print("==>> data: ", data)
+    return json.dumps(data, indent=4)
 
 
+@async_run
+async def _fetch_join(l=fetch_join()):
+    get_data = await l
+    data = {}
+    for i in get_data:
+        data.setdefault(f"{i[1].paper_id}", [])
+        data[f"{i[1].paper_id}"].append(
+            f"{i[0].citing_paper_id},{i[1].word_cited_id}")
+    return json.dumps(data, indent=4)
 
-test()
+
+# print("==>> _fetch_id: ", _fetch_id())
+print("==>> _fetch_join: ", _fetch_join())
