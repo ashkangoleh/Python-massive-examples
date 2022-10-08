@@ -227,3 +227,11 @@ print(f"\033[92m regx_stmt3(result): {str(regx_stmt3.all())}\033[0m")
 print(f"\033[34mregx_stmt3(result): {str(regx_stmt3)}\033[0m")
 print(f"\033[92m regx_stmt4(result): {str(regx_stmt4.all())}\033[0m")
 print(f"\033[34mregx_stmt4(result): {str(regx_stmt4)}\033[0m")
+
+
+# ***********************************************func and over************************************
+over_func = session.query(func.count(content.c.paper_id).over(partition_by=content.c.word_cited_id),
+                          content.c.paper_id, content.c.word_cited_id).filter(and_(content.c.paper_id == 32521, content.c.word_cited_id == "word1"))
+
+print(f"\033[92m over_func(result): {str(over_func.all())}\033[0m")
+print(f"\033[34m over_func(result): {str(over_func)}\033[0m")

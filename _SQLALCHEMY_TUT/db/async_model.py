@@ -2,6 +2,7 @@ import asyncio
 from curses import echo
 import json
 from box import Box
+from sqlalchemy.sql.expression import literal
 import yaml
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -21,8 +22,14 @@ port = conf.port
 db_name = conf.db_name
 
 
-engine = create_async_engine(
-    f"postgresql+asyncpg://{username}:{password}@{url}:{port}/{db_name}", echo=False, future=True)
+def engine():
+    engine = create_async_engine(
+        f"postgresql+asyncpg://{username}:{password}@{url}:{port}/{db_name}", echo=False, future=True, enable_from_linting=False)
+
+    
+    engine.sync_engine.dispose()
+    return engine
+
 
 meta = MetaData(bind=engine)
 # meta.create_all(engine)
@@ -47,7 +54,7 @@ class Content(Base):
 
 
 AsyncLocalSession = sessionmaker(
-    bind=engine, expire_on_commit=False, class_=AsyncSession)
+    bind=engine(), expire_on_commit=False, class_=AsyncSession)
 
 
 def async_run(coroutine):
@@ -98,9 +105,18 @@ async def fetch_by_id(async_session):
 async def fetch_join(async_session):
     stmt = select(Cites, Content).join(
         Content, Cites.cited_paper_id == Content.paper_id).limit(10)
-    print("==>> stmt: ", stmt)
     result = await async_session.execute(stmt)
     return result.all()
+
+
+@async_session
+async def cross_join(async_session):
+    stmt = select(Cites, Content).limit(10)
+    result = await async_session.execute(stmt)
+
+    return result.first()
+
+
 
 
 @async_run
@@ -120,6 +136,12 @@ async def _fetch_by_id(l=fetch_by_id()):
 
 
 @async_run
+async def _cross_join(l=cross_join()):
+    data = await l
+    return data
+
+
+@async_run
 async def _fetch_join(l=fetch_join()):
     get_data = await l
     data = {}
@@ -132,4 +154,5 @@ async def _fetch_join(l=fetch_join()):
 
 # print("==>> _fetch_id: ", _fetch_id())
 # print("==>> _fetch_join: ", _fetch_join())
-print("==>> _fetch_by_id: ", _fetch_by_id().x)
+# print("==>> _fetch_by_id: ", _fetch_by_id().x)
+print("==>> _cross_join: ", _cross_join())
