@@ -56,8 +56,7 @@ cities = Table('cities', meta, autoload=True,
 # paper = meta.tables['paper']
 
 
-Session = sessionmaker(autocommit=False, autoflush=False, bind=connection)
-session = Session()
+session = sessionmaker(autocommit=False, autoflush=False, bind=connection)()
 
 
 # ***********************************************SUBQUERY**************************************************
@@ -177,7 +176,7 @@ session.commit()
 stmt = session.query(cites).filter(cites.c.citing_paper_id == "455651").update(
     {"citing_paper_id": "********************"})
 
-print(f"\033[92m statement(result): update parameter {str(stmt)}\033[0m")
+print(f"\033[92m stmt(result): update parameter {str(stmt)}\033[0m")
 
 session.commit()
 
@@ -186,8 +185,8 @@ stmts = update(cities).where(cities.c.name == "spongebob").values(
     name="spongebob11").returning(cities.c.id)
 
 for row in session.execute(stmts):
-    print(f"id: {row.id}")
-print(f"\033[92m statement(result): update parameter {str(stmt)}\033[0m")
+    print(f"\033[34m id: {row.id}\033[0m")
+print(f"\033[92m stmts(result): update parameter {str(stmt)}\033[0m")
 
 
 stmtts = pg_insert(cities).values(
@@ -205,7 +204,7 @@ stmtts = stmtts.on_conflict_do_update(
 for user in session.execute(
     stmtts,
 ).scalars():
-    print("inserted or updated: %s" % user)
+    print("\033[92m inserted or updated: %s\033[0m" % user)
 session.commit()
 
 

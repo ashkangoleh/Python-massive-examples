@@ -4,6 +4,7 @@ aiohttp-cors==0.7.0
 aioredis==2.0.1
 aiosignal==1.2.0
 aiosqlite==0.17.0
+altgraph==0.17.2
 anyio==3.6.1
 apispec==5.2.2
 appdirs==1.4.4
@@ -86,6 +87,7 @@ kafka-python==1.4.7
 localstack==1.1.0
 localstack-client==1.39
 localstack-ext==1.1.0
+lxml==4.9.1
 Markdown==3.4.1
 MarkupSafe==2.1.1
 matplotlib-inline==0.1.6
@@ -118,6 +120,7 @@ priority==2.0.0
 prompt-toolkit==3.0.30
 protobuf==3.20.1
 psutil==5.9.1
+psycopg2-binary==2.9.3
 ptyprocess==0.7.0
 pure-eval==0.2.2
 pyaes==1.6.1
@@ -130,6 +133,8 @@ pyct==0.4.8
 pydantic==1.9.2
 PyGetWindow==0.0.9
 Pygments==2.13.0
+pyinstaller==5.4.1
+pyinstaller-hooks-contrib==2022.10
 PyJWT==2.4.0
 PyMsgBox==1.0.9
 pyparsing==3.0.9
@@ -140,12 +145,14 @@ PyRect==0.2.0
 pyrsistent==0.18.1
 PyScreeze==0.1.28
 pystray==0.19.4
+python-box==6.0.2
 python-dateutil==2.8.2
 python-dotenv==0.20.0
 python-jose==3.3.0
 python-multipart==0.0.5
 python-xlib==0.31
 python3-xlib==0.15
+pytube==12.1.0
 pytweening==1.0.4
 pytz==2022.1
 pytzdata==2020.1
@@ -168,6 +175,8 @@ six==1.16.0
 sniffio==1.2.0
 soupsieve==2.3.2.post1
 SQLAlchemy==1.4.39
+sqlalchemy2-stubs==0.0.2a27
+sqlmodel==0.0.8
 sse-starlette==1.1.6
 stack-data==0.5.0
 starlette==0.19.1
@@ -190,6 +199,7 @@ uvicorn==0.18.2
 uvloop==0.16.0
 venusian==1.2.0
 virtualenv==20.15.1
+WakaQ==1.0.6
 watchfiles==0.16.1
 wcwidth==0.2.5
 webencodings==0.5.1
@@ -200,3 +210,4 @@ wikipedia==1.4.0
 wrapt==1.14.1
 wsproto==1.2.0
 yarl==1.7.2
+youtube-dl==2021.12.17

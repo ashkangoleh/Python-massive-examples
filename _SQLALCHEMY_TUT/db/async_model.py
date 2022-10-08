@@ -4,6 +4,7 @@ import json
 from box import Box
 import yaml
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import select, Table, MetaData, VARCHAR, Column as c
 from contextlib import asynccontextmanager
@@ -32,6 +33,10 @@ class Cites(Base):
     meta
     citing_paper_id = c(VARCHAR, primary_key=True)
     cited_paper_id = c(VARCHAR)
+
+    @hybrid_property
+    def x(self):
+        return str(self.citing_paper_id) + " " + str(self.cited_paper_id)
 
 
 class Content(Base):
@@ -83,6 +88,13 @@ async def fetch_id(async_session):
 
 
 @async_session
+async def fetch_by_id(async_session):
+    stmt = select(Cites).filter(Cites.cited_paper_id == 100157)
+    result = await async_session.execute(stmt)
+    return result.scalars().first()
+
+
+@async_session
 async def fetch_join(async_session):
     stmt = select(Cites, Content).join(
         Content, Cites.cited_paper_id == Content.paper_id).limit(10)
@@ -102,6 +114,12 @@ async def _fetch_id(l=fetch_id()):
 
 
 @async_run
+async def _fetch_by_id(l=fetch_by_id()):
+    data = await l
+    return data
+
+
+@async_run
 async def _fetch_join(l=fetch_join()):
     get_data = await l
     data = {}
@@ -113,4 +131,5 @@ async def _fetch_join(l=fetch_join()):
 
 
 # print("==>> _fetch_id: ", _fetch_id())
-print("==>> _fetch_join: ", _fetch_join())
+# print("==>> _fetch_join: ", _fetch_join())
+print("==>> _fetch_by_id: ", _fetch_by_id().x)

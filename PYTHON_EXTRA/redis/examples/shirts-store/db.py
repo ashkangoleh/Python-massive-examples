@@ -1,7 +1,8 @@
 import redis
 
 
-r = redis.Redis("arz.local", username="default", password="ashkan")
+r = redis.Redis("arz.local")
+                # , username="default", password="ashkan")
 
 # r.flushdb()  # not recommended in production
 
