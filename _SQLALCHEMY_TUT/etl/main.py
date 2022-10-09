@@ -1,12 +1,13 @@
 
 from ETL_db import *
-session = sessionmaker(bind=engine)()
+s = sessionmaker(bind=engine)()
 
-users = session.query(Users.UserId,Uploads.UploadId).join(Uploads,Users.UserId==Uploads.UserId,isouter=False).subquery().alias('Users')
+users = s.query(Users.UserId,Uploads.UploadId).join(Uploads,Users.UserId==Uploads.UserId,isouter=False).subquery().alias('Users')
 # USERS = aliased(Users,users)
-test = session.query(users).filter(users.c.UserId==1)
+test = s.query(users).filter(users.c.UserId==1)
 
-
+a = s.query(Users).select_entity_from(Uploads).join(Users,isouter=True).all()
+print("==>> a: ", a)
 
 print("==>> users: ", users)
 print("==>> test: ", test)
