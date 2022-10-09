@@ -1,6 +1,6 @@
 from sqlalchemy import *
 # from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship, declarative_base
+from sqlalchemy.orm import sessionmaker, relationship, declarative_base,aliased
 from sqlalchemy.sql import *
 
 engine = create_engine('postgresql+psycopg2://root:1@arz.local:5432/')
