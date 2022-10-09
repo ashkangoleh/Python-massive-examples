@@ -35,6 +35,6 @@ class Profile(Base):
     # users = relationship("Users", back_populates='profile')
 
 
-Users.__table__.create(bind=engine, checkfirst=True)
-Uploads.__table__.create(bind=engine, checkfirst=True)
-Profile.__table__.create(bind=engine,checkfirst=True)
+# Users.__table__.create(bind=engine, checkfirst=True)
+# Uploads.__table__.create(bind=engine, checkfirst=True)
+# Profile.__table__.create(bind=engine,checkfirst=True)
