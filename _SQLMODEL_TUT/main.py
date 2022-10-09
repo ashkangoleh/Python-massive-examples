@@ -12,7 +12,7 @@ class cites(SQLModel, table=True):
 with Session(engine) as session:
     in_ = cites(cited_paper_id=1212,citing_paper_id=1212)
     statement = select(cites.citing_paper_id).where(cites.cited_paper_id==1212)
-    result = session.execute(statement).first()
+    result = session.execute(statement).all()
     session.add(in_)
     session.commit()
     print("==>> result: ", result)

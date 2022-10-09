@@ -235,3 +235,6 @@ over_func = session.query(func.count(content.c.paper_id).over(partition_by=conte
 
 print(f"\033[92m over_func(result): {str(over_func.all())}\033[0m")
 print(f"\033[34m over_func(result): {str(over_func)}\033[0m")
+
+
+
