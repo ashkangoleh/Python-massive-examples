@@ -61,7 +61,7 @@ session = sessionmaker(autocommit=False, autoflush=False, bind=connection)()
 
 # ***********************************************SUBQUERY**************************************************
 cites_sub = session.query(cites.c.cited_paper_id).filter(
-    cites.c.cited_paper_id == 100157).scalar_subquery()
+    cites.c.cited_paper_id == 100157).subquery().alias("cites_sub")
 subquery = session.query(content).filter(content.c.paper_id.in_(cites_sub))
 
 print(f"\033[92m subquery(result):{subquery.first()}\033[0m")
