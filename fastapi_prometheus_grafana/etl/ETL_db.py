@@ -3,7 +3,7 @@ from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base,aliased
 from sqlalchemy.sql import *
 
-engine = create_engine('postgresql+psycopg2://root:1@arz.local:5432/')
+engine = create_engine('postgresql+psycopg2://root:1@postgres:5432/')
 Base = declarative_base()
 
 
@@ -35,6 +35,6 @@ class Profile(Base):
     # users = relationship("Users", back_populates='profile')
 
 
-# Users.__table__.create(bind=engine, checkfirst=True)
-# Uploads.__table__.create(bind=engine, checkfirst=True)
+Users.__table__.create(bind=engine, checkfirst=True)
+Uploads.__table__.create(bind=engine, checkfirst=True)
 # Profile.__table__.create(bind=engine,checkfirst=True)

@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  app:
+    build: ./etl
+    restart: unless-stopped
+    container_name: app
+    hostname: application
+    ports:
+      - 8000:8000
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    container_name: 'prometheus'
+    ports:
+      - 9090:9090
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./data:/prometheus-data"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    user: "472" # user id changes 104 group: grafana 472 group:root
+    container_name: grafana
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - "./datasource.yml:/etc/grafana/provisioning/datasource.yml"
+      - "./grafana-data:/var/lib/grafana"
+    env_file:
+      - ./config.monitoring
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=1
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+networks:
+  default:
+    external:
+      name: vnet
