@@ -1,0 +1,9 @@
+route:
+    receiver: 'pager'
+
+receivers:
+    - name: 'pager'
+      webhook_configs:
+      - url: http://localhost:9093/ # replace with your PagerTree webhook url
+
+

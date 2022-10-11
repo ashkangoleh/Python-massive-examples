@@ -35,7 +35,18 @@ services:
       - "./grafana-data:/var/lib/grafana"
     env_file:
       - ./config.monitoring
-
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    restart: always
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    deploy:
+      mode: global
   postgres:
     image: postgres:latest
     restart: always
