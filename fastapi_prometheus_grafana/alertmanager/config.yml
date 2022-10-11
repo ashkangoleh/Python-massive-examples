@@ -4,6 +4,6 @@ route:
 receivers:
     - name: 'pager'
       webhook_configs:
-      - url: http://localhost:9093/ # replace with your PagerTree webhook url
+      - url: http://prometheus:9090/ # replace with your PagerTree webhook url
 
 
