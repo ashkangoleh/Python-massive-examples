@@ -1,14 +1,49 @@
 from typing import List, Union
-from fastapi import Body, FastAPI, Header, Request
+from fastapi import Body, FastAPI, Header, Depends, Request
+
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import HTTPException
 from main import *
 import uvicorn
 from starlette_prometheus import metrics, PrometheusMiddleware
+
+from starlette.requests import HTTPConnection
 
 app = FastAPI()
 
 app.add_middleware(PrometheusMiddleware)
 app.add_route('/metrics', metrics)
+
+
+class User(BaseModel):
+    name: str
+    token: str
+
+
+fake_db = [
+    User(name='foo', token='a1'),
+    User(name='bar', token='a2')
+]
+
+
+async def get_user_by_token(token: str = Header()):
+    for user in fake_db:
+        if user.token == token:
+            return user
+        else:
+            raise HTTPException(status_code=401, detail='Invalid token')
+
+
+@app.get(path='/a', summary='Test route A')
+async def test_route_a(user: User = Depends(get_user_by_token)):
+    return user
+
+
+@app.get(path='/b', summary='Test route B')
+async def test_route_a(user: User = Depends(get_user_by_token)):
+    return {'name': user.name}
+
 
 @app.get('/1')
 async def join_with_subquery():
@@ -93,6 +128,6 @@ app.add_middleware(
 )
 
 
-# if __name__ == "__main__":
-#     uvicorn.run("fast:app", host="localhost",
-#                 port=8080, debug=True, reload=True)
+if __name__ == "__main__":
+    uvicorn.run("fast:app", host="localhost",
+                port=8080, debug=True, reload=True)

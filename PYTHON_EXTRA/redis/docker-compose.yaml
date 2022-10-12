@@ -3,7 +3,7 @@ version: '3.9'
 services:
   redis:
     image: redis:alpine
-    command: redis-server --requirepass redis
+    # command: redis-server --requirepass redis
     container_name: local-redis
     ports:
       - 6379:6379
@@ -12,12 +12,12 @@ services:
     
     environment:
       - REDIS_REPLICATION_MODE=master
-    networks:
-      node_net:
-        ipv4_address: 192.168.8.23
+    # networks:
+    #   node_net:
+    #     ipv4_address: 192.168.8.23
 
 
 # networking for the redis container
 
-networks:
-  node_net:
+# networks:
+#   node_net:
