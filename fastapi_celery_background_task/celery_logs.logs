@@ -1,0 +1,33 @@
+[2022-10-15 16:18:27,940: WARNING/MainProcess] Exception ignored in atexit callback
+[2022-10-15 16:18:27,941: WARNING/MainProcess] : 
+[2022-10-15 16:18:27,942: WARNING/MainProcess] <function _exit_function at 0x7feb9f16fe20>
+[2022-10-15 16:18:27,942: WARNING/MainProcess] Traceback (most recent call last):
+[2022-10-15 16:18:27,943: WARNING/MainProcess]   File "/usr/lib/python3.10/multiprocessing/util.py", line 334, in _exit_function
+[2022-10-15 16:18:27,944: WARNING/MainProcess]     
+[2022-10-15 16:18:27,944: WARNING/MainProcess] _run_finalizers(0)
+[2022-10-15 16:18:27,945: WARNING/MainProcess]   File "/usr/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+[2022-10-15 16:18:27,945: WARNING/MainProcess]     
+[2022-10-15 16:18:27,946: WARNING/MainProcess] finalizer()
+[2022-10-15 16:18:27,946: WARNING/MainProcess]   File "/usr/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+[2022-10-15 16:18:27,947: WARNING/MainProcess]     
+[2022-10-15 16:18:27,947: WARNING/MainProcess] res = self._callback(*self._args, **self._kwargs)
+[2022-10-15 16:18:27,948: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/billiard/pool.py", line 1662, in _terminate_pool
+[2022-10-15 16:18:27,950: WARNING/MainProcess]     
+[2022-10-15 16:18:27,950: WARNING/MainProcess] cls._help_stuff_finish(*help_stuff_finish_args)
+[2022-10-15 16:18:27,951: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 1341, in _help_stuff_finish
+[2022-10-15 16:18:27,953: WARNING/MainProcess]     
+[2022-10-15 16:18:27,953: WARNING/MainProcess] readable, _, again = _select(inqR, timeout=0.5)
+[2022-10-15 16:18:27,953: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 165, in _select
+[2022-10-15 16:18:27,954: WARNING/MainProcess]     
+[2022-10-15 16:18:27,954: WARNING/MainProcess] return poll(readers, writers, err, timeout)
+[2022-10-15 16:18:27,955: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 121, in _select_imp
+[2022-10-15 16:18:27,955: WARNING/MainProcess]     
+[2022-10-15 16:18:27,956: WARNING/MainProcess] events = poller.poll(timeout)
+[2022-10-15 16:18:27,956: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/celery/apps/worker.py", line 299, in _handle_request
+[2022-10-15 16:18:27,957: WARNING/MainProcess]     
+[2022-10-15 16:18:27,958: WARNING/MainProcess] raise exc(exitcode)
+[2022-10-15 16:18:27,958: WARNING/MainProcess] celery.exceptions
+[2022-10-15 16:18:27,958: WARNING/MainProcess] .
+[2022-10-15 16:18:27,959: WARNING/MainProcess] WorkerTerminate
+[2022-10-15 16:18:27,959: WARNING/MainProcess] : 
+[2022-10-15 16:18:27,959: WARNING/MainProcess] 1
