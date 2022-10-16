@@ -39,24 +39,21 @@ async def signUp(data: signUp):
     task = signature("sign_up", kwargs={
                      "user_email": data.email}, queue="sign_up")
     result = task.apply_async()
-    tk_id = result.id
-    tk_state = result.state
-    return JSONResponse(tk_id)
+    data = {}
+    data[result.id] = result['user_email']
+    return JSONResponse(data)
 
 
 @app.get("/sign-in")
 async def signUp(data):
-    print("==>> data: ", data)
-    print("Create User in database")
-    task = signature("signing_in", kwargs={
+    task = signature("sign_in", kwargs={
                      "user_email": data}, queue="sign_in")
-    print("==>> task: ", task)
-    r = task.apply_async()
+    result = task.apply_async()
     # r = onboard_user.apply_async(kwargs={"user_email": data.email})
     # d = r.get(on_message=on_raw_message, propagate=False)
-    d = r.result
-    print("==>> d: ", d)
-    return JSONResponse(content=d)
+    data = {}
+    data[result.id] = result.state
+    return JSONResponse(content=data)
 
 
 @app.get("/dash/{task_id}")

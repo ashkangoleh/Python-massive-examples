@@ -31,7 +31,8 @@ from celery_config import settings
              autoretry_for=(Exception,),
              retry_kwargs={"max_retries": 3, "countdown": 3},
              )
-def onboard_user(user_email):
+def onboard_user(self,user_email):
+    self.update_state(state="SUCCESS",meta={'user_email':user_email})
     print(user_email)
     print(f"{onboard_user.__name__}")
     print("...")

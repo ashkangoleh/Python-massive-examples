@@ -15,15 +15,17 @@ def create_celery():
     celery_app.conf.update(result_persistent=True)
     celery_app.conf.update(worker_send_task_events=False)
     celery_app.conf.update(worker_prefetch_multiplier=1)
+    celery_app.conf.update(result_extended=True)
 
     return celery_app
 
 
 def get_task_info(task_id):
     task_result = AsyncResult(task_id)
+
     result = {
         # "task_id": task_id,
         "task_status": task_result.status,
-        "task_result": task_result.get()
+        "task_info": task_result.get(),
     }
     return result
