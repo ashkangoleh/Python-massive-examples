@@ -66,3 +66,15 @@
 [2022-10-17 15:28:52,035: WARNING/ForkPoolWorker-1] onboard_user_sign_in
 [2022-10-17 15:28:52,035: WARNING/ForkPoolWorker-1] ...
 [2022-10-17 15:28:52,038: INFO/ForkPoolWorker-1] Task sign_in[3554f58a-2b35-463c-b5d4-97d2bc852c30] succeeded in 0.06414985499941395s: ('a@a.com', 'OK')
+[2022-10-17 15:36:33,494: INFO/MainProcess] Task sign_up[c800f1b0-d608-41e4-b3d3-6fc7fe8dc22d] received
+[2022-10-17 15:36:33,501: WARNING/ForkPoolWorker-1] user@example.com
+[2022-10-17 15:36:33,501: WARNING/ForkPoolWorker-1] send welcome email
+[2022-10-17 15:36:33,501: WARNING/ForkPoolWorker-1] sent
+[2022-10-17 15:36:33,501: WARNING/ForkPoolWorker-1] ...
+[2022-10-17 15:36:43,516: INFO/ForkPoolWorker-1] Task sign_up[c800f1b0-d608-41e4-b3d3-6fc7fe8dc22d] succeeded in 10.020657785000367s: ('user@example.com', 'OK')
+[2022-10-17 15:38:51,687: INFO/MainProcess] Task sign_up[468d25a8-b8c9-491a-9ef6-a04f28ffd3b1] received
+[2022-10-17 15:38:51,694: WARNING/ForkPoolWorker-1] user@example.com
+[2022-10-17 15:38:51,694: WARNING/ForkPoolWorker-1] send welcome email
+[2022-10-17 15:38:51,694: WARNING/ForkPoolWorker-1] sent
+[2022-10-17 15:38:51,694: WARNING/ForkPoolWorker-1] ...
+[2022-10-17 15:39:01,713: INFO/ForkPoolWorker-1] Task sign_up[468d25a8-b8c9-491a-9ef6-a04f28ffd3b1] succeeded in 10.02475333899929s: ('user@example.com', 'OK')

@@ -3,10 +3,15 @@ FastAPI mini application that can be used to
 interact with the API server and celery
 """
 # from typing import Optional
-from fastapi import BackgroundTasks, Body, FastAPI
+from fastapi import BackgroundTasks, Body, FastAPI,status
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
+from fastapi.encoders import jsonable_encoder
+from pydantic import ValidationError
 from pydantic.networks import EmailStr
+from pydantic.dataclasses import dataclass
+from fastapi.exceptions import RequestValidationError
+from starlette.requests import Request
+from starlette.responses import Response
 import uvicorn
 from celery_utils import create_celery, get_task_info
 from workers import signature, AsyncResult
@@ -29,7 +34,35 @@ app = create_app()
 celery = app.celery_app
 
 
-class SignUp(BaseModel):
+@app.exception_handler(RequestValidationError)
+async def http_exception_accept_handler(request: Request, exc: RequestValidationError) -> Response:
+    raw_errors = exc.raw_errors
+    error_wrapper = raw_errors[0]
+    validation_error: ValidationError = error_wrapper.exc
+    overwritten_errors = validation_error.errors()
+    return JSONResponse(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                        content={"detail": jsonable_encoder(
+                            overwritten_errors)},
+                        )
+
+
+class Config:
+    validate_assignment = True
+    title = "sign up"
+    error_msg_templates = {
+        'value_error.email': 'value is not a valid email address!!!!',
+    }
+    schema_extra = {
+        'examples': [
+            {
+                'email': 'a@a.com',
+            }
+        ]
+    }
+
+
+@dataclass(config=Config)
+class SignUp:
     """Base model for sign up users
 
     Args:
