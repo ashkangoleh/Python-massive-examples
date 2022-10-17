@@ -2,13 +2,13 @@
 FastAPI mini application that can be used to
 interact with the API server and celery
 """
+from celery import signature
 from fastapi import BackgroundTasks, FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from pydantic.networks import EmailStr
 import uvicorn
-from celery_utils import create_celery, get_task_info,signature
-
+from celery_utils import create_celery, get_task_info
 
 
 def create_app() -> FastAPI:

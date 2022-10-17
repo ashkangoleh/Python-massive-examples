@@ -39,13 +39,44 @@ class BaseConfig:
 
     CELERY_TASK_ROUTES = (route_task,)
 
+    @property
+    def broker_url_str(self):
+        """
+        return broker url info
+        """
+        return f"configuration_recorder_data is {self.broker_url}"
+
+    @property
+    def result_backend_str(self):
+        """
+        return broker url info
+        """
+        return f"configuration_recorder_data is {self.result_backend}"
+
+    @property
+    def tasks_queue_list(self):
+        """
+        return tasks queue list
+        """
+        return f"configuration_recorder_data is {self.CELERY_TASK_QUEUES}"
+
 
 class DevelopmentConfig(BaseConfig):
+    """DevelopmentConfig
+
+    Args:
+        BaseConfig (Class): Base configuration
+    """
     pass
 
 
 @lru_cache()
 def get_settings():
+    """settings instance
+
+    Returns:
+        class: class configuration settings
+    """
     config_cls_dict = {
         "development": DevelopmentConfig,
     }

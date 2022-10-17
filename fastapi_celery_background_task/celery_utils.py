@@ -1,7 +1,7 @@
 """
 Celery utilities
 """
-from celery import current_app as current_celery_app , signature
+from celery import current_app as current_celery_app
 from celery.result import AsyncResult
 
 from celery_config import settings
