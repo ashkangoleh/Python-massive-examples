@@ -6,12 +6,12 @@ from functools import lru_cache
 from kombu import Queue
 
 
-def route_task(name):
+# def route_task(name):
+def route_task(name, args, kwargs, options, task=None, **kw):
     """
     Route Task
     args: name:str
     """
-    # def route_task(name, args, kwargs, options, task=None, **kw):
     if ":" in name:
         queue, _ = name.split(":")
         return {"queue": queue}

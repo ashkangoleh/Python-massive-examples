@@ -2,13 +2,14 @@
 FastAPI mini application that can be used to
 interact with the API server and celery
 """
-from celery import signature
-from fastapi import BackgroundTasks, FastAPI
+# from typing import Optional
+from fastapi import BackgroundTasks, Body, FastAPI
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from pydantic.networks import EmailStr
 import uvicorn
 from celery_utils import create_celery, get_task_info
+from workers import signature, AsyncResult
 
 
 def create_app() -> FastAPI:
@@ -69,7 +70,7 @@ async def sign_up(data: SignUp):
                      "user_email": data.email}, queue="sign_up")
     result = task.apply_async()
     data = {}
-    data[result.id] = result['user_email']
+    data[result.id] = result.state
     return JSONResponse(data)
 
 
@@ -101,6 +102,29 @@ async def dashboard(task_id: str):
     result = get_task_info(task_id)
 
     return result
+
+
+# class Custom(BaseModel):
+#     custom: Optional[int] = Field(None, max_length=1)
+
+
+@app.post("/dash2")
+async def dashboard2(task_id: str = Body(max_length=36),
+                     custom: int = Body(gt=0, lt=10, embed=False)):
+    """Dashboard task
+
+    Args:
+        task_id (str): task identifier
+
+    Returns:
+        dict:  return results of dashboard
+    """
+    result = get_task_info(task_id)
+
+    return {
+        "task_id": task_id,
+        "result": result
+    }
 
 
 @app.get("/background-sign-up")

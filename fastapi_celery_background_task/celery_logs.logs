@@ -1,108 +1,68 @@
-[2022-10-16 15:35:20,499: INFO/MainProcess] Task sign_up[ab440cbf-91e3-49b7-8e14-0caf369e21ad] received
-[2022-10-16 15:35:20,548: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:35:20,548: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:35:20,548: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:35:20,548: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:35:30,563: INFO/ForkPoolWorker-1] Task sign_up[ab440cbf-91e3-49b7-8e14-0caf369e21ad] succeeded in 10.062211913998908s: ('user@example.com', 'OK')
-[2022-10-16 15:36:36,340: INFO/MainProcess] Task sign_up[2d578a73-170b-4849-a495-dc3b01da7ca8] received
-[2022-10-16 15:36:36,345: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:36:36,345: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:36:36,346: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:36:36,346: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:36:46,357: INFO/ForkPoolWorker-1] Task sign_up[2d578a73-170b-4849-a495-dc3b01da7ca8] succeeded in 10.01585783200062s: ('user@example.com', 'OK')
-[2022-10-16 15:36:53,838: INFO/MainProcess] Connected to redis://localhost:6379//
-[2022-10-16 15:36:53,841: INFO/MainProcess] mingle: searching for neighbors
-[2022-10-16 15:36:54,849: INFO/MainProcess] mingle: all alone
-[2022-10-16 15:36:54,857: INFO/MainProcess] celery@ashkan ready.
-[2022-10-16 15:36:56,394: INFO/MainProcess] Task sign_up[8d4c8513-5add-42bb-8cba-4e267efd4d61] received
-[2022-10-16 15:36:56,464: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:36:56,464: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:36:56,464: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:36:56,465: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:37:06,473: INFO/ForkPoolWorker-1] Task sign_up[8d4c8513-5add-42bb-8cba-4e267efd4d61] succeeded in 10.078292728998349s: ('user@example.com', 'OK')
-[2022-10-16 15:38:41,121: INFO/MainProcess] Connected to redis://localhost:6379//
-[2022-10-16 15:38:41,124: INFO/MainProcess] mingle: searching for neighbors
-[2022-10-16 15:38:42,133: INFO/MainProcess] mingle: all alone
-[2022-10-16 15:38:42,141: INFO/MainProcess] celery@ashkan ready.
-[2022-10-16 15:38:51,118: INFO/MainProcess] Task sign_up[9493f3fa-8a12-42ad-883b-eafe9b5ecc76] received
-[2022-10-16 15:38:51,171: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:38:51,171: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:38:51,171: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:38:51,171: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:39:01,185: INFO/ForkPoolWorker-1] Task sign_up[9493f3fa-8a12-42ad-883b-eafe9b5ecc76] succeeded in 10.065955599999143s: ('user@example.com', 'OK')
-[2022-10-16 15:39:54,780: INFO/MainProcess] Task sign_up[fd6fd42c-7752-453f-ac7d-7baf4e23485f] received
-[2022-10-16 15:39:54,796: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:39:54,796: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:39:54,796: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:39:54,797: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:40:04,815: INFO/ForkPoolWorker-1] Task sign_up[fd6fd42c-7752-453f-ac7d-7baf4e23485f] succeeded in 10.032500843997695s: ('user@example.com', 'OK')
-[2022-10-16 15:51:49,074: INFO/MainProcess] Task sign_up[166b9021-99c9-4cda-be3c-48071673f3d8] received
-[2022-10-16 15:51:49,079: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:51:49,079: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:51:49,079: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:51:49,079: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:51:59,097: INFO/ForkPoolWorker-1] Task sign_up[166b9021-99c9-4cda-be3c-48071673f3d8] succeeded in 10.021792383999127s: ('user@example.com', 'OK')
-[2022-10-16 15:53:04,489: INFO/MainProcess] Task sign_up[d5982257-f2b1-44e4-ae71-024ae53c57b1] received
-[2022-10-16 15:53:04,495: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:53:04,495: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:53:04,495: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:53:04,495: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:53:14,821: INFO/ForkPoolWorker-1] Task sign_up[d5982257-f2b1-44e4-ae71-024ae53c57b1] succeeded in 10.331411967999884s: ('user@example.com', 'OK')
-[2022-10-16 15:53:17,204: INFO/MainProcess] Task sign_up[28301779-0394-415a-bc85-47d07d47ccd7] received
-[2022-10-16 15:53:17,210: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:53:17,210: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:53:17,211: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:53:17,211: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:53:20,305: INFO/MainProcess] Task sign_up[618a611c-95b9-4719-9d91-9acc3c6b0cad] received
-[2022-10-16 15:53:20,305: INFO/MainProcess] Scaling up 1 processes.
-[2022-10-16 15:53:20,488: WARNING/ForkPoolWorker-2] user@example.com
-[2022-10-16 15:53:20,488: WARNING/ForkPoolWorker-2] send welcome email
-[2022-10-16 15:53:20,488: WARNING/ForkPoolWorker-2] sent
-[2022-10-16 15:53:20,488: WARNING/ForkPoolWorker-2] ...
-[2022-10-16 15:53:27,224: INFO/ForkPoolWorker-1] Task sign_up[28301779-0394-415a-bc85-47d07d47ccd7] succeeded in 10.019720080999832s: ('user@example.com', 'OK')
-[2022-10-16 15:53:30,501: INFO/ForkPoolWorker-2] Task sign_up[618a611c-95b9-4719-9d91-9acc3c6b0cad] succeeded in 10.057359649999853s: ('user@example.com', 'OK')
-[2022-10-16 15:53:34,517: INFO/MainProcess] Task sign_up[7ae5509c-328f-4c84-993d-329e7759dacf] received
-[2022-10-16 15:53:34,522: WARNING/ForkPoolWorker-1] user@example.com
-[2022-10-16 15:53:34,522: WARNING/ForkPoolWorker-1] send welcome email
-[2022-10-16 15:53:34,522: WARNING/ForkPoolWorker-1] sent
-[2022-10-16 15:53:34,522: WARNING/ForkPoolWorker-1] ...
-[2022-10-16 15:53:44,539: INFO/ForkPoolWorker-1] Task sign_up[7ae5509c-328f-4c84-993d-329e7759dacf] succeeded in 10.020872895998764s: ('user@example.com', 'OK')
-[2022-10-16 15:54:05,495: INFO/MainProcess] Task sign_up[c3287ef7-f200-4fa6-bc9b-b6472f34f0b1] received
-[2022-10-16 15:54:05,495: INFO/MainProcess] Scaling down 1 processes.
-[2022-10-16 15:54:05,519: WARNING/ForkPoolWorker-2] user@example.com
-[2022-10-16 15:54:05,519: WARNING/ForkPoolWorker-2] send welcome email
-[2022-10-16 15:54:05,519: WARNING/ForkPoolWorker-2] sent
-[2022-10-16 15:54:05,519: WARNING/ForkPoolWorker-2] ...
-[2022-10-16 15:54:07,658: INFO/MainProcess] Task sign_up[03bb2611-8c16-4a36-ad25-f2798b757811] received
-[2022-10-16 15:54:07,658: INFO/MainProcess] Scaling up 1 processes.
-[2022-10-16 15:54:07,825: WARNING/ForkPoolWorker-3] user@example.com
-[2022-10-16 15:54:07,825: WARNING/ForkPoolWorker-3] send welcome email
-[2022-10-16 15:54:07,825: WARNING/ForkPoolWorker-3] sent
-[2022-10-16 15:54:07,825: WARNING/ForkPoolWorker-3] ...
-[2022-10-16 15:54:15,533: INFO/ForkPoolWorker-2] Task sign_up[c3287ef7-f200-4fa6-bc9b-b6472f34f0b1] succeeded in 10.01899275499818s: ('user@example.com', 'OK')
-[2022-10-16 15:54:17,839: INFO/ForkPoolWorker-3] Task sign_up[03bb2611-8c16-4a36-ad25-f2798b757811] succeeded in 10.057275392999145s: ('user@example.com', 'OK')
-[2022-10-16 15:54:20,935: INFO/MainProcess] Task sign_up[9f72d5a3-ee01-4638-810e-0887cf983503] received
-[2022-10-16 15:54:20,940: WARNING/ForkPoolWorker-3] user@example.com
-[2022-10-16 15:54:20,940: WARNING/ForkPoolWorker-3] send welcome email
-[2022-10-16 15:54:20,940: WARNING/ForkPoolWorker-3] sent
-[2022-10-16 15:54:20,940: WARNING/ForkPoolWorker-3] ...
-[2022-10-16 15:54:30,953: INFO/ForkPoolWorker-3] Task sign_up[9f72d5a3-ee01-4638-810e-0887cf983503] succeeded in 10.016539715001272s: ('user@example.com', 'OK')
-[2022-10-16 15:54:35,954: INFO/MainProcess] Task sign_up[87739e6d-5ae2-4174-b1f3-0a5a34df253a] received
-[2022-10-16 15:54:35,959: WARNING/ForkPoolWorker-3] user@example.com
-[2022-10-16 15:54:35,959: WARNING/ForkPoolWorker-3] send welcome email
-[2022-10-16 15:54:35,959: WARNING/ForkPoolWorker-3] sent
-[2022-10-16 15:54:35,959: WARNING/ForkPoolWorker-3] ...
-[2022-10-16 15:54:38,391: INFO/MainProcess] Task sign_up[35e63f84-8f1a-4752-8e19-fe09dbc62c24] received
-[2022-10-16 15:54:38,396: WARNING/ForkPoolWorker-2] user@example.com
-[2022-10-16 15:54:38,396: WARNING/ForkPoolWorker-2] send welcome email
-[2022-10-16 15:54:38,397: WARNING/ForkPoolWorker-2] sent
-[2022-10-16 15:54:38,397: WARNING/ForkPoolWorker-2] ...
-[2022-10-16 15:54:45,969: INFO/ForkPoolWorker-3] Task sign_up[87739e6d-5ae2-4174-b1f3-0a5a34df253a] succeeded in 10.01451298000029s: ('user@example.com', 'OK')
-[2022-10-16 15:54:48,410: INFO/ForkPoolWorker-2] Task sign_up[35e63f84-8f1a-4752-8e19-fe09dbc62c24] succeeded in 10.018172947002313s: ('user@example.com', 'OK')
-[2022-10-16 15:55:12,186: INFO/MainProcess] Scaling down 1 processes.
-[2022-10-16 15:56:17,668: INFO/MainProcess] Task sign_up[079fd72e-c760-416e-a8df-a1a7ae6acaa4] received
-[2022-10-16 15:56:17,675: WARNING/ForkPoolWorker-3] user@example.com
-[2022-10-16 15:56:17,675: WARNING/ForkPoolWorker-3] send welcome email
-[2022-10-16 15:56:17,675: WARNING/ForkPoolWorker-3] sent
-[2022-10-16 15:56:17,676: WARNING/ForkPoolWorker-3] ...
-[2022-10-16 15:56:27,693: INFO/ForkPoolWorker-3] Task sign_up[079fd72e-c760-416e-a8df-a1a7ae6acaa4] succeeded in 10.024127355001838s: ('user@example.com', 'OK')
+[2022-10-17 15:26:04,770: INFO/MainProcess] Task sign_in[ae85082c-f88a-4c5a-abf3-5d147bf417a3] received
+[2022-10-17 15:26:04,827: WARNING/ForkPoolWorker-1] a@a.com
+[2022-10-17 15:26:04,827: WARNING/ForkPoolWorker-1] onboard_user_sign_in
+[2022-10-17 15:26:04,827: WARNING/ForkPoolWorker-1] ...
+[2022-10-17 15:26:04,833: INFO/ForkPoolWorker-1] Task sign_in[ae85082c-f88a-4c5a-abf3-5d147bf417a3] succeeded in 0.062223357999755535s: None
+[2022-10-17 15:26:53,748: INFO/MainProcess] Task sign_in[341aef80-bb7c-467d-8506-7311fad7cf3c] received
+[2022-10-17 15:26:53,755: WARNING/ForkPoolWorker-1] a@a.com
+[2022-10-17 15:26:53,755: WARNING/ForkPoolWorker-1] onboard_user_sign_in
+[2022-10-17 15:26:53,755: WARNING/ForkPoolWorker-1] ...
+[2022-10-17 15:26:53,759: INFO/ForkPoolWorker-1] Task sign_in[341aef80-bb7c-467d-8506-7311fad7cf3c] succeeded in 0.009513785000308417s: None
+[2022-10-17 15:27:30,453: INFO/MainProcess] Task sign_up[696f0270-b588-4a35-908c-12af023f5e43] received
+[2022-10-17 15:27:30,458: WARNING/ForkPoolWorker-1] user@example.com
+[2022-10-17 15:27:30,458: WARNING/ForkPoolWorker-1] send welcome email
+[2022-10-17 15:27:30,458: WARNING/ForkPoolWorker-1] sent
+[2022-10-17 15:27:30,458: WARNING/ForkPoolWorker-1] ...
+[2022-10-17 15:27:40,477: INFO/ForkPoolWorker-1] Task sign_up[696f0270-b588-4a35-908c-12af023f5e43] succeeded in 10.023324589998083s: ('user@example.com', 'OK')
+[2022-10-17 15:28:21,996: INFO/MainProcess] Task sign_in[cbf61702-83b8-43f5-82b5-0792605e7760] received
+[2022-10-17 15:28:22,002: WARNING/ForkPoolWorker-1] a@a.com
+[2022-10-17 15:28:22,002: WARNING/ForkPoolWorker-1] onboard_user_sign_in
+[2022-10-17 15:28:22,002: WARNING/ForkPoolWorker-1] ...
+[2022-10-17 15:28:22,006: INFO/ForkPoolWorker-1] Task sign_in[cbf61702-83b8-43f5-82b5-0792605e7760] succeeded in 0.008496100002957974s: None
+[2022-10-17 15:28:34,480: INFO/MainProcess] Task sign_in[fe4f1409-dc2e-4920-b485-34a1d68e1b0b] received
+[2022-10-17 15:28:34,486: WARNING/ForkPoolWorker-1] a@a.com
+[2022-10-17 15:28:34,486: WARNING/ForkPoolWorker-1] onboard_user_sign_in
+[2022-10-17 15:28:34,486: WARNING/ForkPoolWorker-1] ...
+[2022-10-17 15:28:34,490: INFO/ForkPoolWorker-1] Task sign_in[fe4f1409-dc2e-4920-b485-34a1d68e1b0b] succeeded in 0.009340171996882418s: None
+[2022-10-17 15:28:40,225: WARNING/MainProcess] Exception ignored in atexit callback
+[2022-10-17 15:28:40,226: WARNING/MainProcess] : 
+[2022-10-17 15:28:40,226: WARNING/MainProcess] <function _exit_function at 0x7f2ee2d1fe20>
+[2022-10-17 15:28:40,226: WARNING/MainProcess] Traceback (most recent call last):
+[2022-10-17 15:28:40,226: WARNING/MainProcess]   File "/usr/lib/python3.10/multiprocessing/util.py", line 334, in _exit_function
+[2022-10-17 15:28:40,226: WARNING/MainProcess]     
+[2022-10-17 15:28:40,227: WARNING/MainProcess] _run_finalizers(0)
+[2022-10-17 15:28:40,227: WARNING/MainProcess]   File "/usr/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+[2022-10-17 15:28:40,227: WARNING/MainProcess]     
+[2022-10-17 15:28:40,227: WARNING/MainProcess] finalizer()
+[2022-10-17 15:28:40,227: WARNING/MainProcess]   File "/usr/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+[2022-10-17 15:28:40,227: WARNING/MainProcess]     
+[2022-10-17 15:28:40,228: WARNING/MainProcess] res = self._callback(*self._args, **self._kwargs)
+[2022-10-17 15:28:40,228: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/billiard/pool.py", line 1662, in _terminate_pool
+[2022-10-17 15:28:40,228: WARNING/MainProcess]     
+[2022-10-17 15:28:40,229: WARNING/MainProcess] cls._help_stuff_finish(*help_stuff_finish_args)
+[2022-10-17 15:28:40,229: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 1341, in _help_stuff_finish
+[2022-10-17 15:28:40,229: WARNING/MainProcess]     
+[2022-10-17 15:28:40,229: WARNING/MainProcess] readable, _, again = _select(inqR, timeout=0.5)
+[2022-10-17 15:28:40,230: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 165, in _select
+[2022-10-17 15:28:40,230: WARNING/MainProcess]     
+[2022-10-17 15:28:40,230: WARNING/MainProcess] return poll(readers, writers, err, timeout)
+[2022-10-17 15:28:40,230: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 121, in _select_imp
+[2022-10-17 15:28:40,230: WARNING/MainProcess]     
+[2022-10-17 15:28:40,230: WARNING/MainProcess] events = poller.poll(timeout)
+[2022-10-17 15:28:40,231: WARNING/MainProcess]   File "/external/test_proj/venv/lib/python3.10/site-packages/celery/apps/worker.py", line 299, in _handle_request
+[2022-10-17 15:28:40,231: WARNING/MainProcess]     
+[2022-10-17 15:28:40,231: WARNING/MainProcess] raise exc(exitcode)
+[2022-10-17 15:28:40,231: WARNING/MainProcess] celery.exceptions
+[2022-10-17 15:28:40,231: WARNING/MainProcess] .
+[2022-10-17 15:28:40,231: WARNING/MainProcess] WorkerTerminate
+[2022-10-17 15:28:40,231: WARNING/MainProcess] : 
+[2022-10-17 15:28:40,232: WARNING/MainProcess] 1
+[2022-10-17 15:28:41,877: INFO/MainProcess] Connected to redis://localhost:6379//
+[2022-10-17 15:28:41,882: INFO/MainProcess] mingle: searching for neighbors
+[2022-10-17 15:28:42,891: INFO/MainProcess] mingle: all alone
+[2022-10-17 15:28:42,901: INFO/MainProcess] celery@ashkan ready.
+[2022-10-17 15:28:51,973: INFO/MainProcess] Task sign_in[3554f58a-2b35-463c-b5d4-97d2bc852c30] received
+[2022-10-17 15:28:52,035: WARNING/ForkPoolWorker-1] a@a.com
+[2022-10-17 15:28:52,035: WARNING/ForkPoolWorker-1] onboard_user_sign_in
+[2022-10-17 15:28:52,035: WARNING/ForkPoolWorker-1] ...
+[2022-10-17 15:28:52,038: INFO/ForkPoolWorker-1] Task sign_in[3554f58a-2b35-463c-b5d4-97d2bc852c30] succeeded in 0.06414985499941395s: ('a@a.com', 'OK')
