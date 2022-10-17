@@ -1,9 +1,17 @@
+"""
+Celery configuration
+"""
 import os
 from functools import lru_cache
 from kombu import Queue
 
 
-def route_task(name, args, kwargs, options, task=None, **kw):
+def route_task(name):
+    """
+    Route Task
+    args: name:str
+    """
+    # def route_task(name, args, kwargs, options, task=None, **kw):
     if ":" in name:
         queue, _ = name.split(":")
         return {"queue": queue}
@@ -11,9 +19,13 @@ def route_task(name, args, kwargs, options, task=None, **kw):
 
 
 class BaseConfig:
+    """
+    Base configuration
+    """
     broker_url: str = os.environ.get(
         "CELERY_BROKER_URL", "redis://localhost:6379/")
-    # result_backend: str = os.environ.get("CELERY_RESULT_BACKEND", "db+postgresql+psycopg2://root:1@localhost:5432/root")
+    # result_backend: str = os.environ.get("CELERY_RESULT_BACKEND",
+    # "db+postgresql+psycopg2://root:1@localhost:5432/root")
     result_backend: str = "db+postgresql+psycopg2://root:1@localhost:5432/root"
     # result_backend: str = os.environ.get("result_backend", "rpc://")
     result_extended: bool = True

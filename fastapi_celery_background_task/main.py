@@ -1,13 +1,20 @@
+"""
+FastAPI mini application that can be used to
+interact with the API server and celery
+"""
 from fastapi import BackgroundTasks, FastAPI
 from fastapi.responses import JSONResponse
-from celery_utils import create_celery, get_task_info
-from workers import signature, AsyncResult
 from pydantic import BaseModel
 from pydantic.networks import EmailStr
 import uvicorn
+from celery_utils import create_celery, get_task_info,signature
+
 
 
 def create_app() -> FastAPI:
+    """
+    Create app instance
+    """
     current_app = FastAPI(title=" ",
                           description=" ",
                           version="1", )
@@ -21,21 +28,43 @@ app = create_app()
 celery = app.celery_app
 
 
-class signUp(BaseModel):
+class SignUp(BaseModel):
+    """Base model for sign up users
+
+    Args:
+        BM (BaseModel): model creation object
+    """
     email: EmailStr
 
 
 def send_email(email, message):
+    """send email to users
+
+    Args:
+        email (str): parameters
+        message (str): parameters
+    """
     print("==>> message: ", message)
     print("==>> email: ", email)
 
 
 def on_raw_message(body):
+    """on raw message
+
+    Args:
+        body (dict): passing dictionary body
+
+    Returns:
+        dict: return message as dictionary
+    """
     return body
 
 
-@app.post("/sign-up", response_model=signUp)
-async def signUp(data: signUp):
+@app.post("/sign-up", response_model=SignUp)
+async def sign_up(data: SignUp):
+    """
+    sign up a user
+    """
     task = signature("sign_up", kwargs={
                      "user_email": data.email}, queue="sign_up")
     result = task.apply_async()
@@ -45,7 +74,10 @@ async def signUp(data: signUp):
 
 
 @app.get("/sign-in")
-async def signUp(data):
+async def sign_in(data):
+    """
+    sign in a user
+    """
     task = signature("sign_in", kwargs={
                      "user_email": data}, queue="sign_in")
     result = task.apply_async()
@@ -58,6 +90,14 @@ async def signUp(data):
 
 @app.get("/dash/{task_id}")
 async def dashboard(task_id: str):
+    """Dashboard task
+
+    Args:
+        task_id (str): task identifier
+
+    Returns:
+        dict:  return results of dashboard
+    """
     result = get_task_info(task_id)
 
     return result
@@ -65,6 +105,14 @@ async def dashboard(task_id: str):
 
 @app.get("/background-sign-up")
 async def ping(background_tasks: BackgroundTasks):
+    """Background tasks
+
+    Args:
+        background_tasks (BackgroundTasks): builtin background tasks
+
+    Returns:
+        dict: return dict with background tasks returned
+    """
     background_tasks.add_task(send_email, "email@address.com", "Hi!")
     return {"message": "pong!"}
 

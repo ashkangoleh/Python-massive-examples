@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 import uvicorn
 from api import api

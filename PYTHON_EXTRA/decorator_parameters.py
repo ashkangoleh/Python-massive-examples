@@ -2,9 +2,9 @@ from functools import reduce
 
 def repetition_fibo(repetition):
     def decorator(func):
-        def wrapper(type:str=None):
-            #type 's' means series
-            if type == 's':
+        def wrapper(_type:str=None):
+            #_type 's' means series
+            if _type == 's':
                 for i in range(repetition):
                     fib = lambda n: reduce(lambda x,n:[x[1],x[0]+x[1]],range(i),[0,1])
                     current_step = fib(i)[0]
@@ -20,11 +20,11 @@ def repetition_fibo(repetition):
 
 
 
-def fibonacci_generator(type:str=None,num:int=0):
+def fibonacci_generator(_type:str=None,num:int=0):
     @repetition_fibo(num)
-    def func(type:str=None):
+    def func(_type:str=None):
         return
-    func(type).__repr__()
+    func(_type).__repr__()
 
 
 fibonacci_generator(type='s',num=100)

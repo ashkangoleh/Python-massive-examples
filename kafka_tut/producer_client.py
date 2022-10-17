@@ -1,7 +1,5 @@
 from kafka import KafkaProducer
 import json
-
-from pytoolconfig import dataclass
 from data import get_registered_user1, get_registered_user2
 import time
 
@@ -11,7 +9,7 @@ def json_serializer(data):
 
 
 conf = {'bootstrap.servers': "arz.local:9093,",
-        'group.id': f"foo",
+        'group.id': "foo",
         'auto.offset.reset': 'smallest'}
 
 producer = KafkaProducer(

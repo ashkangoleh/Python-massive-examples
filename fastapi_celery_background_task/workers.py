@@ -1,7 +1,10 @@
+"""
+celery workers
+"""
 import time
-from celery import Celery, signature, shared_task
-from celery.result import AsyncResult
-from celery_config import settings
+from celery import shared_task
+# from celery.result import AsyncResult
+# from celery_config import settings
 # SIGN_UP_Q = Celery("SIGN_UP_Q", broker="redis://localhost:6379/",
 #                 backend="db+postgresql+psycopg2://root:1@localhost:5432/")
 # SIGN_IN_Q = Celery("SIGN_IN_Q", broker="redis://localhost:6379/",
@@ -31,10 +34,13 @@ from celery_config import settings
              autoretry_for=(Exception,),
              retry_kwargs={"max_retries": 3, "countdown": 3},
              )
-def onboard_user(self,user_email):
-    self.update_state(state="SUCCESS",meta={'user_email':user_email})
+def onboard_user_sign_in(self, user_email):
+    """
+    onboard_user sign in user with email address
+    """
+    self.update_state(state="SUCCESS", meta={'user_email': user_email})
     print(user_email)
-    print(f"{onboard_user.__name__}")
+    print(f"{onboard_user_sign_in.__name__}")
     print("...")
 
 
@@ -56,7 +62,10 @@ def onboard_user(self,user_email):
              autoretry_for=(Exception,),
              retry_kwargs={"max_retries": 3, "countdown": 3},
              )
-def onboard_user(user_email):
+def onboard_user_sign_up(user_email):
+    """
+    onboard_user sign up user with email address
+    """
     print(user_email)
     print("send welcome email")
     print("sent")

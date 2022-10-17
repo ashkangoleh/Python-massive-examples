@@ -30,8 +30,8 @@ class KucoinWsTest(unittest.TestCase):
                            '/market/level2:BTC-USDT'])
 
 
-    def on_error(self, ws, error):
-        print("==>> error: ", error)
+    def on_error(self,wst,error):
+        print("==>> error: ",wst, error)
 
     def test_endpoint_validity(self):
         self._WS.get_ws()

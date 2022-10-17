@@ -21,7 +21,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO,
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
-# templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="templates")
 random.seed()
 
 

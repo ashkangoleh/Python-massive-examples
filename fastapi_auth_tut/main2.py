@@ -3,7 +3,6 @@ from typing import Any, Callable, Optional
 from fastapi import FastAPI, Form, Request, Path, Response, Header
 import uvicorn
 from fastapi.responses import JSONResponse
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 app = FastAPI()
