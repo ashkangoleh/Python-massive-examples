@@ -5,6 +5,7 @@
 *.png
 !credentials.json
 node_modules
+!industry_skills.csv
 venv
 .vscode
 .idea
