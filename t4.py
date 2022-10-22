@@ -602,21 +602,21 @@
 
 
 
-import pytube
-import ffmpeg
+# import pytube
+# import ffmpeg
 
-# link = "https://www.youtube.com/watch?v=CCO0-64cfe4"
-# yt = pytube.YouTube(link)
-# # for e in yt.streams:
-# #     print(e)
-# yt.streams.filter(abr="160kbps", progressive=False).first().download(filename="audio.mp3")
-# yt.streams.filter(video_codec="vp9",res="1080p", progressive=False).first().download(filename="video.mp4")
+# # link = "https://www.youtube.com/watch?v=CCO0-64cfe4"
+# # yt = pytube.YouTube(link)
+# # # for e in yt.streams:
+# # #     print(e)
+# # yt.streams.filter(abr="160kbps", progressive=False).first().download(filename="audio.mp3")
+# # yt.streams.filter(video_codec="vp9",res="1080p", progressive=False).first().download(filename="video.mp4")
 
 
-audio = ffmpeg.input("audio.mp3")
-video = ffmpeg.input("video.mp4")
+# audio = ffmpeg.input("audio.mp3")
+# video = ffmpeg.input("video.mp4")
 
-ffmpeg.output(audio, video, "finished_video.mp4").run(overwrite_output=True)
+# ffmpeg.output(audio, video, "finished_video.mp4").run(overwrite_output=True)
 # print("==>> yt: ", yt)
 # print("Title:", yt.title)
 # print("Author:", yt.author)
@@ -625,3 +625,31 @@ ffmpeg.output(audio, video, "finished_video.mp4").run(overwrite_output=True)
 # print("Length of video:", yt.length, "seconds")
 # yt.streams.get_highest_resolution().download()
 # print("Video successfullly downloaded from", link)
+
+
+
+
+def rsi_producer(msg:str="ss",producer:str="are hast"):
+    return msg,producer
+
+
+def ema(msg:str="ss",producer:str="are hast"):
+    return msg,producer
+
+
+def sma(msg:str="ss",producer:str="are hast"):
+    return msg,producer
+
+
+
+funcs = {
+    "RSI":rsi_producer,
+    "ema":ema,
+    "sma":sma,
+    
+}
+
+
+
+print(funcs["RSI"].__name__)
+print(funcs["RSI"](msg="test",producer="done"))
