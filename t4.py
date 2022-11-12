@@ -593,13 +593,11 @@
 # print(sign(2))
 
 
-
 # x= 1.25
 # print(x.as_integer_ratio()) # (as_integer_ratio()) Coefficients which makes `x`
 
 
 # https://www.youtube.com/watch?v=CCO0-64cfe4
-
 
 
 # import pytube
@@ -627,29 +625,41 @@
 # print("Video successfullly downloaded from", link)
 
 
+# def rsi_producer(msg:str="ss",producer:str="are hast"):
+#     return msg,producer
 
 
-def rsi_producer(msg:str="ss",producer:str="are hast"):
-    return msg,producer
+# def ema(msg:str="ss",producer:str="are hast"):
+#     return msg,producer
 
 
-def ema(msg:str="ss",producer:str="are hast"):
-    return msg,producer
+# def sma(msg:str="ss",producer:str="are hast"):
+#     return msg,producer
 
 
-def sma(msg:str="ss",producer:str="are hast"):
-    return msg,producer
+# funcs = {
+#     "RSI":rsi_producer,
+#     "ema":ema,
+#     "sma":sma,
+
+# }
+# print(funcs["RSI"](msg="test",producer="done"))
+# import httpx
+# import asyncio
+# from starlette.background import BackgroundTask
+# from starlette.responses import StreamingResponse
+# client = httpx.AsyncClient()
+
+# async def main():
+#     req = client.build_request("GET","https://www.arzdigital.com/")
+#     print("==>> req: ", req.content)
+#     r = await client.send(request=req,stream=True)
+#     print("==>> r: ", r.status_code)
+#     return StreamingResponse(r.aiter_text())
+
+
+# if __name__ == "__main__":
+#     asyncio.run(main())
 
 
 
-funcs = {
-    "RSI":rsi_producer,
-    "ema":ema,
-    "sma":sma,
-    
-}
-
-
-
-print(funcs["RSI"].__name__)
-print(funcs["RSI"](msg="test",producer="done"))
