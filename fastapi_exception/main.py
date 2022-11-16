@@ -4,8 +4,18 @@ from fastapi.responses import JSONResponse
 from starlette import status
 from fastapi.testclient import TestClient
 from pydantic import BaseModel
-
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.exceptions import ExceptionMiddleware
+from starlette.types import ASGIApp
 app = FastAPI()
+
+
+class PartnerAvailabilityMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        raise CustomException(
+            status.HTTP_503_SERVICE_UNAVAILABLE, 'Partner services is unavailable.'
+        )
+        return await call_next(request)
 
 
 class UserData(BaseModel):
@@ -37,10 +47,20 @@ def check(user_data: UserData):
 @app.exception_handler(CustomException)
 async def custom_exception_handler(request: Request, exc: CustomException):
     return JSONResponse(
-        # status_code=exc.code,
+        # status_code=status.HTTP_400_BAD_REQUEST,
         content={"code": exc.code,
                  "message": f"Exception Occurred! Reason -> {exc.message}"},
     )
+
+
+class PartnerAvailabilityMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        raise CustomException(
+            # status.HTTP_503_SERVICE_UNAVAILABLE,
+            5000500,
+            'Partner services is unavailable.'
+        )
+        return await call_next(request)
 
 
 @app.middleware("http")
@@ -49,6 +69,9 @@ async def add_metric(request: Request, call_next):
     print("Response: ", response.status_code)
     return response
 
+# app.add_middleware(PartnerAvailabilityMiddleware)
+# this is the change
+app.add_middleware(ExceptionMiddleware, handlers=app.exception_handlers)
 # # your code ends here
 
 # tc = TestClient(app)
