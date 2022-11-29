@@ -3,6 +3,7 @@
 *.csv
 *.gz
 *.png
+*.dat
 !credentials.json
 node_modules
 !industry_skills.csv
