@@ -23,4 +23,4 @@ class AppUser(HttpUser):
 
 
 
-# locust -f locustfile.py --host http://localhost:8080 --users 500
+# locust -f locustfile.py --host http://localhost:5050 --users 500
