@@ -23,3 +23,9 @@ async def get_sentiment(text):
         "subjectivity":blob.subjectivity
     }
     return result
+
+@api.get("/test")
+async def test():
+    return {
+        "test":"done"
+    }
