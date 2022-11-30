@@ -1,0 +1,45 @@
+kafka-zebra:
+    <<: *kafka-common
+    container_name: kafka-zebra
+    hostname: kafka.zebra.arz.team
+    ports:
+      - 9992:9992
+      - 8092:8092
+      # - 9092:9092
+      - 10192:10192
+      # - 11092:11092
+      # - 12092:12092
+    expose:
+      - 10092
+    volumes:
+      - /var/_sync/cert:/_cert
+      - /mnt/HC_Volume_20154656/kafka/data:/var/lib/kafka/data
+    environment:
+      <<: *kafka-common-env
+      KAFKA_BROKER_ID: 2
+      KAFKA_BROKER_RACK: "r2"
+      KAFKA_ZOOKEEPER_CONNECT: zk.lion.arz.team:21811,zk.zebra:21812,zk.hippo.arz.team:21813,zk.panda.arz.team:21814,zk.monkey.arz.team:21815
+      KAFKA_LISTENERS: LOCAL://0.0.0.0:10092,REMOTE://0.0.0.0:10192
+      KAFKA_ADVERTISED_LISTENERS: LOCAL://kafka.zebra.arz.team:10092,REMOTE://kafka.zebra.arz.team:10192
+      KAFKA_CONFLUENT_METADATA_SERVER_ADVERTISED_LISTENERS: http://kafka.zebra.arz.team:8092
+      KAFKA_JMX_HOSTNAME: kafka.zebra.arz.team
+      KAFKA_JMX_PORT: 9992
+      KAFKA_JMX_OPTS: -Djava.rmi.server.hostname=kafka.zebra.arz.team
+                      -Dcom.sun.management.jmxremote
+                      -Dcom.sun.management.jmxremote.local.only=false
+                      -Dcom.sun.management.jmxremote.rmi.port=9992
+                      -Dcom.sun.management.jmxremote.port=9992
+                      -Dcom.sun.management.jmxremote.authenticate=false
+                      -Dcom.sun.management.jmxremote.ssl=false
+      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry.zebra.arz.team:12082
+      KAFKA_CONFLUENT_METADATA_SERVER_LISTENERS: http://0.0.0.0:8092
+      KAFKA_KAFKA_REST_CONFLUENT_METADATA_BOOTSTRAP_SERVER_URLS: http://kafka.lion.arz.team:8091,http://kafka.zebra.arz.team:8092,http://kafka.hippo.arz.team:8093,http://kafka.panda.arz.team:8094,http://kafka.monkey.arz.team:8095,http://kafka.camel.arz.team:8096
+
+      KAFKA_SSL_KEYSTORE_TYPE: JKS
+      KAFKA_SSL_KEYSTORE_LOCATION: /_cert/server_kafka_zebra.jks
+      KAFKA_SSL_KEYSTORE_PASSWORD: ${KAFKA_SSL_KEYSTORE_PASSWORD}
+
+networks:
+  default:
+    external:
+      name: vnet

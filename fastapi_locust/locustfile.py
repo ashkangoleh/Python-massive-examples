@@ -10,7 +10,7 @@ sentences = [
 
 
 class AppUser(HttpUser):
-    wait_time = between(2, 5)
+    wait_time = between(1, 2)
 
     @task
     def index_page(self):
@@ -24,6 +24,5 @@ class AppUser(HttpUser):
     @task
     def test_page(self):
         self.client.get("/api/test")
-
 
 # locust -f locustfile.py --host http://localhost:5050 --users 500
