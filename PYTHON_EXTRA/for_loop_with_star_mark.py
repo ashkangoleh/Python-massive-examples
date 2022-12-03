@@ -16,3 +16,10 @@ e2 = {"hello_world": "123"}
 
 print(list(*e2.values()).__repr__())
 
+e2 = "ashkan"
+e3:list[int|str] = [
+    1,2,3,4,5,6,6,7,8,9,0,"a"
+]
+
+print(*e2)
+print(*e3)
