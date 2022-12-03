@@ -23,6 +23,6 @@ class AppUser(HttpUser):
 
     @task
     def test_page(self):
-        self.client.get("/api/test")
+        self.client.get("Sst")
 
 # locust -f locustfile.py --host http://localhost:5050 --users 500
