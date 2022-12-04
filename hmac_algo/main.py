@@ -29,7 +29,7 @@ class Authorization:
 
     @property
     def hmac_renewal(self):
-        _hmac = hmac.new(key=self.encoded_api_key(),
+        _hmac = hmac.new(key=Authorization.encoded_api_key(),
                          msg=self.user_specific_message, digestmod=hashlib.sha512)
         return _hmac.hexdigest()
 
@@ -46,18 +46,18 @@ class ValidationAuth(Authorization):
     @property
     def validation(self):
         check_validity_hmac = hmac.new(
-            self.encoded_api_key(), self.user_specific_message, digestmod=hashlib.sha512).hexdigest()
+            ValidationAuth.encoded_api_key(), self.user_specific_message, digestmod=hashlib.sha512).hexdigest()
         print(check_validity_hmac)
         print(self.hmac_renewal)
         return check_validity_hmac == self.hmac_renewal
 
 
 # auth = Authorization("ashkan", "123456","+I-8Z49BJe@glpBH,6bADbIg&x#nROH&")
-# # print(auth.api_secret_key_generator)
+# print(auth.api_secret_key_generator)
 # print(auth.hmac_renewal)
 
 auth_validation = ValidationAuth(
-    'ashkan', '123456', apiKey="+I-8Z49BJe@glpBH,6bADbIg&x#nROH&").validation
+    'ashkan', '123456', apiKey=",,XK&x,mIKC7,q#0J,#ah-ynq+l,,lfJ").validation
 print("==>> auth_validation: ", auth_validation)
 
 
