@@ -1,6 +1,5 @@
 version: "3.6"
 services:
-  
   traefik:
     container_name: traefik
     hostname: traefik
@@ -8,16 +7,22 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+      - "8181:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik/traefik.toml:/etc/traefik/traefik.toml"
+#       - "./traefik/traefik.toml:/etc/traefik/traefik.toml"
       - "./letsencrypt:/letsencrypt"
     command:
-      #- "--log.level=DEBUG"
+    #no need toml file
+      - "--log.level=DEBUG"
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.websecure.address=:443"
+      - "--certificatesResolvers.myresolver.acme.email=ashkangoleh@gmail.com"
+      - "--certificatesResolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web"
     restart: always
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
@@ -46,7 +51,7 @@ services:
   #   image: traefik/whoami
   #   labels:
   #     - "traefik.enable=true"
-  #     - "traefik.http.routers.whoami.rule=Host(`venus.arz.team`)"
+  #     - "traefik.http.routers.whoami.rule=Host(venus.arz.team)"
   #     - "traefik.http.routers.whoami.entrypoints=websecure"
   #     - "traefik.http.routers.whoami.tls.certresolver=myresolver"
   #   restart: always

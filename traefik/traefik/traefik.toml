@@ -1,0 +1,13 @@
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+    [entryPoints.web.http.redirections.entryPoint]
+      to = "websecure"
+      scheme = "https"
+
+[api]
+  dashboard = true
+
+
+[providers.file]
+  filename = "traefik_dynamic.toml"
