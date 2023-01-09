@@ -1,6 +1,5 @@
 import asyncio
 import threading
-from typing import Optional, Union
 from prometheus_client import CollectorRegistry, Gauge, Counter, pushadd_to_gateway
 
 
@@ -14,15 +13,15 @@ counter = Counter(
 )
 
 
-def set_interval(function: callable, interval: int, _async: Optional[bool], obj: Union[str, int, dict, None] = None):
+def set_interval(function: callable, interval: int, event_loop: bool = False):
     def _wrapper():
-        if _async:
+        if event_loop:
             loop = asyncio.new_event_loop()
-            set_interval(function, interval, _async, obj)
-            loop.run_until_complete(function(obj))
+            set_interval(function, interval, event_loop, )
+            loop.run_until_complete(function())
         else:
-            set_interval(function, interval, _async, obj)
-            function(obj)
+            set_interval(function, interval, event_loop, )
+            function()
 
     th = threading.Timer(interval, _wrapper)
     th.start()
@@ -39,7 +38,7 @@ def func(*args):
 if __name__ == '__main__':
     def sync_main():
         try:
-            set_interval(function=func, interval=1, _async=False, obj=None)
+            set_interval(function=func, interval=1)
         except Exception:
             raise RuntimeError("Exception's Sync loop")
     sync_main()
