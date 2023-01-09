@@ -7,6 +7,7 @@
 !credentials.json
 node_modules
 !industry_skills.csv
+tmp175u98nh/
 venv
 .vscode
 .idea
