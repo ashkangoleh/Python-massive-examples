@@ -1,0 +1,31 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=1
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  pgbouncer:
+    image: bitnami/pgbouncer
+    environment:
+      - PGBOUNCER_USERNAME=root
+      - PGBOUNCER_PASSWORD=1
+      - PGBOUNCER_DATABASE=postgres
+      - PGBOUNCER_AUTH_TYPE=md5
+    ports:
+      - "6432:6432"
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+
+networks:
+  default:
+    name: vnet
+    external: true
