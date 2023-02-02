@@ -34,7 +34,6 @@ def repeat_every(*, seconds: float, wait_first: bool = False)-> Callable:
             asyncio.create_task(loop())
 
         return wrapped
-    print("Repeat every working well.")
     return decorator
 
 
