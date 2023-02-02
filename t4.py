@@ -593,13 +593,11 @@
 # print(sign(2))
 
 
-
 # x= 1.25
 # print(x.as_integer_ratio()) # (as_integer_ratio()) Coefficients which makes `x`
 
 
 # https://www.youtube.com/watch?v=CCO0-64cfe4
-
 
 
 # import pytube
@@ -627,29 +625,114 @@
 # print("Video successfullly downloaded from", link)
 
 
+# def rsi_producer(msg:str="ss",producer:str="are hast"):
+#     return msg,producer
 
 
-def rsi_producer(msg:str="ss",producer:str="are hast"):
-    return msg,producer
+# def ema(msg:str="ss",producer:str="are hast"):
+#     return msg,producer
 
 
-def ema(msg:str="ss",producer:str="are hast"):
-    return msg,producer
+# def sma(msg:str="ss",producer:str="are hast"):
+#     return msg,producer
 
 
-def sma(msg:str="ss",producer:str="are hast"):
-    return msg,producer
+# funcs = {
+#     "RSI":rsi_producer,
+#     "ema":ema,
+#     "sma":sma,
+
+# }
+# print(funcs["RSI"](msg="test",producer="done"))
+# import httpx
+# import asyncio
+# from starlette.background import BackgroundTask
+# from starlette.responses import StreamingResponse
+# client = httpx.AsyncClient()
+
+# async def main():
+#     req = client.build_request("GET","https://www.arzdigital.com/")
+#     print("==>> req: ", req.content)
+#     r = await client.send(request=req,stream=True)
+#     print("==>> r: ", r.status_code)
+#     return StreamingResponse(r.aiter_text())
 
 
-
-funcs = {
-    "RSI":rsi_producer,
-    "ema":ema,
-    "sma":sma,
-    
-}
+# if __name__ == "__main__":
+#     asyncio.run(main())
 
 
+# class stochastic_rsi(object):
+#     def __init__(self,yechi) -> None:
+#         self.yechi = yechi
 
-print(funcs["RSI"].__name__)
-print(funcs["RSI"](msg="test",producer="done"))
+#     def get(self):
+#         return self.yechi
+
+
+# class stochastic(stochastic_rsi):
+#     @property
+#     def get(self):
+#         yechi = super().get()
+#         return yechi
+
+
+# ss = stochastic("aaa")
+# print(ss.get)
+
+
+# import requests
+
+
+# headers = {
+#     "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
+#     "accept-encoding": "gzip"
+# }
+
+# url = 'https://exchaino.com/api/v3/markets?&paginate=0'
+
+# resp = requests.get(url,headers=headers)
+# print(resp.status_code)
+# print(resp.json)
+
+
+# from flask import Flask
+# from flask import request
+# from flask import Response
+# import requests
+
+# app = Flask(__name__)
+
+# @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     if request.method == 'POST':
+#         msg = request.get_json()
+#         print(msg)
+
+#         return Response(f"{msg}", status=200)
+#     else:
+#         return "<h1>Welcome!</h1>"
+
+
+# if __name__ == '__main__':
+#    app.run(debug=True)
+
+
+# def test1():
+#     print("1")
+
+# def test2():
+#     print("2")
+
+
+# ww = "2"
+
+# match ww:
+#     case "1":
+#         test1()
+#     case "2":
+#         test2()
+#     case _:
+#         raise ValueError("value error")
+
+

@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+    postgres:
+        image: postgres:latest
+        restart: always
+        container_name: postgresql
+        hostname: pgsqlprc
+        environment:
+          - POSTGRES_USER=root
+          - POSTGRES_PASSWORD=1
+    #    ports:
+     #     - '5432:5432'
+        volumes:
+          - "./data:/var/lib/postgresql/data"
+#          - "./postgresql.conf:/var/lib/postgresql/data/postgresql.conf"
+    pgbouncer:
+      image: "bitnami/pgbouncer:latest"
+      restart: always
+      environment:
+        POSTGRESQL_HOST: "postgres"
+        POSTGRESQL_USERNAME: "root"
+        POSTGRESQL_PASSWORD: "1"
+        PGBOUNCER_AUTH_TYPE: "trust"
+        PGBOUNCER_POOL_MODE: transaction
+        PGBOUNCER_IGNORE_STARTUP_PARAMETERS: "extra_float_digits"
+      ports:
+        - "6432:6432"
+      depends_on:
+        - postgres
+      volumes:
+        - ./pgconf:/etc/pgbouncer
+      healthcheck:
+        test: ["CMD-SHELL", "pgbouncer --version"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+networks:
+  default:
+    external:
+      name: vnet

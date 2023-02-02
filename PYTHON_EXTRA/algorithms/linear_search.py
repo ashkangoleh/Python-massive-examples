@@ -6,10 +6,10 @@ def linear_search(values, search_for):
         if values[search_at] == search_for:
             search_res = True
         else:
-            search_at = search_at + 1
+            search_at += 1
     return search_res
 
 
-l = [1, 0, 2, 5, 200, 150, 657, 321, 12, 78]
-print(linear_search(l, 657))
-print(linear_search(l, 90))
+l = [1, 0, 2, 5, 200, 150, 657, 321, 12, 78,10]
+print(linear_search(l, 10))
+# print(linear_search(l, 90))

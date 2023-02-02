@@ -13,7 +13,7 @@ class VacationDaysShortageError(Exception):
 @dataclass
 class Employee:
     name: str
-    vacation_days: int = 25
+    vacation_days: int = 1
 
     def take_holiday(self, days: int = 1) -> None:
         if self.vacation_days < days:
@@ -26,7 +26,7 @@ class Employee:
 
 def main() -> None:
     ashkan = Employee(name="ashkan")
-    ashkan.take_holiday(25)
+    ashkan.take_holiday(10)
 
 
 if __name__ == "__main__":

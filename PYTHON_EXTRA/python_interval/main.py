@@ -13,14 +13,14 @@ def async_run(coroutine):
     return wrapper
 
 
-def setInterval(function: callable, interval: int, _async: Optional[bool], obj: Union[str, int, dict]):
+def set_interval(function: callable, interval: int, _async: Optional[bool], obj: Union[str, int, dict]):
     def _wrapper():
         if _async:
             loop = asyncio.new_event_loop()
-            setInterval(function, interval, _async, obj)
+            set_interval(function, interval, _async, obj)
             loop.run_until_complete(function(obj))
         else:
-            setInterval(function, interval, _async, obj)
+            set_interval(function, interval, _async, obj)
             function(obj)
 
     th = threading.Timer(interval, _wrapper)
@@ -36,18 +36,18 @@ if __name__ == "__main__":
         print(f"{custom_sync_function.__name__}_{argument*123}")
 
     @async_run
-    async def asyncMain():
+    async def async_main():
         try:
-            setInterval(custom_async_function, interval=1, _async=True, obj=2)
+            set_interval(custom_async_function, interval=1, _async=True, obj=2)
         except Exception as e:
             raise RuntimeError("Exception's Async loop")
 
-    def syncMain():
+    def sync_main():
         try:
-            setInterval(custom_sync_function,
+            set_interval(custom_sync_function,
                         interval=1, _async=False, obj=2)
         except Exception as e:
             raise RuntimeError("Exception's Async loop")
 
-    asyncMain()
-    syncMain()
+    async_main()
+    sync_main()

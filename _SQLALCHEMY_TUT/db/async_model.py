@@ -10,6 +10,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import select, Table, MetaData, VARCHAR, Column as c
 from contextlib import asynccontextmanager
 from sqlalchemy.ext.declarative import declarative_base
+import pandas as pd
 Base = declarative_base()
 config = Box.from_yaml(
     filename="/external/test_proj/_SQLALCHEMY_TUT/db/config.yaml", Loader=yaml.FullLoader)
@@ -98,7 +99,7 @@ async def fetch_id(async_session):
 async def fetch_by_id(async_session):
     stmt = select(Cites).filter(Cites.cited_paper_id == 100157)
     result = await async_session.execute(stmt)
-    return result.scalars().first()
+    return result.scalars().all()
 
 
 @async_session
@@ -126,7 +127,7 @@ async def _fetch_id(l=fetch_id()):
     for i in get_data:
         data.setdefault(i.cited_paper_id, [])
         data[i.cited_paper_id].append(f"{i.citing_paper_id}")
-    return json.dumps(data, indent=4)
+    return json.dumps(data)
 
 
 @async_run
@@ -155,4 +156,17 @@ async def _fetch_join(l=fetch_join()):
 # print("==>> _fetch_id: ", _fetch_id())
 # print("==>> _fetch_join: ", _fetch_join())
 # print("==>> _fetch_by_id: ", _fetch_by_id().x)
-print("==>> _cross_join: ", _cross_join())
+# print("==>> _cross_join: ", _cross_join())
+_id = _fetch_by_id()
+data ={}
+for i in _id:
+    data.setdefault(i.cited_paper_id, [])
+    data[i.cited_paper_id].append(f"{i.citing_paper_id}")
+
+
+df = pd.DataFrame(data)
+print("==>> df: ", df.columns)
+df.rename(columns={100157:"test"},inplace=True,index=str)
+# df.set_index("test",inplace=True)
+df.drop_duplicates(inplace=True)
+print("==>> df: ", df)
