@@ -15,7 +15,6 @@ def run():
         print(book)
         queue.put(book)
         time.sleep(1)
-        
     print("\nDequeuing...")
     while not queue.empty():
         time.sleep(1)
@@ -24,3 +23,7 @@ def run():
 
 if __name__ == "__main__":
     run()
+    
+    
+    
+#fastero 'file: Queue.py' for thest speed

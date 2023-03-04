@@ -733,24 +733,24 @@
 #     case "2":
 #         test2()
 #     case _:
-#         raise ValueError("value error")
-import random
+# #         raise ValueError("value error")
+# import random
 
-data = []
+# data = []
 
-for i in range(1, 101):
-    # Generate a new dictionary with random values
-    d = {
-        "user_id": random.randint(1, 10),
-        "comment_id": random.randint(1, 10),
-        "context": f"example {i}",
-        "word_percentage": f"{random.randint(1, 100)}",
-        # "mlp": random.choice([True, False]),
-        # "mlr": random.choice([0, 1])
-    }
-    # Append the new dictionary to the list
-    data.append(d)
-import json
+# for i in range(1, 101):
+#     # Generate a new dictionary with random values
+#     d = {
+#         "user_id": random.randint(1, 10),
+#         "comment_id": random.randint(1, 10),
+#         "context": f"example {i}",
+#         "word_percentage": f"{random.randint(1, 100)}",
+#         # "mlp": random.choice([True, False]),
+#         # "mlr": random.choice([0, 1])
+#     }
+#     # Append the new dictionary to the list
+#     data.append(d)
+# import json
 
-print(json.dumps(data,indent=4))
-# print(data)
+# print(json.dumps(data,indent=4))
+# # print(data)
